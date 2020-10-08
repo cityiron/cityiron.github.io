@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Categories - category - 鐵手</title>
+        <title>Categories - category - tiecheng</title>
         <link>https://blog.funnycode.cn/categories/</link>
-        <description>Categories - category - 鐵手</description>
+        <description>Categories - category - tiecheng</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>tczjhz@163.com (tiecheng)</managingEditor>
             <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 07 Oct 2020 23:25:25 &#43;0800</lastBuildDate><atom:link href="https://blog.funnycode.cn/categories/" rel="self" type="application/rss+xml" /><item>
     <title>博客</title>

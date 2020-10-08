@@ -1,15 +1,17 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>RDS - tag - 鐵手</title>
+        <title>RDS - tag - tiecheng</title>
         <link>https://blog.funnycode.cn/tags/rds/</link>
-        <description>RDS - tag - 鐵手</description>
+        <description>RDS - tag - tiecheng</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>tczjhz@163.com (tiecheng)</managingEditor>
             <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 22 Sep 2019 17:33:11 &#43;0800</lastBuildDate><atom:link href="https://blog.funnycode.cn/tags/rds/" rel="self" type="application/rss+xml" /><item>
     <title>阿里云 RDS 采坑记录</title>
-    <link>https://blog.funnycode.cn/posts/aliyun-daily-01/aliyun-daily-01/</link>
+    <link>https://blog.funnycode.cn/posts/aliyun-daily-01/</link>
     <pubDate>Sun, 22 Sep 2019 17:33:11 &#43;0800</pubDate>
     <author></author>
-    <guid>https://blog.funnycode.cn/posts/aliyun-daily-01/aliyun-daily-01/</guid>
-    <description><![CDATA[<p>binlog 丢失</p>]]></description>
+    <guid>https://blog.funnycode.cn/posts/aliyun-daily-01/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/feature.jpg" referrerpolicy="no-referrer">
+            </div>一、前言 上周同事负责的同步服务出现宕机后，由于在忙于另一个重要的项目，线上没有及时处理，后发现同步数据丢失。我趁机了解了下我们的同步逻辑并对]]></description>
 </item></channel>
 </rss>

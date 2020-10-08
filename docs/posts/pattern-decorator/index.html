@@ -5,19 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>装饰者模式 - 鐵手</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="装饰者模式" />
-<meta property="og:description" content="简介 Decorator Pattern（装饰模式） This pattern creates a decorator class which wraps the original class and provides additional functionality keeping class methods signature intact. 白话文 这个模式我们需要创建一个新的装饰类，然后装饰类会拥有一个属性是" />
+        <title>装饰者模式 - tiecheng</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="装饰者模式" />
+<meta property="og:description" content="简介 Decorator Pattern（装饰模式） This pattern creates a decorator class which wraps the original class and provides additional functionality keeping class methods signature intact. 白话文： 这个模式我们需要创建一个新的装饰类，然后装饰类会拥有一个属性" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.funnycode.cn/posts/pattern-decorator/pattern-decorator/" />
+<meta property="og:url" content="https://blog.funnycode.cn/posts/pattern-decorator/" />
 <meta property="article:published_time" content="2019-11-04T17:00:24+08:00" />
 <meta property="article:modified_time" content="2019-11-04T17:00:24+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="装饰者模式"/>
-<meta name="twitter:description" content="简介 Decorator Pattern（装饰模式） This pattern creates a decorator class which wraps the original class and provides additional functionality keeping class methods signature intact. 白话文 这个模式我们需要创建一个新的装饰类，然后装饰类会拥有一个属性是"/>
+<meta name="twitter:description" content="简介 Decorator Pattern（装饰模式） This pattern creates a decorator class which wraps the original class and provides additional functionality keeping class methods signature intact. 白话文： 这个模式我们需要创建一个新的装饰类，然后装饰类会拥有一个属性"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/posts/pattern-decorator/pattern-decorator/" /><link rel="prev" href="https://blog.funnycode.cn/posts/aliyun-daily-01/aliyun-daily-01/" /><link rel="next" href="https://blog.funnycode.cn/posts/hugo-01/hugo-01/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/posts/pattern-decorator/" /><link rel="prev" href="https://blog.funnycode.cn/posts/aliyun-daily-01/" /><link rel="next" href="https://blog.funnycode.cn/posts/hugo-01/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -25,11 +25,11 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/blog.funnycode.cn\/posts\/pattern-decorator\/pattern-decorator\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Go, 装饰者模式","wordcount":  426 ,
-        "url": "https:\/\/blog.funnycode.cn\/posts\/pattern-decorator\/pattern-decorator\/","datePublished": "2019-11-04T17:00:24+08:00","dateModified": "2019-11-04T17:00:24+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@id": "https:\/\/blog.funnycode.cn\/posts\/pattern-decorator\/"
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Go, 装饰者模式","wordcount":  428 ,
+        "url": "https:\/\/blog.funnycode.cn\/posts\/pattern-decorator\/","datePublished": "2019-11-04T17:00:24+08:00","dateModified": "2019-11-04T17:00:24+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
-            "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jepg"},"author": {
+            "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
                 "@type": "Person",
                 "name": "tiecheng"
             },"description": ""
@@ -40,11 +40,11 @@
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/" title="鐵手">funnycode</a>
+            <a href="/" title="tiecheng">Funnycode Blog</a>
         </div>
         <div class="menu">
             <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/cityiron" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="">简体中文<i class="fas fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/pattern-decorator/pattern-decorator/" selected>简体中文</option></select>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/pattern-decorator/" selected>简体中文</option></select>
                     </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="" id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="">
@@ -66,7 +66,7 @@
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/" title="鐵手">funnycode</a>
+                <a href="/" title="tiecheng">Funnycode Blog</a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
@@ -91,7 +91,7 @@
                 </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/cityiron" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="">
                 <i class="fas fa-adjust fa-fw"></i>
             </a><a href="javascript:void(0);" class="menu-item" title="">简体中文<i class="fas fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/pattern-decorator/pattern-decorator/" selected>简体中文</option></select>
+                    <select class="language-select" onchange="location = this.value;"><option value="/posts/pattern-decorator/" selected>简体中文</option></select>
                 </a></div>
     </div>
 </header>
@@ -108,7 +108,7 @@
         </div><article class="page single"><h1 class="single-title animated flipInX">装饰者模式</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category"></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-11-04">2019-11-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;&nbsp;<span id="/posts/pattern-decorator/pattern-decorator/" class="leancloud_visitors" data-flag-title="装饰者模式">
+                <i class="far fa-clock fa-fw"></i>&nbsp;&nbsp;<span id="/posts/pattern-decorator/" class="leancloud_visitors" data-flag-title="装饰者模式">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -127,13 +127,9 @@
 <blockquote>
 <p>This pattern creates a decorator class which wraps the original class and provides additional functionality keeping class methods signature intact.</p>
 </blockquote>
-<blockquote>
-<p>白话文</p>
-</blockquote>
+<p>白话文：</p>
 <p>这个模式我们需要创建一个新的装饰类，然后装饰类会拥有一个属性是被装饰类，并且会有“一个”方法和需要使用的被装饰类的方法签名完全一致，调用装饰类的方法会执行装饰类内容并调用被装饰类的被装饰方法。</p>
-<blockquote>
-<p>故事</p>
-</blockquote>
+<p>故事：</p>
 <p>我买了一本书《go编程思想》，小明也买了一本书《go编程思想》并给它带上了一个黄金封面，两本书内容一摸一样，只是小明的变成金灿灿的土豪版。</p>
 <h1 id="实例">实例</h1>
 <h2 id="对于某个接口的方法装饰">对于某个接口的方法装饰</h2>
@@ -271,7 +267,7 @@ red
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title=" Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/posts/pattern-decorator/pattern-decorator/" data-title="装饰者模式" data-hashtags="Go,装饰者模式"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/posts/pattern-decorator/pattern-decorator/" data-hashtag="Go"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title=" Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/posts/pattern-decorator/pattern-decorator/" data-title="装饰者模式"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="https://blog.funnycode.cn/posts/pattern-decorator/pattern-decorator/" data-title="装饰者模式"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title=" 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/posts/pattern-decorator/pattern-decorator/" data-title="装饰者模式" data-ralateuid="xxxx"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title=" Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/posts/pattern-decorator/" data-title="装饰者模式" data-hashtags="Go,装饰者模式"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/posts/pattern-decorator/" data-hashtag="Go"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title=" Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/posts/pattern-decorator/" data-title="装饰者模式"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="https://blog.funnycode.cn/posts/pattern-decorator/" data-title="装饰者模式"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title=" 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/posts/pattern-decorator/" data-title="装饰者模式"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>
@@ -283,8 +279,8 @@ red
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/aliyun-daily-01/aliyun-daily-01/" class="prev" rel="prev" title="阿里云 RDS 采坑记录"><i class="fas fa-angle-left fa-fw"></i>阿里云 RDS 采坑记录</a>
-            <a href="/posts/hugo-01/hugo-01/" class="next" rel="next" title="一拳搞定 Hugo | 送它上 GitHub">一拳搞定 Hugo | 送它上 GitHub<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/aliyun-daily-01/" class="prev" rel="prev" title="阿里云 RDS 采坑记录"><i class="fas fa-angle-left fa-fw"></i>阿里云 RDS 采坑记录</a>
+            <a href="/posts/hugo-01/" class="next" rel="next" title="一拳搞定 Hugo | 送它上 GitHub">一拳搞定 Hugo | 送它上 GitHub<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
