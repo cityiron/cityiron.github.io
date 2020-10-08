@@ -127,16 +127,23 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#xxl-job的变化">xxl job的变化</a></li>
-    <li><a href="#mysql-排查">MySQL 排查</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#为什么过了一天同步服务会启动失败">为什么过了一天，同步服务会启动失败？</a></li>
-    <li><a href="#binlog不在了如何补救">binlog不在了，如何补救？</a></li>
+    <li><a href="#一前言">一、前言</a></li>
+    <li><a href="#二排查">二、排查</a>
+      <ul>
+        <li><a href="#xxl-job的变化">xxl job的变化</a></li>
+        <li><a href="#mysql-排查">MySQL 排查</a></li>
+      </ul>
+    </li>
+    <li><a href="#三解决方案">三、解决方案</a></li>
+    <li><a href="#四思考问题">四、思考问题</a>
+      <ul>
+        <li><a href="#为什么过了一天同步服务会启动失败">为什么过了一天，同步服务会启动失败？</a></li>
+        <li><a href="#binlog不在了如何补救">binlog不在了，如何补救？</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h1 id="一前言">一、前言</h1>
+            </div><div class="content" id="content"><h2 id="一前言">一、前言</h2>
 <p>上周同事负责的同步服务出现宕机后，由于在忙于另一个重要的项目，线上没有及时处理，后发现同步数据丢失。我趁机了解了下我们的同步逻辑并对这次异常做一个简单的总结。</p>
 <p>情况描述：</p>
 <p>线上我们基于 otter 的 msyql 数据同步服务出错，出错后会停止数据同步（我们后续的配置没有从中心节点同步到私有云节点），导致了私有云无法正常启动部分服务。</p>
@@ -151,8 +158,8 @@
 <li>查询发现同步服务异常，无法通过binlog的偏移量找到记录，导致无法把中心节点加了的配置同步到私有云节点</li>
 <li>我们是在一天后对这个问题做的处理</li>
 </ul>
-<h1 id="二排查">二、排查</h1>
-<h2 id="xxl-job的变化">xxl job的变化</h2>
+<h2 id="二排查">二、排查</h2>
+<h3 id="xxl-job的变化">xxl job的变化</h3>
 <p>xxl-job的SQL：</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">t</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">job_group</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">job_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">executor_address</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">executor_handler</span>
   <span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">executor_param</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">executor_sharding_param</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">executor_fail_retry_count</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">trigger_time</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">trigger_code</span>
@@ -165,7 +172,7 @@
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">id</span> <span class="k">DESC</span>
 <span class="k">LIMIT</span> <span class="o">?</span><span class="p">,</span> <span class="o">?</span>
 </code></pre></div><p>并没有异常情况。</p>
-<h2 id="mysql-排查">MySQL 排查</h2>
+<h3 id="mysql-排查">MySQL 排查</h3>
 <p>mysql 查看 binlog：</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">//</span> <span class="err">查看</span><span class="n">binlog文件列表</span>
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="k">show</span> <span class="nb">binary</span> <span class="n">logs</span><span class="p">;</span>
@@ -186,11 +193,11 @@
 <span class="o">+</span><span class="c1">------------------+----------+--------------+------------------+-------------------+
 </span><span class="c1"></span><span class="mi">1</span> <span class="k">row</span> <span class="k">in</span> <span class="k">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
 </code></pre></div><p>并没有异常情况。</p>
-<h1 id="三解决方案">三、解决方案</h1>
+<h2 id="三解决方案">三、解决方案</h2>
 <p>因为同步服务是由于binlog的偏移量问题而失败，偏移量是通过zk节点去获取的，我们去MySQL查询了最新的可用的偏移量，设置到了zk的指定节点，让同步服务正常运行。（我们的配置同步在新偏移量之后，所以启动后能够从中心节点同步到私有云节点）</p>
 <p>这个是临时的解决方案，我们没法找到之前的binlog的完整记录</p>
-<h1 id="四思考问题">四、思考问题</h1>
-<h2 id="为什么过了一天同步服务会启动失败">为什么过了一天，同步服务会启动失败？</h2>
+<h2 id="四思考问题">四、思考问题</h2>
+<h3 id="为什么过了一天同步服务会启动失败">为什么过了一天，同步服务会启动失败？</h3>
 <p>同步服务失败，因为binlog找不到。MySQL我们自己安装的话binlog配置默认是不清理的，但是RDS上不是这样的。
 下面是RDS默认配置：</p>
 <ul>
@@ -199,7 +206,7 @@
 <li>可用空间保护，默认开启该功能，表示当实例总空间使用率超过80%或实例剩余可用空间不足5GB时，会强制从最早的Binlog开始清理，直到总空间使用率降到80%以下且实例剩余可用空间大于5GB。</li>
 </ul>
 <p>我们可以看到RDS默认保留时间小于一天，所以我们停了一天后再度开启，导致binlog位置找不到，只能从最新的偏移量同步。这里首先把保留时长调至3天（我们的同步服务不可能停3天，在某些改造项目，同步服务可能会停1-2天），这个需要根据实际场景去设置合理的值。</p>
-<h2 id="binlog不在了如何补救">binlog不在了，如何补救？</h2>
+<h3 id="binlog不在了如何补救">binlog不在了，如何补救？</h3>
 <p>阿里云会把binlog保存到OSS，从OSS下载回来binlog，然后把binlog设置到MySQL指定位置（这块可能是我脑补的）。这块有任何问题可以提工单，毕竟顾客是“上帝”。</p>
 <p>本地验证的时候，位置是：</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">/usr/local/mysql/data
@@ -243,5 +250,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="">
                 <i class="fas fa-comment fa-fw"></i>
             </a>
-        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":10},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"","pageSize":10,"placeholder":"","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":10},"comment":{"valine":{"appId":"SdYC7ANQL2uMsQuRBj4SFkJo-gzGzoHsz","appKey":"KeHWy0KG8I326gRWY9vsogt6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"","pageSize":10,"placeholder":"","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>
