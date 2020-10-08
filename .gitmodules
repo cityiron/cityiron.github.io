@@ -1,3 +1,9 @@
 [submodule "themes/ananke"]
 	path = themes/ananke
 	url = https://github.com/budparr/gohugo-theme-ananke.git
+[submodule "themes/leaveIt"]
+	path = themes/leaveIt
+	url = git@github.com:cityiron/LeaveIt.git
+[submodule "themes/loveIt"]
+	path = themes/loveIt
+	url = git@github.com:cityiron/LoveIt.git

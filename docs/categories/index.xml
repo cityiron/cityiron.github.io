@@ -1,10 +1,29 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Categories on My New Hugo Site</title>
-    <link>https://blog.funnycode.cn/categories/</link>
-    <description>Recent content in Categories on My New Hugo Site</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://blog.funnycode.cn/categories/index.xml" rel="self" type="application/rss+xml" />
-  </channel>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Categories - category - 鐵手</title>
+        <link>https://blog.funnycode.cn/categories/</link>
+        <description>Categories - category - 鐵手</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>tczjhz@163.com (tiecheng)</managingEditor>
+            <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 07 Oct 2020 23:25:25 &#43;0800</lastBuildDate><atom:link href="https://blog.funnycode.cn/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>博客</title>
+    <link>https://blog.funnycode.cn/categories/%E5%8D%9A%E5%AE%A2/</link>
+    <pubDate>Wed, 07 Oct 2020 23:25:25 &#43;0800</pubDate>
+    <author></author>
+    <guid>https://blog.funnycode.cn/categories/%E5%8D%9A%E5%AE%A2/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>设计模式</title>
+    <link>https://blog.funnycode.cn/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+    <pubDate>Mon, 04 Nov 2019 17:00:24 &#43;0800</pubDate>
+    <author></author>
+    <guid>https://blog.funnycode.cn/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>阿里云</title>
+    <link>https://blog.funnycode.cn/categories/%E9%98%BF%E9%87%8C%E4%BA%91/</link>
+    <pubDate>Sun, 22 Sep 2019 17:33:11 &#43;0800</pubDate>
+    <author></author>
+    <guid>https://blog.funnycode.cn/categories/%E9%98%BF%E9%87%8C%E4%BA%91/</guid>
+    <description><![CDATA[]]></description>
+</item></channel>
 </rss>
