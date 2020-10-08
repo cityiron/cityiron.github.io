@@ -3,11 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.funnycode.cn/categories/</loc>
+    <loc>https://blog.funnycode.cn/</loc>
+    <lastmod>2020-10-07T23:25:25+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.funnycode.cn/</loc>
+    <loc>https://blog.funnycode.cn/posts/</loc>
+    <lastmod>2020-10-07T23:25:25+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.funnycode.cn/posts/hugo-01/</loc>
+    <lastmod>2020-10-07T23:25:25+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.funnycode.cn/categories/</loc>
   </url>
   
   <url>
