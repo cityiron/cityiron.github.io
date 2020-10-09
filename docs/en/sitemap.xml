@@ -2,16 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://blog.funnycode.cn/en/about/</loc><priority>0</priority><xhtml:link
-                        rel="alternate"
-                        hreflang="zh-cn"
-                        href="https://blog.funnycode.cn/about/"
-                        /><xhtml:link
-                    rel="alternate"
-                    hreflang="en"
-                    href="https://blog.funnycode.cn/en/about/"
-                    /></url><url>
-            <loc>https://blog.funnycode.cn/en/categories/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://blog.funnycode.cn/en/categories/</loc><lastmod>2020-10-09T12:43:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.funnycode.cn/categories/"
@@ -20,7 +11,36 @@
                     hreflang="en"
                     href="https://blog.funnycode.cn/en/categories/"
                     /></url><url>
-            <loc>https://blog.funnycode.cn/en/tags/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://blog.funnycode.cn/en/</loc><lastmod>2020-10-09T12:43:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="zh-cn"
+                        href="https://blog.funnycode.cn/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="en"
+                    href="https://blog.funnycode.cn/en/"
+                    /></url><url>
+            <loc>https://blog.funnycode.cn/en/posts/</loc><lastmod>2020-10-09T12:43:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="zh-cn"
+                        href="https://blog.funnycode.cn/posts/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="en"
+                    href="https://blog.funnycode.cn/en/posts/"
+                    /></url><url>
+            <loc>https://blog.funnycode.cn/en/tags/sample/</loc><lastmod>2020-10-09T12:43:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.funnycode.cn/en/categories/sample/</loc><lastmod>2020-10-09T12:43:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.funnycode.cn/en/posts/sample/</loc><lastmod>2020-10-09T12:43:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="zh-cn"
+                        href="https://blog.funnycode.cn/posts/sample/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="en"
+                    href="https://blog.funnycode.cn/en/posts/sample/"
+                    /></url><url>
+            <loc>https://blog.funnycode.cn/en/tags/</loc><lastmod>2020-10-09T12:43:45&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://blog.funnycode.cn/tags/"
@@ -29,12 +49,12 @@
                     hreflang="en"
                     href="https://blog.funnycode.cn/en/tags/"
                     /></url><url>
-            <loc>https://blog.funnycode.cn/en/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://blog.funnycode.cn/en/about/</loc><priority>0</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
-                        href="https://blog.funnycode.cn/"
+                        href="https://blog.funnycode.cn/about/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="en"
-                    href="https://blog.funnycode.cn/en/"
+                    href="https://blog.funnycode.cn/en/about/"
                     /></url></urlset>
