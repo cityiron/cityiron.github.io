@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>领域驱动实战 | Domain Primitive 的简单使用 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="领域驱动实战 | Domain Primitive 的简单使用" />
+<meta property="og:description" content="本文介绍一个实际项目中可以使用的概念: Domain Primitive." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.funnycode.cn/2020/05/domain-primitive/" />
+<meta property="article:published_time" content="2020-05-28T20:13:43+08:00" />
+<meta property="article:modified_time" content="2020-05-28T20:13:43+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="领域驱动实战 | Domain Primitive 的简单使用"/>
+<meta name="twitter:description" content="本文介绍一个实际项目中可以使用的概念: Domain Primitive."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/2020/05/domain-primitive/" /><link rel="prev" href="https://blog.funnycode.cn/2019/11/pattern-template/" /><link rel="next" href="https://blog.funnycode.cn/2020/10/hugo-01/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "领域驱动实战 | Domain Primitive 的简单使用",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.funnycode.cn\/2020\/05\/domain-primitive\/"
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "DDD, 值对象","wordcount":  1703 ,
+        "url": "https:\/\/blog.funnycode.cn\/2020\/05\/domain-primitive\/","datePublished": "2020-05-28T20:13:43+08:00","dateModified": "2020-05-28T20:13:43+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
+                "@type": "Person",
+                "name": "tiecheng"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Funnycode">Funnycode Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/cityiron" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2020/05/domain-primitive/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Funnycode">Funnycode Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/cityiron" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2020/05/domain-primitive/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title"></h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">领域驱动实战 | Domain Primitive 的简单使用</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category"></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-05-28">2020-05-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;&nbsp;<span id="/2020/05/domain-primitive/" class="leancloud_visitors" data-flag-title="领域驱动实战 | Domain Primitive 的简单使用">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span></span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一前言">一、前言</a></li>
+    <li><a href="#二本文主角-domain-primitive">二、本文主角 Domain Primitive</a>
+      <ul>
+        <li><a href="#21-domain-primitive-的定义">2.1 Domain Primitive 的定义</a></li>
+        <li><a href="#22-使用-domain-primitive-的三原则">2.2 使用 Domain Primitive 的三原则</a></li>
+        <li><a href="#23-domain-primitive-和-ddd-里-value-object-的区别">2.3 Domain Primitive 和 DDD 里 Value Object 的区别</a></li>
+        <li><a href="#24-什么情况下应该用-domain-primitive">2.4 什么情况下应该用 Domain Primitive</a></li>
+      </ul>
+    </li>
+    <li><a href="#三项目的的尝试">三、项目的的尝试</a></li>
+    <li><a href="#四参考">四、参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本文介绍一个实际项目中可以使用的概念: Domain Primitive.</p>
+<h2 id="一前言">一、前言</h2>
+<p>领域驱动这个概念也听到很多次了,书上看过的已经忘记,道听途说的不敢苟同（自己也分不清真假,听闻也没一个真正”成功“的案例）,这里我就说一句我的理解:深入挖掘业务内核,找到问题的根本,把复杂问题分为多个领域（领域内聚）去解决业务实际的问题,而不是通过技术角度随着岁月留下一堆跳跃的代码.</p>
+<h2 id="二本文主角-domain-primitive">二、本文主角 Domain Primitive</h2>
+<h3 id="21-domain-primitive-的定义">2.1 Domain Primitive 的定义</h3>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>概念<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><ol>
+<li>不从任何其他事物发展而来</li>
+<li>初级的形成或生长的早期阶段</li>
+</ol>
+</div>
+        </div>
+    </div>
+<p>让我们重新来定义一下 Domain Primitive :Domain Primitive 是一个在特定领域里,拥有精准定义的、可自我验证的、拥有行为的 Value Object .</p>
+<p>• DP是一个传统意义上的Value Object,拥有Immutable的特性
+• DP是一个完整的概念整体,拥有精准定义
+• DP使用业务域中的原生语言
+• DP可以是业务域的最小组成部分、也可以构建复杂组合</p>
+<blockquote>
+<p>注意:Domain Primitive的概念和命名来自于Dan Bergh Johnsson &amp; Daniel Deogun的书 Secure by Design.</p>
+</blockquote>
+<h3 id="22-使用-domain-primitive-的三原则">2.2 使用 Domain Primitive 的三原则</h3>
+<p>• 让隐性的概念<strong>显性</strong>化
+• 让隐性的上下文<strong>显性</strong>化
+• 封装多对象行为</p>
+<h3 id="23-domain-primitive-和-ddd-里-value-object-的区别">2.3 Domain Primitive 和 DDD 里 Value Object 的区别</h3>
+<p>在 DDD 中, Value Object 这个概念其实已经存在:</p>
+<p>• 在 Evans 的 DDD 蓝皮书中,Value Object 更多的是一个非 Entity 的值对象
+• 在Vernon的IDDD红皮书中,作者更多的关注了Value Object的Immutability、Equals方法、Factory方法等</p>
+<p>Domain Primitive 是 Value Object 的进阶版,在原始 VO 的基础上要求每个 DP 拥有概念的整体,而不仅仅是值对象.在 VO 的 Immutable 基础上增加了 Validity 和行为.当然同样的要求无副作用（side-effect free）.</p>
+<p>▍Domain Primitive 和 Data Transfer Object (DTO) 的区别</p>
+<p>在日常开发中经常会碰到的另一个数据结构是 DTO ,比如方法的入参和出参.DP 和 DTO 的区别如下:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>DTO</th>
+<th>DP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>功能</td>
+<td>数据传输<!-- raw HTML omitted -->属于技术细节</td>
+<td>业务领域中的概念</td>
+</tr>
+<tr>
+<td>数据的关联</td>
+<td>只是一堆数据放在一起<!-- raw HTML omitted -->不一定有关联度</td>
+<td>数据之间的高相关新</td>
+</tr>
+<tr>
+<td>行为</td>
+<td>无行为</td>
+<td>丰富的行为和业务逻辑</td>
+</tr>
+</tbody>
+</table>
+<h3 id="24-什么情况下应该用-domain-primitive">2.4 什么情况下应该用 Domain Primitive</h3>
+<p>常见的 DP 的使用场景包括:</p>
+<p>• 有格式限制的 String:比如Name,PhoneNumber,OrderNumber,ZipCode,Address等
+• 有限制的Integer:比如OrderId（&gt;0）,Percentage（0-100%）,Quantity（&gt;=0）等
+• 可枚举的 int :比如 Status（一般不用Enum因为反序列化问题）
+• Double 或 BigDecimal:一般用到的 Double 或 BigDecimal 都是有业务含义的,比如 Temperature、Money、Amount、ExchangeRate、Rating 等
+• 复杂的数据结构:比如 Map&gt; 等,尽量能把 Map 的所有操作包装掉,仅暴露必要行为</p>
+<h2 id="三项目的的尝试">三、项目的的尝试</h2>
+<p>举例子:</p>
+<p>DP对象</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Getter</span>
+<span class="nd">@JSONType</span><span class="o">(</span><span class="n">deserializer</span> <span class="o">=</span> <span class="n">NameDeserializer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">serializer</span> <span class="o">=</span> <span class="n">NameSerializer</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Name</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">serialVersionUID</span> <span class="o">=</span> <span class="n">7482387369308807214L</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Name</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">name</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">ValidationException</span><span class="o">(</span><span class="s">&#34;名称不能为空!!!&#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span> <span class="o">(!</span><span class="n">isValid</span><span class="o">(</span><span class="n">name</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">ValidationException</span><span class="o">(</span><span class="s">&#34;仅支持1-64位大小写字母,数字,中划线和下划线组成,必须字母开头!!!&#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isValid</span><span class="o">(</span><span class="n">String</span> <span class="n">code</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">&#34;^[a-zA-Z][a-zA-Z0-9_-]{1,64}$&#34;</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">code</span><span class="o">.</span><span class="na">matches</span><span class="o">(</span><span class="n">pattern</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p>领域方法</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">    <span class="c1">// 根据应用和Git信息查询流水线发布记录
+</span><span class="c1"></span>    <span class="kd">public</span> <span class="n">PipelineDO</span> <span class="nf">queryByAppAndGit</span><span class="o">(</span><span class="kd">final</span> <span class="n">Name</span> <span class="n">appName</span><span class="o">,</span> <span class="kd">final</span> <span class="n">Git</span> <span class="n">git</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 进行逻辑处理
+</span><span class="c1"></span>    <span class="o">}</span>
+</code></pre></div><p>说明</p>
+<ul>
+<li>final 修饰字段,不可变性的特点</li>
+<li>构造方法就直接校验合法性,不需要factory和validutil,更内聚自己的功能</li>
+<li>因为存在JSON序列化和反序列的情况,这里需要自定义序列化和反序列的方法</li>
+</ul>
+<p>效果</p>
+<ul>
+<li>前端联调企图传随便的内容进来,直接通不过参数校验,就进不到核心方法了</li>
+<li>参数相对更能直观其意,并且进来的参数值取出来肯定是合法的</li>
+<li>代码可以写的更少</li>
+</ul>
+<p>容易出错的地方</p>
+<ul>
+<li>如果用Map做一个缓存,Key放String,而实际对应的是Code对象,那么查询的时候要用code.genCodeString(),一开始容易写code忘记转换,导致查询不到结果</li>
+<li>JSON转换在上面已经提到了需要自己定义扩展,会增加一定的重复代码量（我们暂时用的是每个DP类型两个转换类,可以合并到一个方法,根据类型判断,但是语义不够清晰</li>
+</ul>
+<p>还没做好的地方</p>
+<ul>
+<li>如果通过jar包提供给第三方接口调用也使用这个DP类,那么接口调用方传参不合法的时候就会报错</li>
+</ul>
+<h2 id="四参考">四、参考</h2>
+<p><a href="https://developer.aliyun.com/article/716908?spm=a2c6h.12873581.0.0.41f165c3iAKf34&amp;groupCode=taobaotech" target="_blank" rel="noopener noreffer">阿里云领域驱动DP文章</a></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span></span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2020/05/domain-primitive/index.md" target="_blank"></a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title=" Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2020/05/domain-primitive/" data-title="领域驱动实战 | Domain Primitive 的简单使用" data-hashtags="DDD,值对象"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2020/05/domain-primitive/" data-hashtag="DDD"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title=" Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2020/05/domain-primitive/" data-title="领域驱动实战 | Domain Primitive 的简单使用"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="https://blog.funnycode.cn/2020/05/domain-primitive/" data-title="领域驱动实战 | Domain Primitive 的简单使用"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title=" 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2020/05/domain-primitive/" data-title="领域驱动实战 | Domain Primitive 的简单使用"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/ddd/">DDD</a>,&nbsp;<a href="/tags/%E5%80%BC%E5%AF%B9%E8%B1%A1/">值对象</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();"></a></span>&nbsp;|&nbsp;<span><a href="/"></a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2019/11/pattern-template/" class="prev" rel="prev" title="模板模式"><i class="fas fa-angle-left fa-fw"></i>模板模式</a>
+            <a href="/2020/10/hugo-01/" class="next" rel="next" title="一拳搞定 Hugo | 送它上 GitHub">一拳搞定 Hugo | 送它上 GitHub<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">tiecheng</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">浙ICP备17037814号</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":10},"comment":{"valine":{"appId":"SdYC7ANQL2uMsQuRBj4SFkJo-gzGzoHsz","appKey":"KeHWy0KG8I326gRWY9vsogt6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"","pageSize":10,"placeholder":"","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'UA-180197270-1', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-180197270-1" async></script></body>
+</html>
