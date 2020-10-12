@@ -4,11 +4,23 @@
 
 <!--more-->
 
+琦玉：
+杰诺斯，接下去要好好学习 kubernetes。
+
+杰诺斯：
+老师，我会的。你先教我如何搭建一个集群呗？
+
+琦玉：
+感慨万千，以前找三台旧电脑搭建一个 kubernetes 集群，现在在本机敲两下命令就可以跑起来，杰诺斯，今天就从 minikube 入手吧。
+
+
 ## 一、前言
+
+本篇是整个 kubernetes 的第一篇，比较简单，完全走的官方路线。安装好了 kubernetes 集群，我们才能愉快的进入容器编排的海洋。
 
 ## 二、Minikube 操作
 
-### 2.1 暂停 Minikube
+### 2-1. 暂停 Minikube
 
 ```bash
 minikube stop
@@ -21,7 +33,7 @@ minikube stop
 * "minikube" 已停止
 ```
 
-### 2.2 启动
+### 2-2. 启动
 
 ```bash
 minikube start
@@ -40,7 +52,7 @@ minikube start
 * 完成！kubectl 已经配置至 "minikube"
 ```
 
-### 2.3 启动 dashboard
+### 2-3. 启动 dashboard
 
 ```bash
 minikube dashboard
@@ -54,13 +66,13 @@ minikube dashboard
 * Opening http://127.0.0.1:58368/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/ in your default browser...
 ```
 
-### 2.4 查看 service 的 URL
+### 2-4. 查看 service 的 URL
 
 ```bash
 minikube service hello-minikube --url
 ```
 
-### 2.5 删除 Minikube 集群
+### 2-5. 删除 Minikube 集群
 
 ```bash
 minikube delete
@@ -73,7 +85,9 @@ minikube delete
 * The "minikube" cluster has been deleted.
 ```
 
-## 三、碰到的问题
+## 三、补充说明
+
+### 3-1. dashboard 打不开了
 
 在电脑从公司带回家再次来到公司的时候，出现了一些网络问题，比如 dashboard 无法打开，在浏览器回车 dashboard 地址(http://127.0.0.1:63999/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/service?namespace=default)后返回:
 

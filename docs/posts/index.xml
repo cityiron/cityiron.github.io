@@ -5,12 +5,12 @@
         <description> | Funnycode</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>tczjhz@163.com (tiecheng)</managingEditor>
             <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 09 Oct 2020 15:25:02 &#43;0800</lastBuildDate><atom:link href="https://blog.funnycode.cn/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>一拳搞定 Kubernetes | 走近 deployment</title>
+    <title>一拳搞定 Kubernetes | 玩转 deployment</title>
     <link>https://blog.funnycode.cn/2020/10/run-deployment/</link>
     <pubDate>Fri, 09 Oct 2020 15:25:02 &#43;0800</pubDate>
     <author></author>
     <guid>https://blog.funnycode.cn/2020/10/run-deployment/</guid>
-    <description><![CDATA[<p>本文介绍通过 Kubernetes Deployment 对象如何去运行一个应用.</p>]]></description>
+    <description><![CDATA[<p>本文介绍通过 Kubernetes Deployment 对象如何去控制一个应用。</p>]]></description>
 </item><item>
     <title>一拳搞定 Kubernetes | 玩转 Minikube</title>
     <link>https://blog.funnycode.cn/2020/10/k8s-local-minikube-01/</link>
@@ -38,14 +38,14 @@
     <pubDate>Sat, 09 Nov 2019 19:00:33 &#43;0800</pubDate>
     <author></author>
     <guid>https://blog.funnycode.cn/2019/11/pattern-template/</guid>
-    <description><![CDATA[本文介绍如何在 go 语言中使用模板模式. 一、前言 Template Pattern（模板模式） 白话文: 定一个“抽象类”,定义一个方法A,定义需要子类实现的方法,所]]></description>
+    <description><![CDATA[<p>本文介绍如何在 go 语言中使用模板模式.</p>]]></description>
 </item><item>
     <title>装饰者模式</title>
     <link>https://blog.funnycode.cn/2019/11/pattern-decorator/</link>
     <pubDate>Mon, 04 Nov 2019 17:00:24 &#43;0800</pubDate>
     <author></author>
     <guid>https://blog.funnycode.cn/2019/11/pattern-decorator/</guid>
-    <description><![CDATA[本文介绍在 go 语言中使用装饰者模式. 一、前言 Decorator Pattern（装饰模式） 维基百科 This pattern creates a decorator class which wraps the original class and provides additional functionality keeping class methods signature intact. 白话文: 这个模式我们需]]></description>
+    <description><![CDATA[<p>本文介绍在 go 语言中使用装饰者模式.</p>]]></description>
 </item><item>
     <title>阿里云采坑记录 | RDS 的 binglog 丢失</title>
     <link>https://blog.funnycode.cn/2019/09/aliyun-daily-01/</link>
