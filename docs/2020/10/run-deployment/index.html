@@ -17,7 +17,7 @@
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/2020/10/run-deployment/" /><link rel="prev" href="https://blog.funnycode.cn/2020/10/k8s-local-minikube-01/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/2020/10/run-deployment/" /><link rel="prev" href="https://blog.funnycode.cn/2020/10/minikube-install/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2020\/10\/run-deployment\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "deployment, pod","wordcount":  5004 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "deployment, pod","wordcount":  5219 ,
         "url": "https:\/\/blog.funnycode.cn\/2020\/10\/run-deployment\/","datePublished": "2020-10-09T15:25:02+08:00","dateModified": "2020-10-09T15:25:02+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -156,7 +156,7 @@
 <li>使用 go 客户端进行上述操作。</li>
 </ul>
 <blockquote>
-<p>默认已经安装了 kubernetes。如果没安装，请参考 搭建 <a href="https://blog.funnycode.cn/2020/10/k8s-local-minikube-01/" rel="">minikube</a></p>
+<p>默认已经安装了 kubernetes。如果没安装，请参考搭建 <a href="https://blog.funnycode.cn/2020/10/minikube-install/" rel="">minikube</a></p>
 </blockquote>
 <h2 id="二实战操作">二、实战操作</h2>
 <h3 id="21-准备-yaml-文件">2.1 准备 yaml 文件</h3>
@@ -760,6 +760,9 @@ Events:
   Normal  ScalingReplicaSet  2m11s  deployment-controller  Scaled down replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">0</span>
   Normal  ScalingReplicaSet  2m11s  deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-6b5df77cd8 to <span class="m">10</span>
 </code></pre></div><h2 id="三api操作">三、API操作</h2>
+<blockquote>
+<p>client-go 内容也比较多，这里尽量简单介绍。</p>
+</blockquote>
 <h3 id="31-创建-deployment">3.1 创建 deployment</h3>
 <h4 id="运行-client-go-示例">运行 client-go 示例</h4>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">TestCreateDeployment</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
@@ -864,7 +867,17 @@ nginx-deployment-669d59f9b4   <span class="m">4</span>         <span class="m">4
 		<span class="nx">t</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Update failed: %v&#34;</span><span class="p">,</span> <span class="nx">retryErr</span><span class="p">)</span>
 	<span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div><h4 id="查看部署情况-1">查看部署情况</h4>
+</code></pre></div><p>注意下 <code>RetryOnConflict</code> 说明：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// RetryOnConflict is used to make an update to a resource when you have to worry about
+</span><span class="c1">// conflicts caused by other code making unrelated updates to the resource at the same
+</span><span class="c1">// time. fn should fetch the resource to be modified, make appropriate changes to it, try
+</span><span class="c1">// to update it, and return (unmodified) the error from the update function. On a
+</span><span class="c1">// successful update, RetryOnConflict will return nil. If the update function returns a
+</span><span class="c1">// &#34;Conflict&#34; error, RetryOnConflict will wait some amount of time as described by
+</span><span class="c1">// backoff, and then try again. On a non-&#34;Conflict&#34; error, or if it retries too many times
+</span><span class="c1">// and gives up, RetryOnConflict will return an error to the caller.
+</span></code></pre></div><p>一句话总结就是：当你担心有冲突的时候使用，保障出现冲突错误会自动重试一定的次数直到成功。</p>
+<h4 id="查看部署情况-1">查看部署情况</h4>
 <ul>
 <li>查看 deployment</li>
 </ul>
@@ -890,7 +903,17 @@ nginx-deployment-574b87c764   <span class="m">2</span>         <span class="m">2
 nginx-deployment-669d59f9b4   <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>       25m
 </code></pre></div><h3 id="34-删除-deployment">3.4 删除 deployment</h3>
 <h4 id="运行-client-go-示例-3">运行 client-go 示例</h4>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">TestDeleteDeployment</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">c</span> <span class="o">:=</span> <span class="nf">getClient</span><span class="p">()</span>
+	<span class="nx">n</span> <span class="o">:=</span> <span class="s">&#34;test&#34;</span>
+
+	<span class="nx">deletePolicy</span> <span class="o">:=</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">DeletePropagationForeground</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">AppsV1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nf">Delete</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="s">&#34;nginx-deployment&#34;</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">DeleteOptions</span><span class="p">{</span>
+		<span class="nx">PropagationPolicy</span><span class="p">:</span> <span class="o">&amp;</span><span class="nx">deletePolicy</span><span class="p">,</span>
+	<span class="p">});</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">t</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div><h2 id="四补充信息">四、补充信息</h2>
 <h3 id="41-deployment-动态更新">4.1 Deployment 动态更新</h3>
 <p>Deployment 控制器每次注意到新的 Deployment 时，都会创建一个 ReplicaSet 以启动所需的 Pods。 如果更新了 Deployment，则控制标签匹配 .spec.selector 但模板不匹配 .spec.template 的 Pods 的现有 ReplicaSet 被缩容。最终，新的 ReplicaSet 缩放为 .spec.replicas 个副本， 所有旧 ReplicaSets 缩放为 0 个副本。</p>
@@ -964,7 +987,7 @@ nginx-deployment-669d59f9b4   <span class="m">0</span>         <span class="m">0
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2020/10/k8s-local-minikube-01/" class="prev" rel="prev" title="一拳搞定 Kubernetes | 玩转 Minikube"><i class="fas fa-angle-left fa-fw"></i>一拳搞定 Kubernetes | 玩转 Minikube</a></div>
+    <div class="post-nav"><a href="/2020/10/minikube-install/" class="prev" rel="prev" title="一拳搞定 Kubernetes | 安装 Minikube"><i class="fas fa-angle-left fa-fw"></i>一拳搞定 Kubernetes | 安装 Minikube</a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.

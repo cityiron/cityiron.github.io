@@ -12,12 +12,12 @@
     <guid>https://blog.funnycode.cn/2020/10/run-deployment/</guid>
     <description><![CDATA[<p>本文介绍通过 Kubernetes Deployment 对象如何去控制一个应用。</p>]]></description>
 </item><item>
-    <title>一拳搞定 Kubernetes | 玩转 Minikube</title>
-    <link>https://blog.funnycode.cn/2020/10/k8s-local-minikube-01/</link>
+    <title>一拳搞定 Kubernetes | 安装 Minikube</title>
+    <link>https://blog.funnycode.cn/2020/10/minikube-install/</link>
     <pubDate>Fri, 09 Oct 2020 14:42:58 &#43;0800</pubDate>
     <author></author>
-    <guid>https://blog.funnycode.cn/2020/10/k8s-local-minikube-01/</guid>
-    <description><![CDATA[<p>本文介绍如何在<strong><ruby>本机<rt>mac</rt></ruby></strong>运行 Minikube 来学习 kubernetes.</p>]]></description>
+    <guid>https://blog.funnycode.cn/2020/10/minikube-install/</guid>
+    <description><![CDATA[<p>本文介绍如何在<strong><ruby>本机<rt>mac</rt></ruby></strong>运行 Minikube 来安装 kubernetes 集群.</p>]]></description>
 </item><item>
     <title>一拳搞定 Hugo | 送它上 GitHub</title>
     <link>https://blog.funnycode.cn/2020/10/hugo-01/</link>

@@ -11,7 +11,7 @@
 - 使用 kubectl 对 deployment 进行 CRUD。（结合 dashboard 图示）
 - 使用 go 客户端进行上述操作。
 
-> 默认已经安装了 kubernetes。如果没安装，请参考 搭建 [minikube]({{< ref "k8s-local-minikube-01/index.zh-cn.md" >}})
+> 默认已经安装了 kubernetes。如果没安装，请参考搭建 [minikube]({{< ref "minikube-install/index.zh-cn.md" >}})
 
 ## 二、实战操作
 
@@ -805,6 +805,8 @@ Events:
 
 ## 三、API操作
 
+> client-go 内容也比较多，这里尽量简单介绍。
+
 ### 3.1 创建 deployment
 
 #### 运行 client-go 示例
@@ -943,6 +945,21 @@ func TestUpdateDeployment(t *testing.T) {
 }
 ```
 
+注意下 `RetryOnConflict` 说明：
+
+```go
+// RetryOnConflict is used to make an update to a resource when you have to worry about
+// conflicts caused by other code making unrelated updates to the resource at the same
+// time. fn should fetch the resource to be modified, make appropriate changes to it, try
+// to update it, and return (unmodified) the error from the update function. On a
+// successful update, RetryOnConflict will return nil. If the update function returns a
+// "Conflict" error, RetryOnConflict will wait some amount of time as described by
+// backoff, and then try again. On a non-"Conflict" error, or if it retries too many times
+// and gives up, RetryOnConflict will return an error to the caller.
+```
+
+一句话总结就是：当你担心有冲突的时候使用，保障出现冲突错误会自动重试一定的次数直到成功。
+
 #### 查看部署情况
 
 - 查看 deployment
@@ -991,7 +1008,17 @@ nginx-deployment-669d59f9b4   0         0         0       25m
 #### 运行 client-go 示例
 
 ```go
+func TestDeleteDeployment(t *testing.T) {
+	c := getClient()
+	n := "test"
 
+	deletePolicy := metav1.DeletePropagationForeground
+	if err := c.AppsV1().Deployments(n).Delete(context.TODO(), "nginx-deployment", metav1.DeleteOptions{
+		PropagationPolicy: &deletePolicy,
+	}); err != nil {
+		t.Error(err)
+	}
+}
 ```
 
 ## 四、补充信息
