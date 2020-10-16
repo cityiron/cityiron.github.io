@@ -3,56 +3,49 @@
         <title>Funnycode</title>
         <link>https://blog.funnycode.cn/</link>
         <description>关于 LoveIt 主题</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>tczjhz@163.com (tiecheng)</managingEditor>
+        <generator>Hugo -- gohugo.io</generator><language>tc</language><managingEditor>tczjhz@163.com (tiecheng)</managingEditor>
             <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 09 Oct 2020 15:25:02 &#43;0800</lastBuildDate>
             <atom:link href="https://blog.funnycode.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>一拳搞定 Kubernetes | 玩转 deployment</title>
     <link>https://blog.funnycode.cn/2020/10/run-deployment/</link>
     <pubDate>Fri, 09 Oct 2020 15:25:02 &#43;0800</pubDate>
-    <author></author>
+    <author>作者</author>
     <guid>https://blog.funnycode.cn/2020/10/run-deployment/</guid>
     <description><![CDATA[<p>本文介绍通过 Kubernetes Deployment 对象如何去控制一个应用。</p>]]></description>
 </item><item>
     <title>一拳搞定 Kubernetes | 安装 Minikube</title>
     <link>https://blog.funnycode.cn/2020/10/minikube-install/</link>
     <pubDate>Fri, 09 Oct 2020 14:42:58 &#43;0800</pubDate>
-    <author></author>
+    <author>作者</author>
     <guid>https://blog.funnycode.cn/2020/10/minikube-install/</guid>
     <description><![CDATA[<p>本文介绍如何在<strong><ruby>本机<rt>mac</rt></ruby></strong>运行 Minikube 来安装 kubernetes 集群.</p>]]></description>
 </item><item>
-    <title>一拳搞定 Hugo | 送它上 GitHub</title>
-    <link>https://blog.funnycode.cn/2020/10/hugo-01/</link>
-    <pubDate>Wed, 07 Oct 2020 23:25:25 &#43;0800</pubDate>
-    <author></author>
-    <guid>https://blog.funnycode.cn/2020/10/hugo-01/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
     <title>领域驱动实战 | Domain Primitive 的简单使用</title>
-    <link>https://blog.funnycode.cn/2020/05/domain-primitive/</link>
+    <link>https://blog.funnycode.cn/2020/05/index.zh-cn/</link>
     <pubDate>Thu, 28 May 2020 20:13:43 &#43;0800</pubDate>
-    <author></author>
-    <guid>https://blog.funnycode.cn/2020/05/domain-primitive/</guid>
+    <author>作者</author>
+    <guid>https://blog.funnycode.cn/2020/05/index.zh-cn/</guid>
     <description><![CDATA[<p>本文介绍一个实际项目中可以使用的概念: Domain Primitive.</p>]]></description>
 </item><item>
     <title>模板模式</title>
-    <link>https://blog.funnycode.cn/2019/11/pattern-template/</link>
+    <link>https://blog.funnycode.cn/2019/11/index.zh-cn/</link>
     <pubDate>Sat, 09 Nov 2019 19:00:33 &#43;0800</pubDate>
-    <author></author>
-    <guid>https://blog.funnycode.cn/2019/11/pattern-template/</guid>
+    <author>作者</author>
+    <guid>https://blog.funnycode.cn/2019/11/index.zh-cn/</guid>
     <description><![CDATA[<p>本文介绍如何在 go 语言中使用模板模式.</p>]]></description>
 </item><item>
     <title>装饰者模式</title>
-    <link>https://blog.funnycode.cn/2019/11/pattern-decorator/</link>
+    <link>https://blog.funnycode.cn/2019/11/index.zh-cn/</link>
     <pubDate>Mon, 04 Nov 2019 17:00:24 &#43;0800</pubDate>
-    <author></author>
-    <guid>https://blog.funnycode.cn/2019/11/pattern-decorator/</guid>
+    <author>作者</author>
+    <guid>https://blog.funnycode.cn/2019/11/index.zh-cn/</guid>
     <description><![CDATA[<p>本文介绍在 go 语言中使用装饰者模式.</p>]]></description>
 </item><item>
     <title>阿里云采坑记录 | RDS 的 binglog 丢失</title>
     <link>https://blog.funnycode.cn/2019/09/aliyun-daily-01/</link>
     <pubDate>Sun, 22 Sep 2019 17:33:11 &#43;0800</pubDate>
-    <author></author>
+    <author>作者</author>
     <guid>https://blog.funnycode.cn/2019/09/aliyun-daily-01/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/feature.jpg" referrerpolicy="no-referrer">

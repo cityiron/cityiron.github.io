@@ -11,7 +11,7 @@
 - 使用 kubectl 对 deployment 进行 CRUD。（结合 dashboard 图示）
 - 使用 go 客户端进行上述操作。
 
-> 默认已经安装了 kubernetes。如果没安装，请参考搭建 [minikube]({{< ref "minikube-install/index.zh-cn.md" >}})
+> 默认已经安装了 kubernetes。如果没安装，请参考搭建 [minikube]({{< ref "minikube-install/index.tc.md" >}})
 
 ## 二、实战操作
 
@@ -62,6 +62,8 @@ matchLabels 字段是 {key,value} 偶对的映射。在 matchLabels 映射中的
 ### 2.2 创建 Deployment
 
 #### 1. 运行 yaml 文件创建
+
+> 也可以通过命令直接创建，参考[minikube]({{< ref "minikube-install/index.tc.md#创建 deployment" >}})
 
 ```bash
 kubectl apply -f /XXX/document/note/Kubernetes/test/nginx/deployment.yaml

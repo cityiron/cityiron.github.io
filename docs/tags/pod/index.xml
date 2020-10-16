@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>pod - 标签 - Funnycode</title>
+        <link>https://blog.funnycode.cn/tags/pod/</link>
+        <description>pod - 标签 - Funnycode</description>
+        <generator>Hugo -- gohugo.io</generator><language>tc</language><managingEditor>tczjhz@163.com (tiecheng)</managingEditor>
+            <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 09 Oct 2020 15:25:02 &#43;0800</lastBuildDate><atom:link href="https://blog.funnycode.cn/tags/pod/" rel="self" type="application/rss+xml" /><item>
+    <title>一拳搞定 Kubernetes | 玩转 deployment</title>
+    <link>https://blog.funnycode.cn/2020/10/run-deployment/</link>
+    <pubDate>Fri, 09 Oct 2020 15:25:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.funnycode.cn/2020/10/run-deployment/</guid>
+    <description><![CDATA[<p>本文介绍通过 Kubernetes Deployment 对象如何去控制一个应用。</p>]]></description>
+</item></channel>
+</rss>

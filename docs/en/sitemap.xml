@@ -4,7 +4,7 @@
     ><url>
             <loc>https://blog.funnycode.cn/en/about/</loc><priority>0</priority><xhtml:link
                         rel="alternate"
-                        hreflang="zh-cn"
+                        hreflang="tc"
                         href="https://blog.funnycode.cn/about/"
                         /><xhtml:link
                     rel="alternate"
@@ -13,7 +13,7 @@
                     /></url><url>
             <loc>https://blog.funnycode.cn/en/categories/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
-                        hreflang="zh-cn"
+                        hreflang="tc"
                         href="https://blog.funnycode.cn/categories/"
                         /><xhtml:link
                     rel="alternate"
@@ -22,7 +22,7 @@
                     /></url><url>
             <loc>https://blog.funnycode.cn/en/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
-                        hreflang="zh-cn"
+                        hreflang="tc"
                         href="https://blog.funnycode.cn/"
                         /><xhtml:link
                     rel="alternate"
@@ -31,7 +31,7 @@
                     /></url><url>
             <loc>https://blog.funnycode.cn/en/tags/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
-                        hreflang="zh-cn"
+                        hreflang="tc"
                         href="https://blog.funnycode.cn/tags/"
                         /><xhtml:link
                     rel="alternate"

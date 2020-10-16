@@ -61,4 +61,4 @@ Disallow: /
 User-agent: ZoominfoBot
 Disallow: /
 
-Sitemap: https://blog.funnycode.cn/en/sitemap.xml
+Sitemap: https://blog.funnycode.cn/sitemap.xml

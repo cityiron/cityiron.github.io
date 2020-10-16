@@ -89,9 +89,79 @@ minikube delete
 * The "minikube" cluster has been deleted.
 ```
 
-## 三、补充说明
+## 三、kubernetes 操作
 
-### 3-1. dashboard 打不开了
+创建 deployment
+
+```bash
+kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.4
+kubectl expose deployment hello-minikube --type=NodePort --port=8080
+```
+
+请注意看这个 `--type=NodePort`，它表示了服务暴露的模式，也就是你要访问到 k8s 里面一个运行程序的途径。
+
+## 四、补充说明
+
+### 3-1. 不能暴露 service
+
+当创建的 service 不加 `--type=NodePort`，在 minikube 获取不到 service url。
+
+```bash
+minikube service nginx-deployment --namespace=test --url
+```
+
+输出：
+
+```bash
+|-----------|------------------|-------------|--------------|
+| NAMESPACE |       NAME       | TARGET PORT |     URL      |
+|-----------|------------------|-------------|--------------|
+| test      | nginx-deployment |             | No node port |
+|-----------|------------------|-------------|--------------|
+* service test/nginx-deployment has no node port
+```
+
+正常情况输出：
+
+```bash
+http://192.168.64.3:31022
+```
+
+请求这个地址：
+
+```bash
+curl http://192.168.64.3:31022
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
+
+有输出，表示请求到了 k8s 集群部署的 nginx。
+
+### 3-2. dashboard 打不开了
 
 在电脑从公司带回家再次来到公司的时候，出现了一些网络问题，比如 dashboard 无法打开，在浏览器回车 dashboard 地址(http://127.0.0.1:63999/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/service?namespace=default)后返回:
 
@@ -111,7 +181,7 @@ minikube delete
 
 这时候建议 stop minikube 后再重新启动.
 
-### 3-2. kubeconfig
+### 3-3. kubeconfig
 
 {{< admonition tip "小贴士" >}}
 
@@ -169,8 +239,11 @@ users:
 
 如果要访问多个 k8s 集群，可以通过在 `kubectl` 命令加上 `--kubeconfig=[位置]` 来实现。
 
-## 四、参考
+## 五、参考
+
 https://kubernetes.io/zh/docs/setup/learning-environment/minikube/
+
+https://minikube.sigs.k8s.io/docs/start/
 
 https://kubernetes.io/zh/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 

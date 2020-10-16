@@ -2,14 +2,14 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <sitemap>
-    <loc>https://blog.funnycode.cn/en/sitemap.xml</loc>
+    <loc>https://blog.funnycode.cn/tc/sitemap.xml</loc>
+    
+      <lastmod>2020-10-09T16:29:41+08:00</lastmod>
     
   </sitemap>
   
   <sitemap>
-    <loc>https://blog.funnycode.cn/zh-cn/sitemap.xml</loc>
-    
-      <lastmod>2020-10-09T16:29:41+08:00</lastmod>
+    <loc>https://blog.funnycode.cn/en/sitemap.xml</loc>
     
   </sitemap>
   
