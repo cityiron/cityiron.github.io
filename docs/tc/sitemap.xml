@@ -2,7 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://blog.funnycode.cn/categories/</loc><lastmod>2020-10-18T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://blog.funnycode.cn/categories/</loc><lastmod>2020-10-19T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://blog.funnycode.cn/en/categories/"
@@ -11,7 +11,7 @@
                     hreflang="tc"
                     href="https://blog.funnycode.cn/categories/"
                     /></url><url>
-            <loc>https://blog.funnycode.cn/</loc><lastmod>2020-10-18T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://blog.funnycode.cn/</loc><lastmod>2020-10-19T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://blog.funnycode.cn/en/"
@@ -20,8 +20,8 @@
                     hreflang="tc"
                     href="https://blog.funnycode.cn/"
                     /></url><url>
-            <loc>https://blog.funnycode.cn/posts/</loc><lastmod>2020-10-18T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.funnycode.cn/tags/</loc><lastmod>2020-10-18T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://blog.funnycode.cn/posts/</loc><lastmod>2020-10-19T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.funnycode.cn/tags/</loc><lastmod>2020-10-19T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://blog.funnycode.cn/en/tags/"
@@ -30,9 +30,9 @@
                     hreflang="tc"
                     href="https://blog.funnycode.cn/tags/"
                     /></url><url>
-            <loc>https://blog.funnycode.cn/categories/%E6%97%85%E6%B8%B8/</loc><lastmod>2020-10-18T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.funnycode.cn/tags/%E9%BB%84%E5%B1%B1/</loc><lastmod>2020-10-18T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.funnycode.cn/2020/10/tour-china-huangshan/</loc><lastmod>2020-10-18T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.funnycode.cn/categories/%E6%97%85%E6%B8%B8/</loc><lastmod>2020-10-19T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.funnycode.cn/tags/%E9%BB%84%E5%B1%B1/</loc><lastmod>2020-10-19T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.funnycode.cn/2020/10/tour-china-huangshan/</loc><lastmod>2020-10-19T14:37:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://blog.funnycode.cn/tags/deployment/</loc><lastmod>2020-10-09T15:25:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
             <loc>https://blog.funnycode.cn/categories/kubernetes/</loc><lastmod>2020-10-09T15:33:21&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
             <loc>https://blog.funnycode.cn/tags/pod/</loc><lastmod>2020-10-09T15:25:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
