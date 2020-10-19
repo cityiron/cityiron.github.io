@@ -1,115 +1,160 @@
-# 模板模式
+# 装饰者模式
 
-本文介绍如何在 go 语言中使用模板模式.
+本文介绍在 go 语言中使用装饰者模式.
 
 <!--more-->
 
 ## 一、前言
 
-Template Pattern（模板模式）
+Decorator Pattern（装饰模式）
+
+{{< admonition type=note title="维基百科" >}}
+This pattern creates a decorator class which wraps the original class and provides additional functionality keeping class methods signature intact.
+{{< /admonition >}}
 
 白话文:
 
-定一个“抽象类”,定义一个方法A,定义需要子类实现的方法,所有子类对象在执行A的时候,会调用各自实现的方法.
-
-在golang中,由于不存在抽象类和真正的继承,所以只能通过一个基础类来充当抽象类,子类通过组合基础类来实现通用方法的继承.
+这个模式我们需要创建一个新的装饰类,然后装饰类会拥有一个属性是被装饰类,并且会有“一个”方法和需要使用的被装饰类的方法签名完全一致,调用装饰类的方法会执行装饰类内容并调用被装饰类的被装饰方法.
 
 故事:
 
-阳光明媚的一天,我家来了位香港的朋友（毕竟那边太乱）,我们决定一起做一桌菜,于是他做香港菜,我做杭州菜,比拼就这么开始了.
+我买了一本书《go编程思想》,小明也买了一本书《go编程思想》并给它带上了一个黄金封面,两本书内容一摸一样,只是小明的变成金灿灿的土豪版.
 
 ## 二、实例
 
-### 2.1 普通例子
+### 2.1 对于某个接口的方法装饰
 
-> 代码
+代码:
 
 ```go
-package main
+package decorator
 
 import (
 	"fmt"
 	"testing"
 )
 
-type Cooking interface {
-	DoOperate()
+type Shape interface {
+	draw()
 }
 
-type AbstractCooking struct {
-	Cooking
-	Prepare    func()
-	GetContent func() string
+type Circle struct {
 }
 
-func (d AbstractCooking) DoOperate() {
-	d.Prepare()
-	fmt.Println("烹饪内容:", d.GetContent())
-	fmt.Println("烹饪完成")
+func (shape Circle) draw() {
+	fmt.Println("Shape: Circle")
 }
 
-type HZCooking struct {
-	AbstractCooking
+type Rectangle struct {
 }
 
-func NewHZCooking() *HZCooking {
-	c := new(HZCooking)
-	c.AbstractCooking.GetContent = c.GetContent
-	c.AbstractCooking.Prepare = c.Prepare
-	return c
+func (shape Rectangle) draw() {
+	fmt.Println("Shape: Rectangle")
 }
 
-func (c *HZCooking) GetContent() string {
-	return "杭州菜."
+type ShapeDecorator struct {
+	decoratorShape Shape
 }
 
-func (c *HZCooking) Prepare() {
-	fmt.Println(" -- 准备杭州菜 -- ")
+func (shape ShapeDecorator) draw() {
+	shape.decoratorShape.draw()
 }
 
-type HkCooking struct {
-	HZCooking
+type RedShapeDecorator struct {
+	ShapeDecorator
 }
 
-func NewHKCooking() *HkCooking {
-	c := new(HkCooking)
-	c.AbstractCooking.GetContent = c.GetContent
-	c.AbstractCooking.Prepare = c.Prepare
-	return c
+func NewRedShapeDecorator(s Shape) *RedShapeDecorator {
+	d := new(RedShapeDecorator)
+	d.decoratorShape = s
+	return d
 }
 
-func (c *HkCooking) GetContent() string {
-	return "香港菜."
+func (shape RedShapeDecorator) draw() {
+	shape.ShapeDecorator.draw()
+	fmt.Println("red")
 }
 
-func (c *HkCooking) Prepare() {
-	fmt.Println(" -- 准备香港菜 -- ")
+type BlueShapeDecorator struct {
+	ShapeDecorator
 }
 
-func TestCooking(t *testing.T) {
-	chinaCooking := NewHZCooking()
-
-	chinaCooking.DoOperate()
-
-	hkCooking := NewHKCooking()
-
-	hkCooking.DoOperate()
+func NewBlueShapeDecorator(s Shape) *BlueShapeDecorator {
+	d := new(BlueShapeDecorator)
+	d.decoratorShape = s
+	return d
 }
 
+func (shape BlueShapeDecorator) draw() {
+	shape.ShapeDecorator.draw()
+	fmt.Println("blue")
+}
+
+func TestName(t *testing.T) {
+	redShapedDecorator := NewRedShapeDecorator(Circle{})
+	redShapedDecorator.draw()
+
+	redShapedDecorator = NewRedShapeDecorator(Rectangle{})
+	redShapedDecorator.draw()
+
+	blueShapedDecorator := NewBlueShapeDecorator(Circle{})
+	blueShapedDecorator.draw()
+
+	blueShapedDecorator = NewBlueShapeDecorator(Rectangle{})
+	blueShapedDecorator.draw()
+}
 ```
 
 输出结果:
 
 ```text
- -- 准备杭州菜 --
-烹饪内容: 杭州菜.
-烹饪完成
- -- 准备香港菜 --
-烹饪内容: 香港菜.
-烹饪完成
+Shape: Circle
+red
+Shape: Rectangle
+red
+Shape: Circle
+blue
+Shape: Rectangle
+blue
+```
+
+### 2.2 直接装饰方法
+
+代码:
+
+```go
+type drawFunc func()
+
+func CircleDraw() {
+	fmt.Println("Shape: Circle")
+}
+
+func RedCircleDraw(d drawFunc) drawFunc {
+	return func() {
+		d()
+		fmt.Println("red")
+	}
+}
+
+func TestFunc(t *testing.T) {
+	var drawFunc drawFunc
+	drawFunc = CircleDraw
+	drawFunc()
+
+	drawFunc = RedCircleDraw(drawFunc)
+	drawFunc()
+}
+```
+
+输出结果:
+
+```Text
+Shape: Circle
+Shape: Circle
+red
 ```
 
 ## 三、参考
 
-https://www.tutorialspoint.com/design_pattern/template_pattern.htm
+https://www.tutorialspoint.com/design_pattern/decorator_pattern.htm
 

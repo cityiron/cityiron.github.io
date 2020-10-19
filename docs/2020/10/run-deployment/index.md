@@ -1051,11 +1051,11 @@ Deployment 控制器每次注意到新的 Deployment 时，都会创建一个 Re
 
 首先可以看到 nginx 的变化如下图:
 
-![ReplicaSet](rs.01.jpg "ReplicaSet")
+{{< figure src="/rs-01.jpg" title="ReplicaSet 2" >}}
 
 扩容到四个节点后:
 
-![ReplicaSet](rs.02.jpg "ReplicaSet")
+{{< figure src="/rs-02.jpg" title="ReplicaSet 4" >}}
 
 ## 五、参考
 

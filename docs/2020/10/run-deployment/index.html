@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2020\/10\/run-deployment\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "deployment, pod","wordcount":  5241 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "deployment, pod","wordcount":  5239 ,
         "url": "https:\/\/blog.funnycode.cn\/2020\/10\/run-deployment\/","datePublished": "2020-10-09T15:25:02+08:00","dateModified": "2020-10-09T15:25:02+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -107,7 +107,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">一拳搞定 Kubernetes | 玩转 deployment</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/kubernetes/"><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-09">2020-10-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5241 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-09">2020-10-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5239 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;<span id="/2020/10/run-deployment/" class="leancloud_visitors" data-flag-title="一拳搞定 Kubernetes | 玩转 deployment">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -939,27 +939,19 @@ nginx-deployment-669d59f9b4   <span class="m">0</span>         <span class="m">0
 </ul>
 <h3 id="43-replicaset-介绍">4.3 ReplicaSet 介绍</h3>
 <p>首先可以看到 nginx 的变化如下图:</p>
-<p><figure><a class="lightgallery" href="rs.01.jpg" title="ReplicaSet" data-thumbnail="rs.01.jpg" data-sub-html="<h2>ReplicaSet</h2><p>ReplicaSet</p>">
-        <img
-            class="lazyload"
-            src="/svg/loading.min.svg"
-            data-src="rs.01.jpg"
-            data-srcset="rs.01.jpg, rs.01.jpg 1.5x, rs.01.jpg 2x"
-            data-sizes="auto"
-            alt="rs.01.jpg" />
-    </a><figcaption class="image-caption">ReplicaSet</figcaption>
-    </figure></p>
+<figure>
+    <img src="/rs-01.jpg"/> <figcaption>
+            <h4>ReplicaSet 2</h4>
+        </figcaption>
+</figure>
+
 <p>扩容到四个节点后:</p>
-<p><figure><a class="lightgallery" href="rs.02.jpg" title="ReplicaSet" data-thumbnail="rs.02.jpg" data-sub-html="<h2>ReplicaSet</h2><p>ReplicaSet</p>">
-        <img
-            class="lazyload"
-            src="/svg/loading.min.svg"
-            data-src="rs.02.jpg"
-            data-srcset="rs.02.jpg, rs.02.jpg 1.5x, rs.02.jpg 2x"
-            data-sizes="auto"
-            alt="rs.02.jpg" />
-    </a><figcaption class="image-caption">ReplicaSet</figcaption>
-    </figure></p>
+<figure>
+    <img src="/rs-02.jpg"/> <figcaption>
+            <h4>ReplicaSet 4</h4>
+        </figcaption>
+</figure>
+
 <h2 id="五参考">五、参考</h2>
 <p><a href="https://kubernetes.io/zh/docs/tasks/run-application/run-stateless-application-deployment/">https://kubernetes.io/zh/docs/tasks/run-application/run-stateless-application-deployment/</a></p>
 <p><a href="https://kubernetes.io/zh/docs/concepts/workloads/controllers/deployment/">https://kubernetes.io/zh/docs/concepts/workloads/controllers/deployment/</a></p>
