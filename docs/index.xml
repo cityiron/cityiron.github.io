@@ -4,9 +4,16 @@
         <link>https://blog.funnycode.cn/</link>
         <description>关于 LoveIt 主题</description>
         <generator>Hugo -- gohugo.io</generator><language>tc</language><managingEditor>tczjhz@163.com (tiecheng)</managingEditor>
-            <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 09 Oct 2020 15:25:02 &#43;0800</lastBuildDate>
+            <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 12 Oct 2020 13:37:24 &#43;0800</lastBuildDate>
             <atom:link href="https://blog.funnycode.cn/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>黄山2日1晚游玩</title>
+    <link>https://blog.funnycode.cn/2020/10/tour-china-huangshan/</link>
+    <pubDate>Mon, 12 Oct 2020 13:37:24 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.funnycode.cn/2020/10/tour-china-huangshan/</guid>
+    <description><![CDATA[<p>2020-10-17 ~ 2010-10-18 黄山二日游记。</p>]]></description>
+</item><item>
     <title>一拳搞定 Kubernetes | 玩转 deployment</title>
     <link>https://blog.funnycode.cn/2020/10/run-deployment/</link>
     <pubDate>Fri, 09 Oct 2020 15:25:02 &#43;0800</pubDate>
