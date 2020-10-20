@@ -1,6 +1,12 @@
 # 
 
-A developer with an interest in Java, Go, Cloud Native, Micro Services.
+![me](self.jpg)
+
+A developer with an interest
+
+Language: Java, Golang
+
+Technology: Micro Service, Cloud Native, Domain Driven
 
 Contact me:
 
