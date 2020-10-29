@@ -8,7 +8,7 @@
         <title>模板模式 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="模板模式" />
 <meta property="og:description" content="本文介绍如何在 go 语言中使用模板模式." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.funnycode.cn/2019/11/index.zh-cn/" />
+<meta property="og:url" content="https://blog.funnycode.cn/2019/11/pattern-template/" />
 <meta property="article:published_time" content="2019-11-09T19:00:33+08:00" />
 <meta property="article:modified_time" content="2020-10-09T16:25:11+08:00" />
 <meta name="twitter:card" content="summary"/>
@@ -17,7 +17,7 @@
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/2019/11/index.zh-cn/" /><link rel="prev" href="https://blog.funnycode.cn/2019/11/index.zh-cn/" /><link rel="next" href="https://blog.funnycode.cn/2020/05/index.zh-cn/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/2019/11/pattern-template/" /><link rel="prev" href="https://blog.funnycode.cn/2019/11/pattern-decorator/" /><link rel="next" href="https://blog.funnycode.cn/2020/05/domain-primitive/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -25,9 +25,9 @@
         "inLanguage": "tc",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/blog.funnycode.cn\/2019\/11\/index.zh-cn\/"
+            "@id": "https:\/\/blog.funnycode.cn\/2019\/11\/pattern-template\/"
         },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "golang, 模板模式","wordcount":  499 ,
-        "url": "https:\/\/blog.funnycode.cn\/2019\/11\/index.zh-cn\/","datePublished": "2019-11-09T19:00:33+08:00","dateModified": "2020-10-09T16:25:11+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        "url": "https:\/\/blog.funnycode.cn\/2019\/11\/pattern-template\/","datePublished": "2019-11-09T19:00:33+08:00","dateModified": "2020-10-09T16:25:11+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
                 "@type": "Person",
@@ -44,7 +44,7 @@
         </div>
         <div class="menu">
             <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/cityiron" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2019/11/index.zh-cn/" selected>简体中文</option></select>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2019/11/pattern-template/" selected>简体中文</option></select>
                     </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
@@ -91,7 +91,7 @@
                 </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/cityiron" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw"></i>
             </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/2019/11/index.zh-cn/" selected>简体中文</option></select>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2019/11/pattern-template/" selected>简体中文</option></select>
                 </a></div>
     </div>
 </header>
@@ -108,7 +108,7 @@
         </div><article class="page single"><h1 class="single-title animated flipInX">模板模式</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="far fa-folder fa-fw"></i>设计模式</a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-11-09">2019-11-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 499 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2019/11/index.zh-cn/" class="leancloud_visitors" data-flag-title="模板模式">
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2019/11/pattern-template/" class="leancloud_visitors" data-flag-title="模板模式">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -229,10 +229,10 @@
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/2019/11/index.zh-cn/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/2019/11/pattern-template/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-title="模板模式" data-hashtags="golang,模板模式"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-title="模板模式"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-title="模板模式"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-title="模板模式"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2019/11/pattern-template/" data-title="模板模式" data-hashtags="golang,模板模式"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2019/11/pattern-template/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2019/11/pattern-template/" data-title="模板模式"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2019/11/pattern-template/" data-title="模板模式"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2019/11/pattern-template/" data-title="模板模式"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>
@@ -244,8 +244,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2019/11/index.zh-cn/" class="prev" rel="prev" title="装饰者模式"><i class="fas fa-angle-left fa-fw"></i>装饰者模式</a>
-            <a href="/2020/05/index.zh-cn/" class="next" rel="next" title="领域驱动实战 | Domain Primitive 的简单使用">领域驱动实战 | Domain Primitive 的简单使用<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/2019/11/pattern-decorator/" class="prev" rel="prev" title="装饰者模式"><i class="fas fa-angle-left fa-fw"></i>装饰者模式</a>
+            <a href="/2020/05/domain-primitive/" class="next" rel="next" title="领域驱动实战 | Domain Primitive 的简单使用">领域驱动实战 | Domain Primitive 的简单使用<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
