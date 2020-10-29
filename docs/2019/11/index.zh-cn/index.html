@@ -5,29 +5,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>装饰者模式 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="装饰者模式" />
-<meta property="og:description" content="本文介绍在 go 语言中使用装饰者模式." />
+        <title>模板模式 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="模板模式" />
+<meta property="og:description" content="本文介绍如何在 go 语言中使用模板模式." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.funnycode.cn/2019/11/index.zh-cn/" />
-<meta property="article:published_time" content="2019-11-04T17:00:24+08:00" />
-<meta property="article:modified_time" content="2020-10-09T16:29:41+08:00" />
+<meta property="article:published_time" content="2019-11-09T19:00:33+08:00" />
+<meta property="article:modified_time" content="2020-10-09T16:25:11+08:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="装饰者模式"/>
-<meta name="twitter:description" content="本文介绍在 go 语言中使用装饰者模式."/>
+<meta name="twitter:title" content="模板模式"/>
+<meta name="twitter:description" content="本文介绍如何在 go 语言中使用模板模式."/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/2019/11/index.zh-cn/" /><link rel="prev" href="https://blog.funnycode.cn/2019/09/aliyun-daily-01/" /><link rel="next" href="https://blog.funnycode.cn/2019/11/index.zh-cn/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/2019/11/index.zh-cn/" /><link rel="prev" href="https://blog.funnycode.cn/2019/11/index.zh-cn/" /><link rel="next" href="https://blog.funnycode.cn/2020/05/index.zh-cn/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "装饰者模式",
+        "headline": "模板模式",
         "inLanguage": "tc",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2019\/11\/index.zh-cn\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "golang, 装饰者模式","wordcount":  459 ,
-        "url": "https:\/\/blog.funnycode.cn\/2019\/11\/index.zh-cn\/","datePublished": "2019-11-04T17:00:24+08:00","dateModified": "2020-10-09T16:29:41+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "golang, 模板模式","wordcount":  499 ,
+        "url": "https:\/\/blog.funnycode.cn\/2019\/11\/index.zh-cn\/","datePublished": "2019-11-09T19:00:33+08:00","dateModified": "2020-10-09T16:25:11+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
                 "@type": "Person",
@@ -105,10 +105,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">装饰者模式</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">模板模式</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="far fa-folder fa-fw"></i>设计模式</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-11-04">2019-11-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 459 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2019/11/index.zh-cn/" class="leancloud_visitors" data-flag-title="装饰者模式">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-11-09">2019-11-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 499 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2019/11/index.zh-cn/" class="leancloud_visitors" data-flag-title="模板模式">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -121,145 +121,105 @@
     <li><a href="#一前言">一、前言</a></li>
     <li><a href="#二实例">二、实例</a>
       <ul>
-        <li><a href="#21-对于某个接口的方法装饰">2.1 对于某个接口的方法装饰</a></li>
-        <li><a href="#22-直接装饰方法">2.2 直接装饰方法</a></li>
+        <li><a href="#21-普通例子">2.1 普通例子</a></li>
       </ul>
     </li>
     <li><a href="#三参考">三、参考</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>本文介绍在 go 语言中使用装饰者模式.</p>
+            </div><div class="content" id="content"><p>本文介绍如何在 go 语言中使用模板模式.</p>
 <h2 id="一前言">一、前言</h2>
-<p>Decorator Pattern（装饰模式）</p>
-<div class="details admonition note open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-pencil-alt fa-fw"></i>维基百科<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content">This pattern creates a decorator class which wraps the original class and provides additional functionality keeping class methods signature intact.</div>
-        </div>
-    </div>
+<p>Template Pattern（模板模式）</p>
 <p>白话文:</p>
-<p>这个模式我们需要创建一个新的装饰类,然后装饰类会拥有一个属性是被装饰类,并且会有“一个”方法和需要使用的被装饰类的方法签名完全一致,调用装饰类的方法会执行装饰类内容并调用被装饰类的被装饰方法.</p>
+<p>定一个“抽象类”,定义一个方法A,定义需要子类实现的方法,所有子类对象在执行A的时候,会调用各自实现的方法.</p>
+<p>在golang中,由于不存在抽象类和真正的继承,所以只能通过一个基础类来充当抽象类,子类通过组合基础类来实现通用方法的继承.</p>
 <p>故事:</p>
-<p>我买了一本书《go编程思想》,小明也买了一本书《go编程思想》并给它带上了一个黄金封面,两本书内容一摸一样,只是小明的变成金灿灿的土豪版.</p>
+<p>阳光明媚的一天,我家来了位香港的朋友（毕竟那边太乱）,我们决定一起做一桌菜,于是他做香港菜,我做杭州菜,比拼就这么开始了.</p>
 <h2 id="二实例">二、实例</h2>
-<h3 id="21-对于某个接口的方法装饰">2.1 对于某个接口的方法装饰</h3>
-<p>代码:</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">decorator</span>
+<h3 id="21-普通例子">2.1 普通例子</h3>
+<blockquote>
+<p>代码</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
 	<span class="s">&#34;fmt&#34;</span>
 	<span class="s">&#34;testing&#34;</span>
 <span class="p">)</span>
 
-<span class="kd">type</span> <span class="nx">Shape</span> <span class="kd">interface</span> <span class="p">{</span>
-	<span class="nf">draw</span><span class="p">()</span>
+<span class="kd">type</span> <span class="nx">Cooking</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="nf">DoOperate</span><span class="p">()</span>
 <span class="p">}</span>
 
-<span class="kd">type</span> <span class="nx">Circle</span> <span class="kd">struct</span> <span class="p">{</span>
+<span class="kd">type</span> <span class="nx">AbstractCooking</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Cooking</span>
+	<span class="nx">Prepare</span>    <span class="kd">func</span><span class="p">()</span>
+	<span class="nx">GetContent</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">string</span>
 <span class="p">}</span>
 
-<span class="kd">func</span> <span class="p">(</span><span class="nx">shape</span> <span class="nx">Circle</span><span class="p">)</span> <span class="nf">draw</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Shape: Circle&#34;</span><span class="p">)</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">d</span> <span class="nx">AbstractCooking</span><span class="p">)</span> <span class="nf">DoOperate</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">d</span><span class="p">.</span><span class="nf">Prepare</span><span class="p">()</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;烹饪内容:&#34;</span><span class="p">,</span> <span class="nx">d</span><span class="p">.</span><span class="nf">GetContent</span><span class="p">())</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;烹饪完成&#34;</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="kd">type</span> <span class="nx">Rectangle</span> <span class="kd">struct</span> <span class="p">{</span>
+<span class="kd">type</span> <span class="nx">HZCooking</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">AbstractCooking</span>
 <span class="p">}</span>
 
-<span class="kd">func</span> <span class="p">(</span><span class="nx">shape</span> <span class="nx">Rectangle</span><span class="p">)</span> <span class="nf">draw</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Shape: Rectangle&#34;</span><span class="p">)</span>
+<span class="kd">func</span> <span class="nf">NewHZCooking</span><span class="p">()</span> <span class="o">*</span><span class="nx">HZCooking</span> <span class="p">{</span>
+	<span class="nx">c</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">HZCooking</span><span class="p">)</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">AbstractCooking</span><span class="p">.</span><span class="nx">GetContent</span> <span class="p">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">GetContent</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">AbstractCooking</span><span class="p">.</span><span class="nx">Prepare</span> <span class="p">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Prepare</span>
+	<span class="k">return</span> <span class="nx">c</span>
 <span class="p">}</span>
 
-<span class="kd">type</span> <span class="nx">ShapeDecorator</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">decoratorShape</span> <span class="nx">Shape</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">HZCooking</span><span class="p">)</span> <span class="nf">GetContent</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="s">&#34;杭州菜.&#34;</span>
 <span class="p">}</span>
 
-<span class="kd">func</span> <span class="p">(</span><span class="nx">shape</span> <span class="nx">ShapeDecorator</span><span class="p">)</span> <span class="nf">draw</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">shape</span><span class="p">.</span><span class="nx">decoratorShape</span><span class="p">.</span><span class="nf">draw</span><span class="p">()</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">HZCooking</span><span class="p">)</span> <span class="nf">Prepare</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34; -- 准备杭州菜 -- &#34;</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="kd">type</span> <span class="nx">RedShapeDecorator</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">ShapeDecorator</span>
+<span class="kd">type</span> <span class="nx">HkCooking</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">HZCooking</span>
 <span class="p">}</span>
 
-<span class="kd">func</span> <span class="nf">NewRedShapeDecorator</span><span class="p">(</span><span class="nx">s</span> <span class="nx">Shape</span><span class="p">)</span> <span class="o">*</span><span class="nx">RedShapeDecorator</span> <span class="p">{</span>
-	<span class="nx">d</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">RedShapeDecorator</span><span class="p">)</span>
-	<span class="nx">d</span><span class="p">.</span><span class="nx">decoratorShape</span> <span class="p">=</span> <span class="nx">s</span>
-	<span class="k">return</span> <span class="nx">d</span>
+<span class="kd">func</span> <span class="nf">NewHKCooking</span><span class="p">()</span> <span class="o">*</span><span class="nx">HkCooking</span> <span class="p">{</span>
+	<span class="nx">c</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">HkCooking</span><span class="p">)</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">AbstractCooking</span><span class="p">.</span><span class="nx">GetContent</span> <span class="p">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">GetContent</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">AbstractCooking</span><span class="p">.</span><span class="nx">Prepare</span> <span class="p">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Prepare</span>
+	<span class="k">return</span> <span class="nx">c</span>
 <span class="p">}</span>
 
-<span class="kd">func</span> <span class="p">(</span><span class="nx">shape</span> <span class="nx">RedShapeDecorator</span><span class="p">)</span> <span class="nf">draw</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">shape</span><span class="p">.</span><span class="nx">ShapeDecorator</span><span class="p">.</span><span class="nf">draw</span><span class="p">()</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;red&#34;</span><span class="p">)</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">HkCooking</span><span class="p">)</span> <span class="nf">GetContent</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="s">&#34;香港菜.&#34;</span>
 <span class="p">}</span>
 
-<span class="kd">type</span> <span class="nx">BlueShapeDecorator</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">ShapeDecorator</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">HkCooking</span><span class="p">)</span> <span class="nf">Prepare</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34; -- 准备香港菜 -- &#34;</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="kd">func</span> <span class="nf">NewBlueShapeDecorator</span><span class="p">(</span><span class="nx">s</span> <span class="nx">Shape</span><span class="p">)</span> <span class="o">*</span><span class="nx">BlueShapeDecorator</span> <span class="p">{</span>
-	<span class="nx">d</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">BlueShapeDecorator</span><span class="p">)</span>
-	<span class="nx">d</span><span class="p">.</span><span class="nx">decoratorShape</span> <span class="p">=</span> <span class="nx">s</span>
-	<span class="k">return</span> <span class="nx">d</span>
+<span class="kd">func</span> <span class="nf">TestCooking</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">chinaCooking</span> <span class="o">:=</span> <span class="nf">NewHZCooking</span><span class="p">()</span>
+
+	<span class="nx">chinaCooking</span><span class="p">.</span><span class="nf">DoOperate</span><span class="p">()</span>
+
+	<span class="nx">hkCooking</span> <span class="o">:=</span> <span class="nf">NewHKCooking</span><span class="p">()</span>
+
+	<span class="nx">hkCooking</span><span class="p">.</span><span class="nf">DoOperate</span><span class="p">()</span>
 <span class="p">}</span>
 
-<span class="kd">func</span> <span class="p">(</span><span class="nx">shape</span> <span class="nx">BlueShapeDecorator</span><span class="p">)</span> <span class="nf">draw</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">shape</span><span class="p">.</span><span class="nx">ShapeDecorator</span><span class="p">.</span><span class="nf">draw</span><span class="p">()</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;blue&#34;</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">TestName</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">redShapedDecorator</span> <span class="o">:=</span> <span class="nf">NewRedShapeDecorator</span><span class="p">(</span><span class="nx">Circle</span><span class="p">{})</span>
-	<span class="nx">redShapedDecorator</span><span class="p">.</span><span class="nf">draw</span><span class="p">()</span>
-
-	<span class="nx">redShapedDecorator</span> <span class="p">=</span> <span class="nf">NewRedShapeDecorator</span><span class="p">(</span><span class="nx">Rectangle</span><span class="p">{})</span>
-	<span class="nx">redShapedDecorator</span><span class="p">.</span><span class="nf">draw</span><span class="p">()</span>
-
-	<span class="nx">blueShapedDecorator</span> <span class="o">:=</span> <span class="nf">NewBlueShapeDecorator</span><span class="p">(</span><span class="nx">Circle</span><span class="p">{})</span>
-	<span class="nx">blueShapedDecorator</span><span class="p">.</span><span class="nf">draw</span><span class="p">()</span>
-
-	<span class="nx">blueShapedDecorator</span> <span class="p">=</span> <span class="nf">NewBlueShapeDecorator</span><span class="p">(</span><span class="nx">Rectangle</span><span class="p">{})</span>
-	<span class="nx">blueShapedDecorator</span><span class="p">.</span><span class="nf">draw</span><span class="p">()</span>
-<span class="p">}</span>
 </code></pre></div><p>输出结果:</p>
-<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">Shape: Circle
-red
-Shape: Rectangle
-red
-Shape: Circle
-blue
-Shape: Rectangle
-blue
-</code></pre></div><h3 id="22-直接装饰方法">2.2 直接装饰方法</h3>
-<p>代码:</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">drawFunc</span> <span class="kd">func</span><span class="p">()</span>
-
-<span class="kd">func</span> <span class="nf">CircleDraw</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Shape: Circle&#34;</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">RedCircleDraw</span><span class="p">(</span><span class="nx">d</span> <span class="nx">drawFunc</span><span class="p">)</span> <span class="nx">drawFunc</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-		<span class="nf">d</span><span class="p">()</span>
-		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;red&#34;</span><span class="p">)</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">TestFunc</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
-	<span class="kd">var</span> <span class="nx">drawFunc</span> <span class="nx">drawFunc</span>
-	<span class="nx">drawFunc</span> <span class="p">=</span> <span class="nx">CircleDraw</span>
-	<span class="nf">drawFunc</span><span class="p">()</span>
-
-	<span class="nx">drawFunc</span> <span class="p">=</span> <span class="nf">RedCircleDraw</span><span class="p">(</span><span class="nx">drawFunc</span><span class="p">)</span>
-	<span class="nf">drawFunc</span><span class="p">()</span>
-<span class="p">}</span>
-</code></pre></div><p>输出结果:</p>
-<div class="highlight"><pre class="chroma"><code class="language-Text" data-lang="Text">Shape: Circle
-Shape: Circle
-red
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text"> -- 准备杭州菜 --
+烹饪内容: 杭州菜.
+烹饪完成
+ -- 准备香港菜 --
+烹饪内容: 香港菜.
+烹饪完成
 </code></pre></div><h2 id="三参考">三、参考</h2>
-<p><a href="https://www.tutorialspoint.com/design_pattern/decorator_pattern.htm">https://www.tutorialspoint.com/design_pattern/decorator_pattern.htm</a></p></div><div class="post-footer" id="post-footer">
+<p><a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">https://www.tutorialspoint.com/design_pattern/template_pattern.htm</a></p></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
@@ -272,20 +232,20 @@ red
                             <a class="link-to-markdown" href="/2019/11/index.zh-cn/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-title="装饰者模式" data-hashtags="golang,装饰者模式"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-title="装饰者模式"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-title="装饰者模式"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-title="装饰者模式"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-title="模板模式" data-hashtags="golang,模板模式"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-title="模板模式"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-title="模板模式"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2019/11/index.zh-cn/" data-title="模板模式"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">golang</a>,&nbsp;<a href="/tags/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/">装饰者模式</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">golang</a>,&nbsp;<a href="/tags/%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/">模板模式</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2019/09/aliyun-daily-01/" class="prev" rel="prev" title="阿里云采坑记录 | RDS 的 binglog 丢失"><i class="fas fa-angle-left fa-fw"></i>阿里云采坑记录 | RDS 的 binglog 丢失</a>
-            <a href="/2019/11/index.zh-cn/" class="next" rel="next" title="模板模式">模板模式<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/2019/11/index.zh-cn/" class="prev" rel="prev" title="装饰者模式"><i class="fas fa-angle-left fa-fw"></i>装饰者模式</a>
+            <a href="/2020/05/index.zh-cn/" class="next" rel="next" title="领域驱动实战 | Domain Primitive 的简单使用">领域驱动实战 | Domain Primitive 的简单使用<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
