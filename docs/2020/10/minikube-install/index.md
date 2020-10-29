@@ -163,7 +163,7 @@ Commercial support is available at
 
 ### 3-2. dashboard 打不开了
 
-在电脑从公司带回家再次来到公司的时候，出现了一些网络问题，比如 dashboard 无法打开，在浏览器回车 dashboard 地址(http://127.0.0.1:63999/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/service?namespace=default)后返回:
+在电脑从公司带回家再次来到公司的时候，出现了一些网络问题，比如 dashboard 无法打开，在浏览器回车 dashboard 地址, 类似：http://127.0.0.1:63999/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/service?namespace=default 后返回:
 
 ```json
 {
