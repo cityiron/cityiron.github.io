@@ -5,29 +5,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>模板模式 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="模板模式" />
-<meta property="og:description" content="本文介绍如何在 go 语言中使用模板模式." />
+        <title>Mac 上配置多个 GitHub 的 ssh 账号 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="Mac 上配置多个 GitHub 的 ssh 账号" />
+<meta property="og:description" content="本文介绍如何在一台电脑上，配置多个 Git 的连接信息，同时连接 GitHub 和公司的 GitLab。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.funnycode.cn/2019/11/pattern-template/" />
-<meta property="article:published_time" content="2019-11-09T19:00:33+08:00" />
-<meta property="article:modified_time" content="2020-03-09T16:25:11+08:00" />
+<meta property="og:url" content="https://blog.funnycode.cn/2020/10/multi-git-account/" />
+<meta property="article:published_time" content="2020-10-29T14:11:30+08:00" />
+<meta property="article:modified_time" content="2020-10-29T14:11:30+08:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="模板模式"/>
-<meta name="twitter:description" content="本文介绍如何在 go 语言中使用模板模式."/>
+<meta name="twitter:title" content="Mac 上配置多个 GitHub 的 ssh 账号"/>
+<meta name="twitter:description" content="本文介绍如何在一台电脑上，配置多个 Git 的连接信息，同时连接 GitHub 和公司的 GitLab。"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/2019/11/pattern-template/" /><link rel="prev" href="https://blog.funnycode.cn/2019/11/pattern-decorator/" /><link rel="next" href="https://blog.funnycode.cn/2020/05/domain-primitive/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/2020/10/multi-git-account/" /><link rel="prev" href="https://blog.funnycode.cn/2020/10/tour-china-huangshan/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "模板模式",
+        "headline": "Mac 上配置多个 GitHub 的 ssh 账号",
         "inLanguage": "tc",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/blog.funnycode.cn\/2019\/11\/pattern-template\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "golang, 模板模式","wordcount":  499 ,
-        "url": "https:\/\/blog.funnycode.cn\/2019\/11\/pattern-template\/","datePublished": "2019-11-09T19:00:33+08:00","dateModified": "2020-03-09T16:25:11+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@id": "https:\/\/blog.funnycode.cn\/2020\/10\/multi-git-account\/"
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "ssh, git","wordcount":  283 ,
+        "url": "https:\/\/blog.funnycode.cn\/2020\/10\/multi-git-account\/","datePublished": "2020-10-29T14:11:30+08:00","dateModified": "2020-10-29T14:11:30+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
                 "@type": "Person",
@@ -44,7 +44,7 @@
         </div>
         <div class="menu">
             <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/cityiron" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2019/11/pattern-template/" selected>简体中文</option></select>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2020/10/multi-git-account/" selected>简体中文</option></select>
                     </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
@@ -91,7 +91,7 @@
                 </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/cityiron" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw"></i>
             </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/2019/11/pattern-template/" selected>简体中文</option></select>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2020/10/multi-git-account/" selected>简体中文</option></select>
                 </a></div>
     </div>
 </header>
@@ -105,10 +105,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">模板模式</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><i class="far fa-folder fa-fw"></i>设计模式</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-11-09">2019-11-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 499 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2019/11/pattern-template/" class="leancloud_visitors" data-flag-title="模板模式">
+        </div><article class="page single"><h1 class="single-title animated flipInX">Mac 上配置多个 GitHub 的 ssh 账号</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/github/"><i class="far fa-folder fa-fw"></i>GitHub</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-29">2020-10-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 283 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2020/10/multi-git-account/" class="leancloud_visitors" data-flag-title="Mac 上配置多个 GitHub 的 ssh 账号">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -119,133 +119,71 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#一前言">一、前言</a></li>
-    <li><a href="#二实例">二、实例</a>
-      <ul>
-        <li><a href="#21-普通例子">2.1 普通例子</a></li>
-      </ul>
-    </li>
-    <li><a href="#三参考">三、参考</a></li>
+    <li><a href="#二如何配置">二、如何配置</a></li>
+    <li><a href="#三参考资源">三、参考资源</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>本文介绍如何在 go 语言中使用模板模式.</p>
+            </div><div class="content" id="content"><p>本文介绍如何在一台电脑上，配置多个 Git 的连接信息，同时连接 GitHub 和公司的 GitLab。</p>
 <h2 id="一前言">一、前言</h2>
-<p>Template Pattern（模板模式）</p>
-<p>白话文:</p>
-<p>定一个“抽象类”,定义一个方法A,定义需要子类实现的方法,所有子类对象在执行A的时候,会调用各自实现的方法.</p>
-<p>在golang中,由于不存在抽象类和真正的继承,所以只能通过一个基础类来充当抽象类,子类通过组合基础类来实现通用方法的继承.</p>
-<p>故事:</p>
-<p>阳光明媚的一天,我家来了位香港的朋友（毕竟那边太乱）,我们决定一起做一桌菜,于是他做香港菜,我做杭州菜,比拼就这么开始了.</p>
-<h2 id="二实例">二、实例</h2>
-<h3 id="21-普通例子">2.1 普通例子</h3>
+<p>日常工作时我本机需要连接公司的 Gitlab，还需要连接两个 GitHub 账号，本地使用的时候免不了需要不同的 SSH 认证登录。</p>
+<h2 id="二如何配置">二、如何配置</h2>
+<ul>
+<li>添加 ssh-agent</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">eval</span> <span class="s2">&#34;</span><span class="k">$(</span>ssh-agent -s<span class="k">)</span><span class="s2">&#34;</span>
+Agent pid <span class="m">65799</span>
+</code></pre></div><ul>
+<li>查看初始化的认证信息</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ ssh-add -L
+The agent has no identities.
+</code></pre></div><ul>
+<li>把 rsa 私钥添加到 ssh</li>
+</ul>
+<pre><code>$ ssh-add ~/.ssh/id_rsa2
+Identity added: /Users/tc/.ssh/id_rsa2 (/Users/tc/.ssh/id_rsa2)
+</code></pre><ul>
+<li>查看添加后的认证信息</li>
+</ul>
+<pre><code>$ ssh-add -L
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmz+FyF/uuIYAedTbzQoAE+wnHG3/uzqQ2Mv9QQbjcWOOjOlTmL48rYTH6hA1rJQl9hFsTrYzTbKYlV1h7oNqT/7nUsmNOhItg51DcvSbA/PSw+2jADkbMV6bnKUtJmx7gxu7RKuWi48smEewYny/zMIJSPRu5Tr1G6WX/zEtonJntgEJELfgrJntgBikTZ/QJOGtejwWJjEPyKyNji0O4o0tmK5Xql+MG0O109Xa5toRBADFWqz+Popk7MNFuooRp/Fz0b4tLTvvlfwrEGDu0z4qmlShTmiZNQhYQsmiwpt27/IUo2Cw8J62EEUqviykuNeZBzYCGMXd3Mcg/CpTPbtBb /Users/tc/.ssh/id_rsa2
+</code></pre><ul>
+<li>查看 github.com 交互的账号信息</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ ssh -T git@github.com
+
+Hi cityiron! You<span class="err">&#39;</span>ve successfully authenticated, but GitHub does not provide shell access.
+</code></pre></div><p>当出现 <code>Hi [yourname]</code>， name 和你要操作的仓库所在的 github 账号一样，那么就可以正常使用 Git 命令。</p>
 <blockquote>
-<p>代码</p>
+<p>每一个 terminal 可以是独立的 session，当电脑启动的时候，默认所有的 terminal 共享一个账号信息</p>
 </blockquote>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
-
-<span class="kn">import</span> <span class="p">(</span>
-	<span class="s">&#34;fmt&#34;</span>
-	<span class="s">&#34;testing&#34;</span>
-<span class="p">)</span>
-
-<span class="kd">type</span> <span class="nx">Cooking</span> <span class="kd">interface</span> <span class="p">{</span>
-	<span class="nf">DoOperate</span><span class="p">()</span>
-<span class="p">}</span>
-
-<span class="kd">type</span> <span class="nx">AbstractCooking</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">Cooking</span>
-	<span class="nx">Prepare</span>    <span class="kd">func</span><span class="p">()</span>
-	<span class="nx">GetContent</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">string</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">d</span> <span class="nx">AbstractCooking</span><span class="p">)</span> <span class="nf">DoOperate</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">d</span><span class="p">.</span><span class="nf">Prepare</span><span class="p">()</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;烹饪内容:&#34;</span><span class="p">,</span> <span class="nx">d</span><span class="p">.</span><span class="nf">GetContent</span><span class="p">())</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;烹饪完成&#34;</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="kd">type</span> <span class="nx">HZCooking</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">AbstractCooking</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">NewHZCooking</span><span class="p">()</span> <span class="o">*</span><span class="nx">HZCooking</span> <span class="p">{</span>
-	<span class="nx">c</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">HZCooking</span><span class="p">)</span>
-	<span class="nx">c</span><span class="p">.</span><span class="nx">AbstractCooking</span><span class="p">.</span><span class="nx">GetContent</span> <span class="p">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">GetContent</span>
-	<span class="nx">c</span><span class="p">.</span><span class="nx">AbstractCooking</span><span class="p">.</span><span class="nx">Prepare</span> <span class="p">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Prepare</span>
-	<span class="k">return</span> <span class="nx">c</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">HZCooking</span><span class="p">)</span> <span class="nf">GetContent</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="s">&#34;杭州菜.&#34;</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">HZCooking</span><span class="p">)</span> <span class="nf">Prepare</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34; -- 准备杭州菜 -- &#34;</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="kd">type</span> <span class="nx">HkCooking</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">HZCooking</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">NewHKCooking</span><span class="p">()</span> <span class="o">*</span><span class="nx">HkCooking</span> <span class="p">{</span>
-	<span class="nx">c</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">HkCooking</span><span class="p">)</span>
-	<span class="nx">c</span><span class="p">.</span><span class="nx">AbstractCooking</span><span class="p">.</span><span class="nx">GetContent</span> <span class="p">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">GetContent</span>
-	<span class="nx">c</span><span class="p">.</span><span class="nx">AbstractCooking</span><span class="p">.</span><span class="nx">Prepare</span> <span class="p">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Prepare</span>
-	<span class="k">return</span> <span class="nx">c</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">HkCooking</span><span class="p">)</span> <span class="nf">GetContent</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="s">&#34;香港菜.&#34;</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">HkCooking</span><span class="p">)</span> <span class="nf">Prepare</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34; -- 准备香港菜 -- &#34;</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">TestCooking</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">chinaCooking</span> <span class="o">:=</span> <span class="nf">NewHZCooking</span><span class="p">()</span>
-
-	<span class="nx">chinaCooking</span><span class="p">.</span><span class="nf">DoOperate</span><span class="p">()</span>
-
-	<span class="nx">hkCooking</span> <span class="o">:=</span> <span class="nf">NewHKCooking</span><span class="p">()</span>
-
-	<span class="nx">hkCooking</span><span class="p">.</span><span class="nf">DoOperate</span><span class="p">()</span>
-<span class="p">}</span>
-
-</code></pre></div><p>输出结果:</p>
-<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text"> -- 准备杭州菜 --
-烹饪内容: 杭州菜.
-烹饪完成
- -- 准备香港菜 --
-烹饪内容: 香港菜.
-烹饪完成
-</code></pre></div><h2 id="三参考">三、参考</h2>
-<p><a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">https://www.tutorialspoint.com/design_pattern/template_pattern.htm</a></p></div><div class="post-footer" id="post-footer">
+<h2 id="三参考资源">三、参考资源</h2>
+<p><a href="https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent</a></p></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2020-03-09</span>
+                <span>更新于 2020-10-29</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/2019/11/pattern-template/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/2020/10/multi-git-account/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2019/11/pattern-template/" data-title="模板模式" data-hashtags="golang,模板模式"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2019/11/pattern-template/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2019/11/pattern-template/" data-title="模板模式"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2019/11/pattern-template/" data-title="模板模式"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2019/11/pattern-template/" data-title="模板模式"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2020/10/multi-git-account/" data-title="Mac 上配置多个 GitHub 的 ssh 账号" data-hashtags="ssh,git"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2020/10/multi-git-account/" data-hashtag="ssh"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2020/10/multi-git-account/" data-title="Mac 上配置多个 GitHub 的 ssh 账号"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2020/10/multi-git-account/" data-title="Mac 上配置多个 GitHub 的 ssh 账号"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2020/10/multi-git-account/" data-title="Mac 上配置多个 GitHub 的 ssh 账号"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">golang</a>,&nbsp;<a href="/tags/%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/">模板模式</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/ssh/">ssh</a>,&nbsp;<a href="/tags/git/">git</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2019/11/pattern-decorator/" class="prev" rel="prev" title="装饰者模式"><i class="fas fa-angle-left fa-fw"></i>装饰者模式</a>
-            <a href="/2020/05/domain-primitive/" class="next" rel="next" title="领域驱动实战 | Domain Primitive 的简单使用">领域驱动实战 | Domain Primitive 的简单使用<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/2020/10/tour-china-huangshan/" class="prev" rel="prev" title="黄山2日1晚游玩"><i class="fas fa-angle-left fa-fw"></i>黄山2日1晚游玩</a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
