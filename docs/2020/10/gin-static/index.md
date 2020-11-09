@@ -39,7 +39,7 @@ http://127.0.0.1:8080/favicon.ico
 
 均可以请求到头像图片。
 
-#### 静态文件
+#### 2.1.1 静态文件
 
 > 访问某个路径，直接找到对应的资源返回。
 
@@ -139,14 +139,14 @@ func (d Dir) Open(name string) (File, error) {
 - 拼接完整的路径
 - 使用标准的 `os.Open()` 打开
 
-#### 静态目录
+#### 2.1.2 静态目录
 
 > 路径加上某个前缀对应访问某个目录下的资源。
 
 使用：
 
 ```go
-	r.StaticFS("/more_static", http.Dir(dir+"/src/gin/assets"))
+	r.Static("/assets", dir+"/src/gin/assets")
 ```
 
 源码分析：
@@ -156,6 +156,8 @@ func (group *RouterGroup) Static(relativePath, root string) IRoutes {
 	return group.StaticFS(relativePath, Dir(root, false))
 }
 ```
+
+- 实际调用也是 `StaticFS` 方法，加了个是否展示目录下的内容的控制
 
 > /github.com/gin-gonic/gin/fs.go:24
 
@@ -179,9 +181,9 @@ func (f neuteredReaddirFile) Readdir(count int) ([]os.FileInfo, error) {
 }
 ```
 
-- 实现反馈 nil
+- 实现返回 nil，和 `Dir(root, false)` 配置的 false 关联
 
-#### 文件服务器
+#### 2.1.3 文件服务器
 
 > 能够通过 HTTP 请求访问文件，类似于 FTP 服务器。
 
@@ -214,6 +216,8 @@ func (group *RouterGroup) StaticFS(relativePath string, fs http.FileSystem) IRou
 }
 ```
 
+- GET 和 HEAD 请求都会到 StaticHandler，所以看下面代码如何创建这个 Handler 即可
+
 > /github.com/gin-gonic/gin/routergroup.go:185
 
 ```go
@@ -242,6 +246,8 @@ func (group *RouterGroup) createStaticHandler(relativePath string, fs http.FileS
 	}
 }
 ```
+
+- 正常执行会走 `fileServer.ServeHTTP(c.Writer, c.Request)`，HTTP 包的逻辑
 
 > /net/http/server.go:2040
 
@@ -284,13 +290,13 @@ func (f *fileHandler) ServeHTTP(w ResponseWriter, r *Request) {
 ```
 
 - 前缀 URL 加上 /
-- 文件服务逻辑，和静态文件
+- 文件服务逻辑，和静态文件部分调用是一样的方法，这里是 true
 
-### 单页路径处理
+### 2.2 单页应用实战
 
-上面讲的都是 gin 本身基础内容，下面说下项目中的实战。
+上面讲的都是 gin 本身基础内容，下面说下项目中的实战例子。
 
-#### 静态文件位置
+#### 2.2.1 静态文件位置
 
 项目文件夹如下：
 
@@ -303,7 +309,7 @@ func (f *fileHandler) ServeHTTP(w ResponseWriter, r *Request) {
 
 - index.html 单页应用，只有一个 HTML，其它都是 .js 渲染出来的
 
-#### 项目配置
+#### 2.2.2 项目配置
 
 通过下面代码加到 gin 里面。
 
@@ -319,11 +325,113 @@ r.Use(static.NewFileSystem(root, "/", constant.ApiVersion, false).HandlerFunc())
 - 不包含的路径，指后端接口路径，比如 `/api/v1`
 - false 上面提到默认的实现有体现，ture 会罗列文件夹下的文件列表，用作 FTP 服务器
 
-#### 原理说明
+#### 2.2.3 原理说明
 
-### 前端页面
+**自定义的 fileSystem**
 
-官方的示例
+```go
+type FileSystem struct {
+	root string
+	prefix  string
+	exclude string
+	indexes bool
+  http.FileSystem
+	http.Handler
+}
+```
+
+- root 根路径，文件系统用
+- prefix 请求前缀，按我的场景是 `"/"`，如果你有类似 `/health` 的这种接口，那么请扩展 exclude 的逻辑
+- exclude 忽略的路径，我的场景是 `/api/v1`，所以的后端接口默认都带上这个路径
+- indexes 是否遍历子目录查找，我的场景是不需要的，所以配置 `false`
+
+**gin 对请求的处理逻辑**
+
+```go
+func (fs *FileSystem) HandlerFunc() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if fs.exclude != "" && strings.HasPrefix(c.Request.URL.Path, fs.exclude) {
+			c.Next()
+		} else {
+			if fs.Exist(c) {
+				fs.ServeHTTP(c.Writer, c.Request)
+				c.Abort()
+			}
+		}
+	}
+}
+```
+
+- 如果是 `/api/v1` 后端接口，则直接进入下一步
+- 否则判断是否存在，存在会执行标准的 ServeHTTP
+
+**判断文件是否存在**
+
+```go
+func (fs *FileSystem) Exist(c *gin.Context) bool {
+	filepath := c.Request.URL.Path
+	if isFrontPageRouter(filepath, fs.exclude) {
+		return true
+	}
+
+	if p := strings.TrimPrefix(filepath, fs.prefix); len(p) < len(filepath) {
+		name := path.Join(fs.root, p)
+		stats, err := os.Stat(name)
+		if err != nil {
+			return false
+		}
+		if stats.IsDir() {
+			if !fs.indexes {
+				index := path.Join(name, INDEX)
+				_, err := os.Stat(index)
+				if err != nil {
+					return false
+				}
+			}
+		}
+		return true
+	}
+	return false
+}
+```
+
+- 如果是前端页面，直接返回存在，因为始终是 `index.html`
+- 其它用 `os` 去判断文件是否真实存在
+
+**http.HandlerFunc 改进**
+
+```go
+// StripPrefix like http.StripPrefix
+func StripPrefix(prefix, exclude string, h http.Handler) http.Handler {
+	if prefix == "" {
+		return h
+	}
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if p := strings.TrimPrefix(r.URL.Path, prefix); len(p) < len(r.URL.Path) {
+			r2 := new(http.Request)
+			*r2 = *r
+			r2.URL = new(url.URL)
+			*r2.URL = *r.URL
+			r2.URL.Path = p
+			b := isFrontPageRouter(r.URL.Path, exclude)
+			if b {
+				r2.URL.Path = "/"
+			}
+			h.ServeHTTP(w, r2)
+		} else {
+			http.NotFound(w, r)
+		}
+	})
+}
+```
+
+- 新加参数 exclude，表示是否不包含的路径
+- isFrontPageRouter 是否是前端页面的路径，如果是前端页面会改写 `URL.Path = "/"`，保证始终访问 `index.html` 文件
+
+### 2.3 扩展阅读
+
+#### 2.3.1 前端页面
+扩展官方的示例，如何返回一个 HTML
 
 ```go
 func main() {
