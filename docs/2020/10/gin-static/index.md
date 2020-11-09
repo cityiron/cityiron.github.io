@@ -335,7 +335,7 @@ type FileSystem struct {
 	prefix  string
 	exclude string
 	indexes bool
-  http.FileSystem
+	http.FileSystem
 	http.Handler
 }
 ```
