@@ -28,6 +28,13 @@
     <guid>https://blog.funnycode.cn/2020/10/tour-china-huangshan/</guid>
     <description><![CDATA[<p>2020-10-17 ~ 2010-10-18 黄山二日游记。</p>]]></description>
 </item><item>
+    <title>一拳搞定 Node.js | 如何运行一个 node 项目</title>
+    <link>https://blog.funnycode.cn/2020/10/nodejs-start/</link>
+    <pubDate>Sun, 11 Oct 2020 09:43:47 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.funnycode.cn/2020/10/nodejs-start/</guid>
+    <description><![CDATA[<p>本文介绍如何在本地启动 nodejs 项目。</p>]]></description>
+</item><item>
     <title>一拳搞定 Kubernetes | 玩转 deployment</title>
     <link>https://blog.funnycode.cn/2020/10/run-deployment/</link>
     <pubDate>Fri, 09 Oct 2020 15:25:02 &#43;0800</pubDate>
@@ -69,14 +76,5 @@
     <author>作者</author>
     <guid>https://blog.funnycode.cn/2019/11/pattern-decorator/</guid>
     <description><![CDATA[<p>本文介绍在 go 语言中使用装饰者模式.</p>]]></description>
-</item><item>
-    <title>阿里云采坑记录 | RDS 的 binglog 丢失</title>
-    <link>https://blog.funnycode.cn/2019/09/aliyun-daily-01/</link>
-    <pubDate>Sun, 22 Sep 2019 17:33:11 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://blog.funnycode.cn/2019/09/aliyun-daily-01/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/feature.jpg" referrerpolicy="no-referrer">
-            </div><p>本文介绍阿里云数据库 binglog 配置注意点.</p>]]></description>
 </item></channel>
 </rss>

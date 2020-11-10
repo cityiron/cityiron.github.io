@@ -68,7 +68,7 @@ minikube dashboard
 
 会自动跳转到浏览器：
 
-{{< figure src="dashboard.png" title="dashboard" >}}
+{{< figure src="/2020/10/minikube-install/dashboard.png" title="dashboard" >}}
 
 ### 2-4. 查看 service 的 URL
 
