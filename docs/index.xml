@@ -70,11 +70,11 @@
     <guid>https://blog.funnycode.cn/2019/11/pattern-template/</guid>
     <description><![CDATA[<p>本文介绍如何在 go 语言中使用模板模式.</p>]]></description>
 </item><item>
-    <title>装饰者模式</title>
-    <link>https://blog.funnycode.cn/2019/11/pattern-decorator/</link>
-    <pubDate>Mon, 04 Nov 2019 17:00:24 &#43;0800</pubDate>
+    <title>转载】蚂蚁金服 Service Mesh 深度实践</title>
+    <link>https://blog.funnycode.cn/2019/11/server-mesh-ant/</link>
+    <pubDate>Thu, 07 Nov 2019 11:17:01 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://blog.funnycode.cn/2019/11/pattern-decorator/</guid>
-    <description><![CDATA[<p>本文介绍在 go 语言中使用装饰者模式.</p>]]></description>
+    <guid>https://blog.funnycode.cn/2019/11/server-mesh-ant/</guid>
+    <description><![CDATA[<p>本文介绍 敖小剑大佬在 QCon 上关于 Service Mesh 的分享。</p>]]></description>
 </item></channel>
 </rss>
