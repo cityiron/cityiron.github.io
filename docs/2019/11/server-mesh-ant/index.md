@@ -1,4 +1,4 @@
-# 转载】蚂蚁金服 Service Mesh 深度实践
+# 【转载】蚂蚁金服 Service Mesh 深度实践
 
 本文介绍 敖小剑大佬在 QCon 上关于 Service Mesh 的分享。
 
