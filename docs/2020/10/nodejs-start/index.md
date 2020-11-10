@@ -89,7 +89,7 @@ node_modules            package-lock.json       package.json
 
 #### 3.1.3 使用 express
 
-安装 `[express](https://expressjs.com/)`
+安装 [express](https://expressjs.com/)
 
 ```bash
  npm install express
@@ -276,5 +276,6 @@ npm ERR!     /Users/tc/.npm/_logs/2020-11-10T02_13_36_826Z-debug.log
 ## 五、参考
 
 https://expressjs.com/en/starter/hello-world.html
+
 https://segmentfault.com/a/1190000023311123
 
