@@ -26,7 +26,7 @@
 
 发展历程和落地规模
 
-![ppt-5-1.jpg](https://res.cloudinary.com/dogbaobao/image/upload/v1573108860/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/05d1b1cbafe6153923c87e895f5766b4_zi7svw.jpg)
+{{< figure src="https://res.cloudinary.com/dogbaobao/image/upload/v1573108860/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/05d1b1cbafe6153923c87e895f5766b4_zi7svw.jpg" title="ppt-5-1.jpg" >}}
 
 Service Mesh 技术在蚂蚁金服的落地，先后经历过如下几个阶段：
 
