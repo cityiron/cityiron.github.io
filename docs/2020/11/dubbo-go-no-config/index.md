@@ -8,7 +8,7 @@
 
 dubbogo 是 dubbo 这个 RPC 框架在 go 语言下的延伸，也是各位 Java 开发人员上手 go 的一个优秀开源项目。启动 dubbogo 经常需要配置环境变量，如 `CONF_PROVIDER_FILE_PATH`，`CONF_CONSUMER_FILE_PATH` 两个最典型的例子。在 idea 中启动的时候，每次都需要加这个还是比较麻烦的，其实大部分跑例子的时候只需要关心注册中心的相关信息。
 
-欢迎━(*｀∀´*)ノ亻!点 star (dubbogo)[https://github.com/apache/dubbo-go]
+欢迎━(*｀∀´*)ノ亻!点 star !(dubbogo)[https://github.com/apache/dubbo-go]
 
 ## 二、实战分析
 
@@ -42,6 +42,22 @@ dgCfg = dg.ConsumerConfig{
   Registries: make(map[string]*dg.RegistryConfig, 4),
 }
 ```
+
+自定义系统变量获取 registry，比如：-REGISTRY=dubbo:127.0.0.1:2181。
+
+```go
+r := os.Getenv("REGISTRY")
+ss := strings.SplitN(s, ":", 2)
+if len(ss) == 2 {
+  dgCfg.Registries[1] = &dg.RegistryConfig{
+    Protocol:   ss[0],
+    Address:    ss[1],
+    TimeoutStr: "3s",
+  }
+}
+```
+
+把参数设置到 ConsumerConfig 就行。
 
 **设置默认 ClientConfig**
 

@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2020\/11\/dubbo-go-no-config\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "配置","wordcount":  344 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "配置","wordcount":  430 ,
         "url": "https:\/\/blog.funnycode.cn\/2020\/11\/dubbo-go-no-config\/","datePublished": "2020-11-10T21:10:29+08:00","dateModified": "2020-11-10T21:10:29+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -107,7 +107,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">一拳搞定 dubbo-go | 不想通过标准的配置文件来启动</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/dubbogo/"><i class="far fa-folder fa-fw"></i>dubbogo</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-10">2020-11-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 344 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-10">2020-11-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 430 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2020/11/dubbo-go-no-config/" class="leancloud_visitors" data-flag-title="一拳搞定 dubbo-go | 不想通过标准的配置文件来启动">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -130,7 +130,7 @@
             </div><div class="content" id="content"><p>本文介绍如何玩转 dubbogo 的配置文件</p>
 <h2 id="一前言">一、前言</h2>
 <p>dubbogo 是 dubbo 这个 RPC 框架在 go 语言下的延伸，也是各位 Java 开发人员上手 go 的一个优秀开源项目。启动 dubbogo 经常需要配置环境变量，如 <code>CONF_PROVIDER_FILE_PATH</code>，<code>CONF_CONSUMER_FILE_PATH</code> 两个最典型的例子。在 idea 中启动的时候，每次都需要加这个还是比较麻烦的，其实大部分跑例子的时候只需要关心注册中心的相关信息。</p>
-<p>欢迎━(<em>｀∀´</em>)ノ亻!点 star (dubbogo)[https://github.com/apache/dubbo-go]</p>
+<p>欢迎━(<em>｀∀´</em>)ノ亻!点 star !(dubbogo)[https://github.com/apache/dubbo-go]</p>
 <h2 id="二实战分析">二、实战分析</h2>
 <h3 id="21-去掉-client-端的配置文件">2.1 去掉 client 端的配置文件</h3>
 <h4 id="211-泛化调用-consumer-端">2.1.1 泛化调用 consumer 端</h4>
@@ -151,7 +151,18 @@
   <span class="nx">Check</span><span class="p">:</span>      <span class="nb">new</span><span class="p">(</span><span class="kt">bool</span><span class="p">),</span>
   <span class="nx">Registries</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">dg</span><span class="p">.</span><span class="nx">RegistryConfig</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
 <span class="p">}</span>
-</code></pre></div><p><strong>设置默认 ClientConfig</strong></p>
+</code></pre></div><p>自定义系统变量获取 registry，比如：-REGISTRY=dubbo:127.0.0.1:2181。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">r</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Getenv</span><span class="p">(</span><span class="s">&#34;REGISTRY&#34;</span><span class="p">)</span>
+<span class="nx">ss</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">SplitN</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="s">&#34;:&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">ss</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">{</span>
+  <span class="nx">dgCfg</span><span class="p">.</span><span class="nx">Registries</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">dg</span><span class="p">.</span><span class="nx">RegistryConfig</span><span class="p">{</span>
+    <span class="nx">Protocol</span><span class="p">:</span>   <span class="nx">ss</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="nx">Address</span><span class="p">:</span>    <span class="nx">ss</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="nx">TimeoutStr</span><span class="p">:</span> <span class="s">&#34;3s&#34;</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>把参数设置到 ConsumerConfig 就行。</p>
+<p><strong>设置默认 ClientConfig</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">dubbo</span><span class="p">.</span><span class="nf">SetClientConf</span><span class="p">(</span><span class="nx">dubbo</span><span class="p">.</span><span class="nf">GetDefaultClientConfig</span><span class="p">())</span>
 </code></pre></div><p><strong>调用 dubbogo 加载</strong></p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">dg</span><span class="p">.</span><span class="nf">Load</span><span class="p">()</span>
