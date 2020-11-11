@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2019\/11\/server-mesh-ant\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "转载, 云原生","wordcount":  12634 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "转载, 云原生","wordcount":  12680 ,
         "url": "https:\/\/blog.funnycode.cn\/2019\/11\/server-mesh-ant\/","datePublished": "2019-11-07T11:17:01+08:00","dateModified": "2020-11-10T11:17:01+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -107,7 +107,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">【转载】蚂蚁金服 Service Mesh 深度实践</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>敖小剑</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/service-mesh/"><i class="far fa-folder fa-fw"></i>Service Mesh</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-11-07">2019-11-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 12634 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2019-11-07">2019-11-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 12680 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 26 分钟&nbsp;<span id="/2019/11/server-mesh-ant/" class="leancloud_visitors" data-flag-title="【转载】蚂蚁金服 Service Mesh 深度实践">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -190,14 +190,12 @@
 <p><strong>全面大规模落地 阶段</strong>：2019 年下半年，在蚂蚁金服内部的业务中全面铺开，落地规模非常庞大，而且准备迎接双十一大促；</p>
 <p>目前 ServiceMesh 正在蚂蚁金服内部大面积铺开，我这里给出的数据是前段时间（大概 9 月中）在云栖大会上公布的数据：应用数百个，容器数量（pod 数）超过 10 万。当然目前落地的 pod 数量已经远超过 10 万，这已经是目前全球最大的 Service Mesh 集群，但这仅仅是一个开始，这个集群的规模后续会继续扩大，明年蚂蚁金服会有更多的应用迁移到 Service Mesh。</p>
 <h3 id="主要落地场景">主要落地场景</h3>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573108859/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/5c89467385df755e41556e92ebed4a50_zo6ypd.jpg"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573108859/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/5c89467385df755e41556e92ebed4a50_zo6ypd.jpg, https://res.cloudinary.com/dogbaobao/image/upload/v1573108859/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/5c89467385df755e41556e92ebed4a50_zo6ypd.jpg 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573108859/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/5c89467385df755e41556e92ebed4a50_zo6ypd.jpg 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573108859/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/5c89467385df755e41556e92ebed4a50_zo6ypd.jpg"
-        title="ppt-6-1.jpg" /></p>
+<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573108859/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/5c89467385df755e41556e92ebed4a50_zo6ypd.jpg"/> <figcaption>
+            <h4>ppt-6-1.jpg</h4>
+        </figcaption>
+</figure>
+
 <p>目前 Service Mesh 在蚂蚁金服内部大量落地，包括支付宝的部分核心链路，落地的主要场景有：</p>
 <p>多语言支持：目前除了支持 Java 之外，还支持 Golang，Python，C++，NodeJS 等语言的相互通信和服务治理；</p>
 <p>应用无感知的升级：关于这一点我们后面会有特别的说明；</p>
@@ -207,28 +205,24 @@
 <h2 id="service-mesh-的实际性能数据">Service Mesh 的实际性能数据</h2>
 <p>之前和一些朋友、客户交流过，目前在 Service Mesh 方面大家最关心的是 Service Mesh 的性能表现，包括对于这次蚂蚁金服 Service Mesh 上双十一，大家最想看到的也是性能指标。
 为什么大家对性能这么关注？</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573108860/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/773cc2680c5bde9dc1bde04bba5c0f0a_zrmncj.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573108860/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/773cc2680c5bde9dc1bde04bba5c0f0a_zrmncj.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573108860/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/773cc2680c5bde9dc1bde04bba5c0f0a_zrmncj.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573108860/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/773cc2680c5bde9dc1bde04bba5c0f0a_zrmncj.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573108860/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/773cc2680c5bde9dc1bde04bba5c0f0a_zrmncj.png"
-        title="ppt-7-1.png" /></p>
+<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573108860/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/773cc2680c5bde9dc1bde04bba5c0f0a_zrmncj.png"/> <figcaption>
+            <h4>ppt-7-1.png</h4>
+        </figcaption>
+</figure>
+
 <p>因为在 Service Mesh 工作原理的各种介绍中，都会提到 Service Mesh 是将原来的一次远程调用，改为走 Sidecar（而且像 Istio 是客户端和服务器端两次 Sidecar，如上图所示），这样一次远程调用就会变成三次远程调用，对性能的担忧也就自然而然的产生了：一次远程调用变三次远程调用，性能会下降多少？延迟会增加多少？</p>
 <p>下图是我们内部的大促压测数据，对比带 SOFAMosn 和不带 SOFAMosn 的情况（实现相同的功能）。其中 SOFAMosn 是我们蚂蚁金服自行开发的基于 Golang 的 Sidecar/ 数据平面，我们用它替代了 Envoy，在去年的演讲中我有做过详细的介绍。</p>
 <blockquote>
 <p>SOFAMosn：
 <a href="https://github.com/sofastack/sofa-mosn">https://github.com/sofastack/sofa-mosn</a></p>
 </blockquote>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119950/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/63d50a0b24c66db7f7c50aacf4ba56f5_tza198.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573119950/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/63d50a0b24c66db7f7c50aacf4ba56f5_tza198.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573119950/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/63d50a0b24c66db7f7c50aacf4ba56f5_tza198.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573119950/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/63d50a0b24c66db7f7c50aacf4ba56f5_tza198.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573119950/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/63d50a0b24c66db7f7c50aacf4ba56f5_tza198.png"
-        title="ppt-8.png" /></p>
+<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119950/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/63d50a0b24c66db7f7c50aacf4ba56f5_tza198.png"/> <figcaption>
+            <h4>ppt-8.png</h4>
+        </figcaption>
+</figure>
+
 <ul>
 <li>CPU：CPU 使用在峰值情况下增加 8%，均值约增加 2%。在最新的一次压测中，CPU 已经优化到基本持平（低于 1%）；</li>
 <li>内存：带 SOFAMosn 的节点比不带 SOFAMosn 的节点内存占用平均多 15M；</li>
@@ -238,14 +232,12 @@
 是不是感觉不科学？</p>
 <h3 id="service-mesh-的基本思路">Service Mesh 的基本思路</h3>
 <p>我们来快速回顾一下 Service Mesh 实现的基本思路：</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/848ecf748dd573d2fe91b7e271d1ba7a_fibk70.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/848ecf748dd573d2fe91b7e271d1ba7a_fibk70.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/848ecf748dd573d2fe91b7e271d1ba7a_fibk70.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/848ecf748dd573d2fe91b7e271d1ba7a_fibk70.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/848ecf748dd573d2fe91b7e271d1ba7a_fibk70.png"
-        title="ppt-9.png" /></p>
+<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/848ecf748dd573d2fe91b7e271d1ba7a_fibk70.png"/> <figcaption>
+            <h4>ppt-9.png</h4>
+        </figcaption>
+</figure>
+
 <p>在基于 SDK 的方案中，应用既有业务逻辑，也有各种非业务功能。虽然通过 SDK 实现了代码重用，但是在部署时，这些功能还是混合在一个进程内的。</p>
 <p>在 Service Mesh 中，我们将 SDK 客户端的功能从应用中剥离出来，拆解为独立进程，以 Sidecar 的模式部署，让业务进程专注于业务逻辑：</p>
 <p>业务进程：专注业务实现，无需感知 Mesh；</p>
@@ -255,23 +247,19 @@
 <h3 id="性能数据背后的情景分析">性能数据背后的情景分析</h3>
 <p>我们回到前面的蚂蚁金服 Service Mesh 落地后的性能对比数据：从原理上说，Sidecar 拆分之后，原来 SDK 中的各种功能只是拆分到 Sidecar 中。整体上并没有增减，因此理论上说 SDK 和 Sidecar 性能表现是一致的。由于增加了应用和 Sidecar 之间的远程调用，性能不可避免的肯定要受到影响。</p>
 <p>首先我们来解释第一个问题：为什么性能损失那么小，和&quot;一次远程调用变三次远程调用&quot;的直觉不符？</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/60600553e98ddc1196adb6882c7e4942_me36uh.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/60600553e98ddc1196adb6882c7e4942_me36uh.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/60600553e98ddc1196adb6882c7e4942_me36uh.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/60600553e98ddc1196adb6882c7e4942_me36uh.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/60600553e98ddc1196adb6882c7e4942_me36uh.png"
-        title="ppt-10.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/60600553e98ddc1196adb6882c7e4942_me36uh.png"/> <figcaption>
+            <h4>ppt-10.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>所谓的“直觉”，是将关注点都集中到了远程调用开销上，下意识的忽略了其他开销，比如 SDK 的开销、业务逻辑处理的开销，因此：</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/d0defac5020222d694db0db8ffcd10a3_maqpt3.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/d0defac5020222d694db0db8ffcd10a3_maqpt3.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/d0defac5020222d694db0db8ffcd10a3_maqpt3.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/d0defac5020222d694db0db8ffcd10a3_maqpt3.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/d0defac5020222d694db0db8ffcd10a3_maqpt3.png"
-        title="ppt-10-2.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/d0defac5020222d694db0db8ffcd10a3_maqpt3.png"/> <figcaption>
+            <h4>ppt-10-2.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>推导出来的结果就是有 3 倍的开销，性能自然会有非常大的影响。</p>
 <p>但是，真实世界中的应用不是这样：</p>
 <ol>
@@ -279,37 +267,31 @@
 <li>SDK 也是有消耗的：即使不考虑各种复杂的功能特性，仅仅就报文（尤其是 Body）序列化的编解码开销也是不低的。而且，客户端和服务器端原有的编解码过程是需要处理 Body 的，而在 Sidecar 中，通常都只是读取 Header 而透传 Body，因此在编解码上要快很多。另外应用和 Sidecar 的两次远程通讯，都是走的 Localhost 而不是真实的网络，速度也要快非常多；</li>
 </ol>
 <p>因此，在真实世界中，我们假定业务逻辑百倍于 Sidecar 的开销，而 SDK 十倍于 Sidecar 的开销，则：</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/cd554734662867b192ea576cf5511fcc_nimk98.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/cd554734662867b192ea576cf5511fcc_nimk98.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/cd554734662867b192ea576cf5511fcc_nimk98.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/cd554734662867b192ea576cf5511fcc_nimk98.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/cd554734662867b192ea576cf5511fcc_nimk98.png"
-        title="ppt-10-3.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/cd554734662867b192ea576cf5511fcc_nimk98.png"/> <figcaption>
+            <h4>ppt-10-3.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>推导出来的结果，性能开销从 111 增加到 113，大约增加 2%。这也就解释了为什么我们实际给出的 Service Mesh 的 CPU 和延迟的性能损失都不大的原因。当然，这里我是刻意选择了 100 和 10 这两个系数来拼凑出 2% 这个估算结果，以迎合我们前面给出“均值约增加 2%”的数据。这不是准确数值，只是用来模拟。</p>
 <h3 id="情理当中的意外惊喜">情理当中的意外惊喜</h3>
 <p>前面的分析可以解释性能开销增加不多的情景，但是，还记得我们的数据中有一个不科学的地方吗：“部分特殊场景带 SOFAMosn 比不带 SOFAMosn RT 反而降低 7.5%”。</p>
 <p>理论上，无论业务逻辑和 SDK 的开销比 Sidecar 的开销大多少，也就是不管我们怎么优化 Sidecar 的性能，其结果也只能接近零。无论如何不可能出现多两个 Sidecar，CPU 消耗和延迟反而降低的情况。</p>
 <p>这个“不科学”是怎么出现的？
 我们继续来回顾这个 Service Mesh 的实现原理图：</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/4827ce40f2090065f3b2ffd366e2926a_m1lobk.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/4827ce40f2090065f3b2ffd366e2926a_m1lobk.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/4827ce40f2090065f3b2ffd366e2926a_m1lobk.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/4827ce40f2090065f3b2ffd366e2926a_m1lobk.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/4827ce40f2090065f3b2ffd366e2926a_m1lobk.png"
-        title="ppt-11.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/4827ce40f2090065f3b2ffd366e2926a_m1lobk.png"/> <figcaption>
+            <h4>ppt-11.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>出现性能大幅提升的主要的原因，是我们在 SOFAMosn 上做了大量的优化，特别是路由的缓存。在蚂蚁金服内部，服务路由的计算和处理是一个异常复杂的逻辑，非常耗资源。而在最近的优化中，我们为服务路由增加了缓存，从而使得服务路由的性能得到了大幅提升。因此：</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/f686d573939ab6f138707e3d57c5662c_xt0ym4.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/f686d573939ab6f138707e3d57c5662c_xt0ym4.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/f686d573939ab6f138707e3d57c5662c_xt0ym4.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/f686d573939ab6f138707e3d57c5662c_xt0ym4.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/f686d573939ab6f138707e3d57c5662c_xt0ym4.png"
-        title="ppt-11-2.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/f686d573939ab6f138707e3d57c5662c_xt0ym4.png"/> <figcaption>
+            <h4>ppt-11-2.png</h4>
+        </figcaption>
+</figure>
+</p>
 <blockquote>
 <p>备注：这里我依然是刻意拼凑出 -7% 这个估算结果，请注意这不是准确数值，只是用来模拟示意。</p>
 </blockquote>
@@ -321,14 +303,12 @@
 <p>也希望这个例子，能够让大家更深刻的理解 Service Mesh 的基本原理和优势。</p>
 <h2 id="大规模落地的困难和挑战">大规模落地的困难和挑战</h2>
 <p>当 Service Mesh 遇到蚂蚁金服的规模，困难和挑战也随之而来：当规模达到一定程度时，很多原本很小的问题都会急剧放大。后面我将在性能、容量、稳定性、可维护性和应用迁移几个方面给大家介绍我们遇到的挑战和实践。</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/f686d573939ab6f138707e3d57c5662c_xt0ym4.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/f686d573939ab6f138707e3d57c5662c_xt0ym4.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/f686d573939ab6f138707e3d57c5662c_xt0ym4.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/f686d573939ab6f138707e3d57c5662c_xt0ym4.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/f686d573939ab6f138707e3d57c5662c_xt0ym4.png"
-        title="ppt-13.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573119949/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/f686d573939ab6f138707e3d57c5662c_xt0ym4.png"/> <figcaption>
+            <h4>ppt-13.png</h4>
+        </figcaption>
+</figure>
+</p>
 <h3 id="数据平面的优化">数据平面的优化</h3>
 <p>在数据平面上，蚂蚁金服采用了自行研发的基于 Golang 的方案：SOFAMosn。关于为什么选择全新开发 SOFAMosn，而不是直接使用 Envoy 的原因，在去年 QCon 的演讲中我有过详细的介绍，有兴趣可以了解。
 前面我们给出的性能数据，实际上主要是数据平面的性能，也就是作为 Sidecar 部署的 SOFAMosn 的性能表现。从数据上看 SOFAMosn 目前的性能表现还是很不错的，这背后是我们在 SOFAMosn 上做了非常多的性能优化。</p>
@@ -345,14 +325,12 @@
 <p>vMixer 的性能优化是个老生常谈的话题，基本上只要谈及 Istio 的性能，都避无可避。</p>
 <p><strong>Mixer 的性能问题，一直都是 Istio 中最被人诟病的地方。</strong></p>
 <p>尤其在 Istio 1.1/1.2 版本之后，引入 Out-Of-Process Adapter 之后，更是雪上加霜。</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/9a4469ed722e58f706e0a5ad90eed36b_j05aiy.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/9a4469ed722e58f706e0a5ad90eed36b_j05aiy.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/9a4469ed722e58f706e0a5ad90eed36b_j05aiy.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/9a4469ed722e58f706e0a5ad90eed36b_j05aiy.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/9a4469ed722e58f706e0a5ad90eed36b_j05aiy.png"
-        title="ppt-15.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/9a4469ed722e58f706e0a5ad90eed36b_j05aiy.png"/> <figcaption>
+            <h4>ppt-15.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>原来 Sidecar 和 Mixer 之间的远程调用已经严重影响性能，在引入 Out-Of-Process Adapter 之后又在 Traffic 流程中引入了新的远程调用，性能更加不可接受。</p>
 <p>从落地的角度看，<strong>Mixer V1</strong> 糟糕至极的性能，已经是“生命无法承受之重”。对于一般规模的生产级落地而言，Mixer 性能已经是难于接受，更不要提大规模落地……</p>
 <p>Mixer V2 方案则给了社区希望：将 Mixer 合并进 Sidecar，引入 web assembly 进行 Adapter 扩展，这是我们期待的 Mixer 落地的正确姿势，是 Mixer 的未来，是 Mixer 的&quot;诗和远方&quot;。然而社区望穿秋水，但 Mixer V2 迟迟未能启动，长期处于 In Review 状态，远水解不了近渴。</p>
@@ -370,14 +348,12 @@
 <p>另外，对于整个 Service Mesh 体系，Pilot 至关重要。因此 Pilot 本身也应该进行保护，也需要诸如熔断 / 限流等特性。</p>
 <h3 id="service-mesh-的运维">Service Mesh 的运维</h3>
 <p>在 Service Mesh 的运维上，我们继续坚持“线上变更三板斧”原则。这里的变更，包括发布新版本，也包括修改配置，尤其特指修改 Istio 的 CRD。</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/04960fe09a6f9be96a24b957e64b83c4_qktckn.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/04960fe09a6f9be96a24b957e64b83c4_qktckn.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/04960fe09a6f9be96a24b957e64b83c4_qktckn.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/04960fe09a6f9be96a24b957e64b83c4_qktckn.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/04960fe09a6f9be96a24b957e64b83c4_qktckn.png"
-        title="ppt-17.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/04960fe09a6f9be96a24b957e64b83c4_qktckn.png"/> <figcaption>
+            <h4>ppt-17.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>线上变更“三板斧”指的是：</p>
 <ul>
 <li>可灰度：任何变更，都必须是可以灰度的，即控制变更的生效范围。先做小范围内变更，验证通过之后才扩大范围；</li>
@@ -392,14 +368,12 @@
 <p>在 Service Mesh 落地的过程中，现有应用如何平滑迁移到 Service Mesh，是一个至关重要的话题。典型如基于传统微服务框架如 SpringCloud/Dubbo 的应用，如何逐个（或者分批）的迁移到 Service Mesh 上。</p>
 <p>蚂蚁金服在去年进行落地实践时，就特别针对应用平滑迁移进行了深入研究和探索。这个问题是 Service Mesh 社区非常关注的核心落地问题，今天我们重点分享。</p>
 <p>在今年 9 月份的云栖大会上，蚂蚁金服推出了双模微服务的概念，如下图所示：</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/ba16ec5865cb61a6bb0ffc239ce46bbd_thrwkm.jpg"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/ba16ec5865cb61a6bb0ffc239ce46bbd_thrwkm.jpg, https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/ba16ec5865cb61a6bb0ffc239ce46bbd_thrwkm.jpg 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/ba16ec5865cb61a6bb0ffc239ce46bbd_thrwkm.jpg 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/ba16ec5865cb61a6bb0ffc239ce46bbd_thrwkm.jpg"
-        title="ppt-18.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/ba16ec5865cb61a6bb0ffc239ce46bbd_thrwkm.jpg"/> <figcaption>
+            <h4>ppt-18.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>“双模微服务”是指传统微服务和 Service Mesh 双剑合璧，即“基于 SDK 的传统微服务”可以和“基于 Sidecar 的 Service Mesh 微服务”实现下列目标：</p>
 <ul>
 <li>互联互通：两个体系中的应用可以相互访问；</li>
@@ -410,14 +384,12 @@
 <p>怎么实现这么一个美好的双模微服务目标呢？</p>
 <p>我们先来分析一下传统微服务体系和 Service Mesh 体系在服务注册 / 服务发现 / 服务相关的配置下发上的不同。</p>
 <p>首先看传统微服务体系，其核心是服务注册中心 / 配置中心，应用通过引用 SDK 的方式来实现对接各种注册中心 / 配置中心。通常不同的注册中心 / 配置中心都有各自的实现机制和接口协议，SDK 和注册中心 / 配置中心的交互方式属于内部实现机制，并不通用。</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573178174/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/b8aaf50dcc6005b54704c8b47969b133_s8mjmh.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573178174/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/b8aaf50dcc6005b54704c8b47969b133_s8mjmh.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573178174/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/b8aaf50dcc6005b54704c8b47969b133_s8mjmh.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573178174/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/b8aaf50dcc6005b54704c8b47969b133_s8mjmh.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573178174/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/b8aaf50dcc6005b54704c8b47969b133_s8mjmh.png"
-        title="ppt-19.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573178174/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/b8aaf50dcc6005b54704c8b47969b133_s8mjmh.png"/> <figcaption>
+            <h4>ppt-19.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>优点是支持海量数据（十万级别甚至百万级别），具备极强的分发能力，而且经过十余年间的打磨，稳定可靠可谓久经考验。市面上有很多成熟的开源产品，各大公司也都有自己的稳定实现。如阿里集团的 Nacos，蚂蚁金服的 SOFARegistry。</p>
 <blockquote>
 <p>SOFARegistry：
@@ -425,28 +397,24 @@
 </blockquote>
 <p>缺点是注册中心 / 配置中心与 SDK 通常是透传数据，即注册中心 / 配置中心只进行数据的存储和分发。大量的控制逻辑需要在 SDK 中实现，而 SDK 是嵌入到应用中的。因此，任何变更都需要改动 SDK 并要求应用升级。</p>
 <p>再来看看 Service Mesh 方案，以 Istio 为例：</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/ba198ff9e1cdc7dff6d9ab7e62f9de94_a2j8lz.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/ba198ff9e1cdc7dff6d9ab7e62f9de94_a2j8lz.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/ba198ff9e1cdc7dff6d9ab7e62f9de94_a2j8lz.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/ba198ff9e1cdc7dff6d9ab7e62f9de94_a2j8lz.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/ba198ff9e1cdc7dff6d9ab7e62f9de94_a2j8lz.png"
-        title="ppt-19-2.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/ba198ff9e1cdc7dff6d9ab7e62f9de94_a2j8lz.png"/> <figcaption>
+            <h4>ppt-19-2.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>Service Mesh 的优点是引入了控制平面（在 Istio 中具体指 Pilot 组件），通过控制平面来提供强大的控制逻辑。而控制平面的引入，MCP/xDS 等标准协议的制订，实现了数据源和下发数据的解耦。即存储于注册中心 / 配置中心（在 Istio 中体现为 k8s api server + Galley）的数据可以有多种灵活的表现形式，如 CRD 形式的 Istio API，通过运行于 Pilot 中的 Controller 来实现控制逻辑和格式转换，最后统一转换到 xDS/UDPA。这给 API 的设计提供了非常大的施展空间，极具灵活度，扩展性非常好。</p>
 <p>缺点也很明显，和成熟的注册中心 / 配置中心相比，支持的容量有限，下发的性能和稳定性相比之下有很大差距。</p>
 <p>控制平面和传统注册中心 / 配置中心可谓各有千秋，尤其他们的优缺点是互补的，如何结合他们的优势？</p>
 <p>此外，<strong>如何打通两个体系是 Service Mesh 社区的老大难问题。</strong> 尤其是缺乏标准化的社区方案，只能自行其是，各自为战。</p>
 <p>最近，在综合了过去一年多的思考和探索之后，蚂蚁金服和阿里集团的同事们共同提出了一套完整的解决方案，我们戏称为“终极方案”：希望可以通过这个方案打通传统微服务体系和 Service Mesh 体系，彻底终结这个困扰已久的问题。</p>
 <p>这个方案的核心在于：<strong>以 MCP 和 xDS/UDPA协议为基础，融合控制平面和传统注册中心 / 配置中心。</strong></p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/985e2a35f4ffb7f20a0c0b58777a904e_r6021q.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/985e2a35f4ffb7f20a0c0b58777a904e_r6021q.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/985e2a35f4ffb7f20a0c0b58777a904e_r6021q.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/985e2a35f4ffb7f20a0c0b58777a904e_r6021q.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/985e2a35f4ffb7f20a0c0b58777a904e_r6021q.png"
-        title="ppt-20.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573178175/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/985e2a35f4ffb7f20a0c0b58777a904e_r6021q.png"/> <figcaption>
+            <h4>ppt-20.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>如上图所示，如果我们将融合控制平面和传统注册中心 / 配置中心而来的新的产品形态视为一个整体，则这个新产品形态的能力主要有三块：</p>
 <ol>
 <li>传统注册中心的数据存储能力：支持海量数据；</li>
@@ -459,14 +427,12 @@
 <li>xDS/UDPA 协议：xDS 协议源自 Envoy，是目前数据平面的事实标准，UDPA 是正在进行中的基于 xDS 协议的标准化版本。Sidecar 基于 xDS/UDPA 协议接入控制平面，我们还有进一步的设想，希望加强 SDK 方案，向 Istio 的功能靠拢，具体表现为 SDK 支持 xDS 协议（初期版本先实现最小功能集）。目标是希望在对接控制平面的前提下，应用可以在 Service Mesh 和 SDK 方案之间自由选择和迁移。
 基于这个思路，我们给出如下图所示的解决方案，希望最大限度的整合传统微服务框架和 Service Mesh。其基本指导原则是：<strong>求同存异，保持兼容。</strong></li>
 </ul>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573179051/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/871a4373f591669219689180bd9054c7_dsgavo.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573179051/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/871a4373f591669219689180bd9054c7_dsgavo.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573179051/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/871a4373f591669219689180bd9054c7_dsgavo.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573179051/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/871a4373f591669219689180bd9054c7_dsgavo.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573179051/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/871a4373f591669219689180bd9054c7_dsgavo.png"
-        title="ppt-21.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573179051/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/871a4373f591669219689180bd9054c7_dsgavo.png"/> <figcaption>
+            <h4>ppt-21.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>上图中，蓝色部分是通用的功能模块，我们希望可以和社区一起共建。红色部分是不兼容的功能模块，但是保持 API 兼容。</p>
 <p>具体说，右边是各种注册中心（配置中心同理）：</p>
 <ul>
@@ -488,49 +454,41 @@
 <!-- raw HTML omitted -->
 <p>有没有短期急迫需求，通常取决于当前有没有迫切需要解决的痛点。
 在 Service Mesh 的发展过程中，有两个特别清晰而直接的痛点，它们甚至对 Service Mesh 的诞生起了直接的推动作用：</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/6d03b6eb52064931afaec57faec15708_fvfsli.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/6d03b6eb52064931afaec57faec15708_fvfsli.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/6d03b6eb52064931afaec57faec15708_fvfsli.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/6d03b6eb52064931afaec57faec15708_fvfsli.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/6d03b6eb52064931afaec57faec15708_fvfsli.png"
-        title="ppt-23.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/6d03b6eb52064931afaec57faec15708_fvfsli.png"/> <figcaption>
+            <h4>ppt-23.png</h4>
+        </figcaption>
+</figure>
+</p>
 <h3 id="多语言支持">多语言支持</h3>
 <p>这是 SDK 方案的天然局限，也是 Service Mesh 的天然优势。需要支持的编程语言越多，为每个编程语言开发和维护一套 SDK 的成本就越高，就有越多的理由采用 Service Mesh。</p>
 <h4 id="类库升级困难">类库升级困难</h4>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/24b236fa51314083a2c7527a1fecfc0b_fa3o9z.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/24b236fa51314083a2c7527a1fecfc0b_fa3o9z.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/24b236fa51314083a2c7527a1fecfc0b_fa3o9z.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/24b236fa51314083a2c7527a1fecfc0b_fa3o9z.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/24b236fa51314083a2c7527a1fecfc0b_fa3o9z.png"
-        title="ppt-23-2.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/24b236fa51314083a2c7527a1fecfc0b_fa3o9z.png"/> <figcaption>
+            <h4>ppt-23-2.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>同样，这也是 SDK 方案的天然局限，也是 Service Mesh 的天然优势（还记得前面那个不科学的 -7% 吗？）。SDK 方案中类库和业务应用打包在一起，升级类库就不得不更新整个业务应用，而且是需要更新所有业务团队的所有应用。在大部分公司，这通常是一个非常困难的事情，而且每次 SDK 升级都要重复一次这种痛苦。</p>
 <p>而且，这两个痛点有可能会同时存在：有多个编程语言的类库需要升级版本&hellip;&hellip;</p>
 <p>所以，第一个建议是先检查是否存在这两个痛点。</p>
 <!-- raw HTML omitted -->
 <p>Service Mesh 的无侵入性，在老应用升级改造，尤其是希望少改代码甚至完全不改代码的情况下，堪称神器。</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/6332252c3e62adcf3f4ac99419a3b172_lerrvx.jpg"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/6332252c3e62adcf3f4ac99419a3b172_lerrvx.jpg, https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/6332252c3e62adcf3f4ac99419a3b172_lerrvx.jpg 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/6332252c3e62adcf3f4ac99419a3b172_lerrvx.jpg 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/6332252c3e62adcf3f4ac99419a3b172_lerrvx.jpg"
-        title="ppt-24.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/6332252c3e62adcf3f4ac99419a3b172_lerrvx.jpg"/> <figcaption>
+            <h4>ppt-24.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>所以，第二个建议是，如果有老应用无改动升级改造的需求，对流量控制、安全、可观测性有诉求，则可以考虑采用  Service Mesh。</p>
 <!-- raw HTML omitted -->
 <p>这个建议仅仅适用于技术力量相对薄弱的企业，这些企业普遍存在一个问题：技术力量不足，或者主要精力投放在业务实现，导致无力维护统一的技术栈，系统呈现烟囱式架构。</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/96ec90e49af171881832820ee1853434_fmhaif.jpg"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/96ec90e49af171881832820ee1853434_fmhaif.jpg, https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/96ec90e49af171881832820ee1853434_fmhaif.jpg 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/96ec90e49af171881832820ee1853434_fmhaif.jpg 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/96ec90e49af171881832820ee1853434_fmhaif.jpg"
-        title="ppt-25.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/96ec90e49af171881832820ee1853434_fmhaif.jpg"/> <figcaption>
+            <h4>ppt-25.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>传统烟囱式架构的常见问题有：</p>
 <ul>
 <li>重复建设，重复造轮子；</li>
@@ -545,14 +503,12 @@
 <!-- raw HTML omitted -->
 <p>最后一个建议，和云原生有关。在去年的 QCon 演讲中，我曾经提到我们在探索 Kubernetes / Service Mesh / Serverless 结合的思路。在过去一年，蚂蚁金服一直在云原生领域做深度探索，也有一些收获。其中，有一点我们是非常明确的：<strong>Mesh 化是云原生落地的关键步骤。</strong></p>
 <p>下图展示了蚂蚁金服在云原生落地方面的基本思路：</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/c8e92254d26180aecb7e8786bf551058_ajnylq.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/c8e92254d26180aecb7e8786bf551058_ajnylq.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/c8e92254d26180aecb7e8786bf551058_ajnylq.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/c8e92254d26180aecb7e8786bf551058_ajnylq.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/c8e92254d26180aecb7e8786bf551058_ajnylq.png"
-        title="ppt-27.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/c8e92254d26180aecb7e8786bf551058_ajnylq.png"/> <figcaption>
+            <h4>ppt-27.png</h4>
+        </figcaption>
+</figure>
+</p>
 <ul>
 <li>最下方是云，以 Kubernetes 为核心，关于这一点社区基本已经达成共识：Kubernetes 就是云原生下的操作系统；</li>
 <li>在 Kubernetes 之上，是 Mesh 层。不仅仅有我们熟悉的 Service Mesh，还有诸如 Database Mesh 和 Message Mesh 等类似的其他 Mesh 产品形态，这些 Mesh 组成了一个标准化的通信层；</li>
@@ -560,14 +516,12 @@
 <li>瘦身之后的应用，其内容主要是业务逻辑实现。这样的工作负载形式，更适合 Serverless 的要求，为接下来转型 Serverless 做好准备；</li>
 </ul>
 <p>所以，我的最后一个建议是，请结合你的长远发展方向考虑：如果云原生是你的诗和远方，那么 Service Mesh 就是必由之路。</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/22521b91cec58acee5ef41d600c5bae8_yzjzsu.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/22521b91cec58acee5ef41d600c5bae8_yzjzsu.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/22521b91cec58acee5ef41d600c5bae8_yzjzsu.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/22521b91cec58acee5ef41d600c5bae8_yzjzsu.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/22521b91cec58acee5ef41d600c5bae8_yzjzsu.png"
-        title="ppt-28.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/22521b91cec58acee5ef41d600c5bae8_yzjzsu.png"/> <figcaption>
+            <h4>ppt-28.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>Kubernetes / Service Mesh / Serverless 是当下云原生落地实践的三驾马车，相辅相成，相得益彰。</p>
 <!-- raw HTML omitted -->
 <p>在最后，重申一下 Service Mesh 的核心价值：</p>
@@ -582,28 +536,24 @@ Service Mesh 的多语言支持和应用无感知升级；</p>
 <p>在今天的内容中，首先介绍了蚂蚁金服 Service Mesh 的发展历程，给大家展示了双十一大规模落地的规模和性能指标，并解释了这些指标背后的原理。然后分享了蚂蚁金服在 Service Mesh 大规模落地中遇到的困难和挑战，以及我们为此做的工作，重点介绍了应用平滑迁移的所谓“终极方案”；最后结合蚂蚁金服在云原生和 Service Mesh 上的实践心得，对于是否应该采用 Service Mesh 给出了几点建议。</p>
 <p>目前蚂蚁金服正在静待今年的双十一大考，这将是 Service Mesh 的历史时刻：全球最大规模的 Service Mesh 集群，Service Mesh 首次超大规模部署&hellip;&hellip; 一切都是如此的值得期待。</p>
 <p>请对 Service Mesh 感兴趣的同学稍后继续关注，预期在双十一之后会有一系列的分享活动：</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/30cf8b6b693807c8e1aae0a4aa04dad1_skkjmn.png"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/30cf8b6b693807c8e1aae0a4aa04dad1_skkjmn.png, https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/30cf8b6b693807c8e1aae0a4aa04dad1_skkjmn.png 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/30cf8b6b693807c8e1aae0a4aa04dad1_skkjmn.png 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/30cf8b6b693807c8e1aae0a4aa04dad1_skkjmn.png"
-        title="ppt-31-1.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180591/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/30cf8b6b693807c8e1aae0a4aa04dad1_skkjmn.png"/> <figcaption>
+            <h4>ppt-31-1.png</h4>
+        </figcaption>
+</figure>
+</p>
 <ul>
 <li>经验分享：会有更多的技术分享，包括落地场景，经验教训，实施方案，架构设计…</li>
 <li>开源贡献：蚂蚁金服会将落地实践中的技术实现和方案以不同的方式回馈社区，推动 Service Mesh 落地实践。目前这个工作正在实质性的进行中， 请留意我们稍后公布的消息；</li>
 <li>商务合作：蚂蚁金服即将推出 Service Mesh 产品，提供商业产品和技术支持，提供金融级特性，欢迎联系；</li>
 <li>社区交流：ServiceMesher 技术社区继续承担国内 Service Mesh 布道和交流的重任；欢迎参加我们今年正在持续举办的 Service Mesh Meetup 活动。</li>
 </ul>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/9d7bc39127fd9682851c8d8b5ff3ba54_mjcxbz.jpg"
-        data-srcset="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/9d7bc39127fd9682851c8d8b5ff3ba54_mjcxbz.jpg, https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/9d7bc39127fd9682851c8d8b5ff3ba54_mjcxbz.jpg 1.5x, https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/9d7bc39127fd9682851c8d8b5ff3ba54_mjcxbz.jpg 2x"
-        data-sizes="auto"
-        alt="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/9d7bc39127fd9682851c8d8b5ff3ba54_mjcxbz.jpg"
-        title="ppt-32.png" /></p>
+<p>(<figure>
+    <img src="https://res.cloudinary.com/dogbaobao/image/upload/v1573180592/blog/servermesh%E6%B7%B1%E5%BA%A6%E5%AE%9E%E8%B7%B5/9d7bc39127fd9682851c8d8b5ff3ba54_mjcxbz.jpg"/> <figcaption>
+            <h4>ppt-32.png</h4>
+        </figcaption>
+</figure>
+</p>
 <p>今年是我在 QCon 演讲的第三年，这三年中的三次演讲，可以说是从一个侧面反映了国内 Service Mesh 发展的不同阶段：</p>
 <p>2017 年，国内 Service Mesh 一片蛮荒的时候，我做了 Service Mesh 的布道，介绍了 Service Mesh 的原理，喊出了“下一代微服务”的口号 ;</p>
 <p>2018 年，以蚂蚁金服为代表的国内互联网企业，陆陆续续开始了 Service Mesh 的落地探索，所谓摸着石头过河不外如是。第二次演讲我分享了蚂蚁金服的探索性实践，介绍了蚂蚁金服的 Service Mesh 落地方式和思路。</p>

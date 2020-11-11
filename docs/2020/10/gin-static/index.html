@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2020\/10\/gin-static\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "静态资源, React, Ant Design","wordcount":  1919 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "静态资源, React, Ant Design","wordcount":  2006 ,
         "url": "https:\/\/blog.funnycode.cn\/2020\/10\/gin-static\/","datePublished": "2020-10-23T19:02:31+08:00","dateModified": "2020-10-23T19:02:31+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -107,8 +107,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">一拳搞定 Gin | 前后端分离下静态资源部署到后端访问</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/gin/"><i class="far fa-folder fa-fw"></i>Gin</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-23">2020-10-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1919 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/2020/10/gin-static/" class="leancloud_visitors" data-flag-title="一拳搞定 Gin | 前后端分离下静态资源部署到后端访问">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-23">2020-10-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2006 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="/2020/10/gin-static/" class="leancloud_visitors" data-flag-title="一拳搞定 Gin | 前后端分离下静态资源部署到后端访问">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -126,6 +126,7 @@
         <li><a href="#23-扩展阅读">2.3 扩展阅读</a></li>
       </ul>
     </li>
+    <li><a href="#三参考">三、参考</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>本文介绍通过 Gin 框架访问后端的静态资源</p>
@@ -501,8 +502,11 @@ http://127.0.0.1:8080/favicon.ico
 <li>isFrontPageRouter 是否是前端页面的路径，如果是前端页面会改写 <code>URL.Path = &quot;/&quot;</code>，保证始终访问 <code>index.html</code> 文件</li>
 </ul>
 <h3 id="23-扩展阅读">2.3 扩展阅读</h3>
-<h4 id="231-前端页面">2.3.1 前端页面</h4>
-<p>扩展官方的示例，如何返回一个 HTML</p>
+<blockquote>
+<p>下面内容只是简单跑个 demo 看看效果，在前后端分离后几乎用不到</p>
+</blockquote>
+<h4 id="231-直接返回前端html">2.3.1 直接返回前端HTML</h4>
+<p>启动程序</p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 	<span class="nx">r</span> <span class="o">:=</span> <span class="nx">gin</span><span class="p">.</span><span class="nf">Default</span><span class="p">()</span>
 
@@ -523,7 +527,7 @@ http://127.0.0.1:8080/favicon.ico
 	<span class="c1">// listen and serve on 0.0.0.0:8080
 </span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">)</span>
 <span class="p">}</span>
-</code></pre></div><p>上面的两个请求返回效果如图：</p>
+</code></pre></div><p>效果</p>
 <figure>
     <img src="/2020/10/gin-static/json.jpg"/> <figcaption>
             <h4>json</h4>
@@ -534,7 +538,43 @@ http://127.0.0.1:8080/favicon.ico
     <img src="/2020/10/gin-static/pure.jpg"/> <figcaption>
             <h4>pure</h4>
         </figcaption>
-</figure></div><div class="post-footer" id="post-footer">
+</figure>
+
+<h4 id="232-通过模板返回html">2.3.2 通过模板返回HTML</h4>
+<p>创建模板</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ mkdir templates <span class="o">&amp;&amp;</span> touch index.tmpl
+</code></pre></div><p>编辑模板</p>
+<div class="highlight"><pre class="chroma"><code class="language-tmpl" data-lang="tmpl"><span class="x">&lt;html&gt;
+</span><span class="x">&lt;body&gt;
+</span><span class="x">&lt;h1&gt;
+</span><span class="x">    {{ .title }}
+</span><span class="x">&lt;/h1&gt;
+</span><span class="x">&lt;/body&gt;
+</span><span class="x">&lt;/html&gt;
+</span></code></pre></div><p>启动程序</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">r</span> <span class="o">:=</span> <span class="nx">gin</span><span class="p">.</span><span class="nf">Default</span><span class="p">()</span>
+
+  <span class="nx">r</span><span class="p">.</span><span class="nf">LoadHTMLGlob</span><span class="p">(</span><span class="nx">dir</span> <span class="o">+</span> <span class="s">&#34;/src/gin/templates/*&#34;</span><span class="p">)</span>
+  <span class="nx">r</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/index&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">c</span><span class="p">.</span><span class="nf">HTML</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span> <span class="s">&#34;index.tmpl&#34;</span><span class="p">,</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">H</span><span class="p">{</span>
+      <span class="s">&#34;title&#34;</span><span class="p">:</span> <span class="s">&#34;Main website&#34;</span><span class="p">,</span>
+    <span class="p">})</span>
+  <span class="p">})</span>
+
+  <span class="c1">// listen and serve on 0.0.0.0:8080
+</span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p>效果</p>
+<figure>
+    <img src="/2020/10/gin-static/pure.jpg"/> <figcaption>
+            <h4>pure</h4>
+        </figcaption>
+</figure>
+
+<h2 id="三参考">三、参考</h2>
+<p><a href="https://github.com/gin-gonic/gin#serving-static-files">https://github.com/gin-gonic/gin#serving-static-files</a></p>
+<p><a href="https://github.com/gin-gonic/gin#html-rendering">https://github.com/gin-gonic/gin#html-rendering</a></p></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

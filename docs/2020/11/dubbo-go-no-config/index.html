@@ -5,29 +5,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>Mac 上配置多个 GitHub 的 ssh 账号 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="Mac 上配置多个 GitHub 的 ssh 账号" />
-<meta property="og:description" content="本文介绍如何在一台电脑上，配置多个 Git 的连接信息，同时连接 GitHub 和公司的 GitLab。" />
+        <title>一拳搞定 dubbo-go | 不想通过标准的配置文件来启动 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="一拳搞定 dubbo-go | 不想通过标准的配置文件来启动" />
+<meta property="og:description" content="本文介绍如何玩转 dubbogo 的配置文件" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.funnycode.cn/2020/10/multi-git-account/" />
-<meta property="article:published_time" content="2020-10-29T14:11:30+08:00" />
-<meta property="article:modified_time" content="2020-10-29T14:11:30+08:00" />
+<meta property="og:url" content="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" />
+<meta property="article:published_time" content="2020-11-10T21:10:29+08:00" />
+<meta property="article:modified_time" content="2020-11-10T21:10:29+08:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Mac 上配置多个 GitHub 的 ssh 账号"/>
-<meta name="twitter:description" content="本文介绍如何在一台电脑上，配置多个 Git 的连接信息，同时连接 GitHub 和公司的 GitLab。"/>
+<meta name="twitter:title" content="一拳搞定 dubbo-go | 不想通过标准的配置文件来启动"/>
+<meta name="twitter:description" content="本文介绍如何玩转 dubbogo 的配置文件"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/2020/10/multi-git-account/" /><link rel="prev" href="https://blog.funnycode.cn/2020/10/gin-static/" /><link rel="next" href="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" /><link rel="prev" href="https://blog.funnycode.cn/2020/10/multi-git-account/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Mac 上配置多个 GitHub 的 ssh 账号",
+        "headline": "一拳搞定 dubbo-go | 不想通过标准的配置文件来启动",
         "inLanguage": "tc",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/blog.funnycode.cn\/2020\/10\/multi-git-account\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "ssh, git","wordcount":  283 ,
-        "url": "https:\/\/blog.funnycode.cn\/2020\/10\/multi-git-account\/","datePublished": "2020-10-29T14:11:30+08:00","dateModified": "2020-10-29T14:11:30+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@id": "https:\/\/blog.funnycode.cn\/2020\/11\/dubbo-go-no-config\/"
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "配置","wordcount":  344 ,
+        "url": "https:\/\/blog.funnycode.cn\/2020\/11\/dubbo-go-no-config\/","datePublished": "2020-11-10T21:10:29+08:00","dateModified": "2020-11-10T21:10:29+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
                 "@type": "Person",
@@ -44,7 +44,7 @@
         </div>
         <div class="menu">
             <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/cityiron" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2020/10/multi-git-account/" selected>简体中文</option></select>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2020/11/dubbo-go-no-config/" selected>简体中文</option></select>
                     </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
@@ -91,7 +91,7 @@
                 </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/cityiron" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw"></i>
             </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/2020/10/multi-git-account/" selected>简体中文</option></select>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2020/11/dubbo-go-no-config/" selected>简体中文</option></select>
                 </a></div>
     </div>
 </header>
@@ -105,10 +105,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">Mac 上配置多个 GitHub 的 ssh 账号</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/github/"><i class="far fa-folder fa-fw"></i>GitHub</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-29">2020-10-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 283 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2020/10/multi-git-account/" class="leancloud_visitors" data-flag-title="Mac 上配置多个 GitHub 的 ssh 账号">
+        </div><article class="page single"><h1 class="single-title animated flipInX">一拳搞定 dubbo-go | 不想通过标准的配置文件来启动</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/dubbogo/"><i class="far fa-folder fa-fw"></i>dubbogo</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-10">2020-11-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 344 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2020/11/dubbo-go-no-config/" class="leancloud_visitors" data-flag-title="一拳搞定 dubbo-go | 不想通过标准的配置文件来启动">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -119,72 +119,68 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#一前言">一、前言</a></li>
-    <li><a href="#二如何配置">二、如何配置</a></li>
-    <li><a href="#三参考资源">三、参考资源</a></li>
+    <li><a href="#二实战分析">二、实战分析</a>
+      <ul>
+        <li><a href="#21-去掉-client-端的配置文件">2.1 去掉 client 端的配置文件</a></li>
+      </ul>
+    </li>
+    <li><a href="#三参考">三、参考</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>本文介绍如何在一台电脑上，配置多个 Git 的连接信息，同时连接 GitHub 和公司的 GitLab。</p>
+            </div><div class="content" id="content"><p>本文介绍如何玩转 dubbogo 的配置文件</p>
 <h2 id="一前言">一、前言</h2>
-<p>日常工作时我本机需要连接公司的 Gitlab，还需要连接两个 GitHub 账号，本地使用的时候免不了需要不同的 SSH 认证登录。</p>
-<h2 id="二如何配置">二、如何配置</h2>
-<ul>
-<li>添加 ssh-agent</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">eval</span> <span class="s2">&#34;</span><span class="k">$(</span>ssh-agent -s<span class="k">)</span><span class="s2">&#34;</span>
-Agent pid <span class="m">65799</span>
-</code></pre></div><ul>
-<li>查看初始化的认证信息</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ ssh-add -L
-The agent has no identities.
-</code></pre></div><ul>
-<li>把 rsa 私钥添加到 ssh</li>
-</ul>
-<pre><code>$ ssh-add ~/.ssh/id_rsa2
-Identity added: /Users/tc/.ssh/id_rsa2 (/Users/tc/.ssh/id_rsa2)
-</code></pre><ul>
-<li>查看添加后的认证信息</li>
-</ul>
-<pre><code>$ ssh-add -L
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmz+FyF/uuIYAedTbzQoAE+wnHG3/uzqQ2Mv9QQbjcWOOjOlTmL48rYTH6hA1rJQl9hFsTrYzTbKYlV1h7oNqT/7nUsmNOhItg51DcvSbA/PSw+2jADkbMV6bnKUtJmx7gxu7RKuWi48smEewYny/zMIJSPRu5Tr1G6WX/zEtonJntgEJELfgrJntgBikTZ/QJOGtejwWJjEPyKyNji0O4o0tmK5Xql+MG0O109Xa5toRBADFWqz+Popk7MNFuooRp/Fz0b4tLTvvlfwrEGDu0z4qmlShTmiZNQhYQsmiwpt27/IUo2Cw8J62EEUqviykuNeZBzYCGMXd3Mcg/CpTPbtBb /Users/tc/.ssh/id_rsa2
-</code></pre><ul>
-<li>查看 github.com 交互的账号信息</li>
-</ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ ssh -T git@github.com
-
-Hi cityiron! You<span class="err">&#39;</span>ve successfully authenticated, but GitHub does not provide shell access.
-</code></pre></div><p>当出现 <code>Hi [yourname]</code>， name 和你要操作的仓库所在的 github 账号一样，那么就可以正常使用 Git 命令。</p>
-<blockquote>
-<p>每一个 terminal 可以是独立的 session，当电脑启动的时候，默认所有的 terminal 共享一个账号信息</p>
-</blockquote>
-<h2 id="三参考资源">三、参考资源</h2>
-<p><a href="https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent</a></p></div><div class="post-footer" id="post-footer">
+<p>dubbogo 是 dubbo 这个 RPC 框架在 go 语言下的延伸，也是各位 Java 开发人员上手 go 的一个优秀开源项目。启动 dubbogo 经常需要配置环境变量，如 <code>CONF_PROVIDER_FILE_PATH</code>，<code>CONF_CONSUMER_FILE_PATH</code> 两个最典型的例子。在 idea 中启动的时候，每次都需要加这个还是比较麻烦的，其实大部分跑例子的时候只需要关心注册中心的相关信息。</p>
+<p>欢迎━(<em>｀∀´</em>)ノ亻!点 star (dubbogo)[https://github.com/apache/dubbo-go]</p>
+<h2 id="二实战分析">二、实战分析</h2>
+<h3 id="21-去掉-client-端的配置文件">2.1 去掉 client 端的配置文件</h3>
+<h4 id="211-泛化调用-consumer-端">2.1.1 泛化调用 consumer 端</h4>
+<p><strong>应用配置</strong></p>
+<p>你可以定义一个默认的应用配置，如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">defaultApplication</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">dg</span><span class="p">.</span><span class="nx">ApplicationConfig</span><span class="p">{</span>
+  <span class="nx">Organization</span><span class="p">:</span> <span class="s">&#34;dubbo-go-proxy&#34;</span><span class="p">,</span>
+  <span class="nx">Name</span><span class="p">:</span>         <span class="s">&#34;Dubbogo Proxy&#34;</span><span class="p">,</span>
+  <span class="nx">Module</span><span class="p">:</span>       <span class="s">&#34;dubbogo proxy&#34;</span><span class="p">,</span>
+  <span class="nx">Version</span><span class="p">:</span>      <span class="s">&#34;0.1.0&#34;</span><span class="p">,</span>
+  <span class="nx">Owner</span><span class="p">:</span>        <span class="s">&#34;Dubbogo Proxy&#34;</span><span class="p">,</span>
+  <span class="nx">Environment</span><span class="p">:</span>  <span class="s">&#34;dev&#34;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div><p>实际使用的时候，应用会有系统环境变量指明应用名称和环境等，上述的几个标准参数应该从业务约定的系统环境变量读取。</p>
+<p><strong>构建 ConsumerConfig</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// dubbogo comsumer config
+</span><span class="c1"></span><span class="nx">dgCfg</span> <span class="p">=</span> <span class="nx">dg</span><span class="p">.</span><span class="nx">ConsumerConfig</span><span class="p">{</span>
+  <span class="nx">Check</span><span class="p">:</span>      <span class="nb">new</span><span class="p">(</span><span class="kt">bool</span><span class="p">),</span>
+  <span class="nx">Registries</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">dg</span><span class="p">.</span><span class="nx">RegistryConfig</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+<span class="p">}</span>
+</code></pre></div><p><strong>设置默认 ClientConfig</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">dubbo</span><span class="p">.</span><span class="nf">SetClientConf</span><span class="p">(</span><span class="nx">dubbo</span><span class="p">.</span><span class="nf">GetDefaultClientConfig</span><span class="p">())</span>
+</code></pre></div><p><strong>调用 dubbogo 加载</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">dg</span><span class="p">.</span><span class="nf">Load</span><span class="p">()</span>
+</code></pre></div><h2 id="三参考">三、参考</h2></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2020-10-29</span>
+                <span>更新于 2020-11-10</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/2020/10/multi-git-account/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/2020/11/dubbo-go-no-config/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2020/10/multi-git-account/" data-title="Mac 上配置多个 GitHub 的 ssh 账号" data-hashtags="ssh,git"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2020/10/multi-git-account/" data-hashtag="ssh"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2020/10/multi-git-account/" data-title="Mac 上配置多个 GitHub 的 ssh 账号"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2020/10/multi-git-account/" data-title="Mac 上配置多个 GitHub 的 ssh 账号"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2020/10/multi-git-account/" data-title="Mac 上配置多个 GitHub 的 ssh 账号"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-title="一拳搞定 dubbo-go | 不想通过标准的配置文件来启动" data-hashtags="配置"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-hashtag="配置"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-title="一拳搞定 dubbo-go | 不想通过标准的配置文件来启动"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-title="一拳搞定 dubbo-go | 不想通过标准的配置文件来启动"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-title="一拳搞定 dubbo-go | 不想通过标准的配置文件来启动"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/ssh/">ssh</a>,&nbsp;<a href="/tags/git/">git</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E9%85%8D%E7%BD%AE/">配置</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2020/10/gin-static/" class="prev" rel="prev" title="一拳搞定 Gin | 前后端分离下静态资源部署到后端访问"><i class="fas fa-angle-left fa-fw"></i>一拳搞定 Gin | 前后端分离下静态资源部署到后端访问</a>
-            <a href="/2020/11/dubbo-go-no-config/" class="next" rel="next" title="一拳搞定 dubbo-go | 不想通过标准的配置文件来启动">一拳搞定 dubbo-go | 不想通过标准的配置文件来启动<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/2020/10/multi-git-account/" class="prev" rel="prev" title="Mac 上配置多个 GitHub 的 ssh 账号"><i class="fas fa-angle-left fa-fw"></i>Mac 上配置多个 GitHub 的 ssh 账号</a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.

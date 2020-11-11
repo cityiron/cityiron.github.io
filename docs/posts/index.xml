@@ -4,7 +4,14 @@
         <link>https://blog.funnycode.cn/posts/</link>
         <description>所有文章 | Funnycode</description>
         <generator>Hugo -- gohugo.io</generator><language>tc</language><managingEditor>tczjhz@163.com (tiecheng)</managingEditor>
-            <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 29 Oct 2020 14:11:30 &#43;0800</lastBuildDate><atom:link href="https://blog.funnycode.cn/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 10 Nov 2020 21:10:29 &#43;0800</lastBuildDate><atom:link href="https://blog.funnycode.cn/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>一拳搞定 dubbo-go | 不想通过标准的配置文件来启动</title>
+    <link>https://blog.funnycode.cn/2020/11/dubbo-go-no-config/</link>
+    <pubDate>Tue, 10 Nov 2020 21:10:29 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.funnycode.cn/2020/11/dubbo-go-no-config/</guid>
+    <description><![CDATA[<p>本文介绍如何玩转 dubbogo 的配置文件</p>]]></description>
+</item><item>
     <title>Mac 上配置多个 GitHub 的 ssh 账号</title>
     <link>https://blog.funnycode.cn/2020/10/multi-git-account/</link>
     <pubDate>Thu, 29 Oct 2020 14:11:30 &#43;0800</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>https://blog.funnycode.cn/2019/11/pattern-template/</guid>
     <description><![CDATA[<p>本文介绍如何在 go 语言中使用模板模式.</p>]]></description>
-</item><item>
-    <title>【转载】蚂蚁金服 Service Mesh 深度实践</title>
-    <link>https://blog.funnycode.cn/2019/11/server-mesh-ant/</link>
-    <pubDate>Thu, 07 Nov 2019 11:17:01 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://blog.funnycode.cn/2019/11/server-mesh-ant/</guid>
-    <description><![CDATA[<p>本文介绍 敖小剑大佬在 QCon 上关于 Service Mesh 的分享。</p>]]></description>
 </item></channel>
 </rss>

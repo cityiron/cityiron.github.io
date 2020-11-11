@@ -430,8 +430,11 @@ func StripPrefix(prefix, exclude string, h http.Handler) http.Handler {
 
 ### 2.3 扩展阅读
 
-#### 2.3.1 前端页面
-扩展官方的示例，如何返回一个 HTML
+> 下面内容只是简单跑个 demo 看看效果，在前后端分离后几乎用不到
+
+#### 2.3.1 直接返回前端HTML
+
+启动程序
 
 ```go
 func main() {
@@ -456,9 +459,57 @@ func main() {
 }
 ```
 
-上面的两个请求返回效果如图：
+效果
 
 {{< figure src="/2020/10/gin-static/json.jpg" title="json" >}}
 
 {{< figure src="/2020/10/gin-static/pure.jpg" title="pure" >}}
+
+#### 2.3.2 通过模板返回HTML
+
+创建模板
+
+```bash
+$ mkdir templates && touch index.tmpl
+```
+
+编辑模板
+
+```tmpl
+<html>
+<body>
+<h1>
+    {{ .title }}
+</h1>
+</body>
+</html>
+```
+
+启动程序
+
+```go
+func main() {
+	r := gin.Default()
+
+  r.LoadHTMLGlob(dir + "/src/gin/templates/*")
+  r.GET("/index", func(c *gin.Context) {
+    c.HTML(http.StatusOK, "index.tmpl", gin.H{
+      "title": "Main website",
+    })
+  })
+
+  // listen and serve on 0.0.0.0:8080
+	r.Run(":8080")
+}
+```
+
+效果
+
+{{< figure src="/2020/10/gin-static/pure.jpg" title="pure" >}}
+
+## 三、参考
+
+https://github.com/gin-gonic/gin#serving-static-files
+
+https://github.com/gin-gonic/gin#html-rendering
 
