@@ -12,6 +12,13 @@
     <guid>https://blog.funnycode.cn/2020/11/dubbo-go-no-config/</guid>
     <description><![CDATA[<p>本文介绍如何玩转 dubbogo 的配置文件</p>]]></description>
 </item><item>
+    <title>键盘 | 斐尔可圣手二代</title>
+    <link>https://blog.funnycode.cn/2020/11/keyboard-mac/</link>
+    <pubDate>Mon, 02 Nov 2020 16:06:54 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.funnycode.cn/2020/11/keyboard-mac/</guid>
+    <description><![CDATA[<p>本文介绍斐尔可圣手二代键盘的使用体验 <a href="https://detail.tmall.com/item.htm?spm=a1z10.5-b-s.w4011-21194147467.56.1291578c5rZjFp&amp;id=583184674550&amp;rn=0456efcf7f3fee22b43f73989ec769dc&amp;abbucket=6&amp;sku_properties=5919063:6536025" target="_blank" rel="noopener noreffer">官方购买</a></p>]]></description>
+</item><item>
     <title>Mac 上配置多个 GitHub 的 ssh 账号</title>
     <link>https://blog.funnycode.cn/2020/10/multi-git-account/</link>
     <pubDate>Thu, 29 Oct 2020 14:11:30 &#43;0800</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>https://blog.funnycode.cn/2020/05/domain-primitive/</guid>
     <description><![CDATA[<p>本文介绍一个实际项目中可以使用的概念: Domain Primitive.</p>]]></description>
-</item><item>
-    <title>模板模式</title>
-    <link>https://blog.funnycode.cn/2019/11/pattern-template/</link>
-    <pubDate>Sat, 09 Nov 2019 19:00:33 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://blog.funnycode.cn/2019/11/pattern-template/</guid>
-    <description><![CDATA[<p>本文介绍如何在 go 语言中使用模板模式.</p>]]></description>
 </item></channel>
 </rss>

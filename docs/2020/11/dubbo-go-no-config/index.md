@@ -8,7 +8,7 @@
 
 dubbogo 是 dubbo 这个 RPC 框架在 go 语言下的延伸，也是各位 Java 开发人员上手 go 的一个优秀开源项目。启动 dubbogo 经常需要配置环境变量，如 `CONF_PROVIDER_FILE_PATH`，`CONF_CONSUMER_FILE_PATH` 两个最典型的例子。在 idea 中启动的时候，每次都需要加这个还是比较麻烦的，其实大部分跑例子的时候只需要关心注册中心的相关信息。
 
-欢迎━(*｀∀´*)ノ亻!点 star !(dubbogo)[https://github.com/apache/dubbo-go]
+欢迎━(*｀∀´*)ノ亻!点 star [dubbogo](https://github.com/apache/dubbo-go)
 
 ## 二、实战分析
 
