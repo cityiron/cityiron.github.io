@@ -1,10 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>键盘 - 标签 - Funnycode</title>
-        <link>https://blog.funnycode.cn/tags/%E9%94%AE%E7%9B%98/</link>
-        <description>键盘 - 标签 - Funnycode</description>
+        <title>外设 - 分类 - Funnycode</title>
+        <link>https://blog.funnycode.cn/categories/%E5%A4%96%E8%AE%BE/</link>
+        <description>外设 - 分类 - Funnycode</description>
         <generator>Hugo -- gohugo.io</generator><language>tc</language><managingEditor>tczjhz@163.com (tiecheng)</managingEditor>
-            <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 02 Nov 2020 16:06:54 &#43;0800</lastBuildDate><atom:link href="https://blog.funnycode.cn/tags/%E9%94%AE%E7%9B%98/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 02 Nov 2020 16:06:54 &#43;0800</lastBuildDate><atom:link href="https://blog.funnycode.cn/categories/%E5%A4%96%E8%AE%BE/" rel="self" type="application/rss+xml" /><item>
     <title>外设 | 斐尔可圣手二代键盘</title>
     <link>https://blog.funnycode.cn/2020/11/keyboard-mac/</link>
     <pubDate>Mon, 02 Nov 2020 16:06:54 &#43;0800</pubDate>
