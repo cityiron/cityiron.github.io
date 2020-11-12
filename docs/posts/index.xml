@@ -68,11 +68,11 @@
     <guid>https://blog.funnycode.cn/2020/09/talkgo-algorithms-01/</guid>
     <description><![CDATA[<p>本文介绍 TalkGo 算法之美第一期题解</p>]]></description>
 </item><item>
-    <title>领域驱动实战 | Domain Primitive 的简单使用</title>
-    <link>https://blog.funnycode.cn/2020/05/domain-primitive/</link>
-    <pubDate>Thu, 28 May 2020 20:13:43 &#43;0800</pubDate>
+    <title>【翻译】DDD聚合：乐观并发</title>
+    <link>https://blog.funnycode.cn/2020/07/ddd-optimistic-concurrency/</link>
+    <pubDate>Sat, 11 Jul 2020 11:07:13 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://blog.funnycode.cn/2020/05/domain-primitive/</guid>
-    <description><![CDATA[<p>本文介绍一个实际项目中可以使用的概念: Domain Primitive.</p>]]></description>
+    <guid>https://blog.funnycode.cn/2020/07/ddd-optimistic-concurrency/</guid>
+    <description><![CDATA[<p>本文介绍通过乐观并发解决协作域的问题</p>]]></description>
 </item></channel>
 </rss>

@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>聚合根 - 标签 - Funnycode</title>
+        <link>https://blog.funnycode.cn/tags/%E8%81%9A%E5%90%88%E6%A0%B9/</link>
+        <description>聚合根 - 标签 - Funnycode</description>
+        <generator>Hugo -- gohugo.io</generator><language>tc</language><managingEditor>tczjhz@163.com (tiecheng)</managingEditor>
+            <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 11 Jul 2020 11:07:13 &#43;0800</lastBuildDate><atom:link href="https://blog.funnycode.cn/tags/%E8%81%9A%E5%90%88%E6%A0%B9/" rel="self" type="application/rss+xml" /><item>
+    <title>【翻译】DDD聚合：乐观并发</title>
+    <link>https://blog.funnycode.cn/2020/07/ddd-optimistic-concurrency/</link>
+    <pubDate>Sat, 11 Jul 2020 11:07:13 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.funnycode.cn/2020/07/ddd-optimistic-concurrency/</guid>
+    <description><![CDATA[<p>本文介绍通过乐观并发解决协作域的问题</p>]]></description>
+</item></channel>
+</rss>
