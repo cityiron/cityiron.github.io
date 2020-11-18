@@ -4,9 +4,9 @@
 
 <!--more-->
 
-## 一、前言
-
 [原文](https://www.jamesmichaelhickey.com/optimistic-concurrency/)
+
+## 一、前言
 
 使用乐观并发解决协作域的问题
 

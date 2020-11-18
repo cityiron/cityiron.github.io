@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>golang - 分类 - Funnycode</title>
+        <link>https://blog.funnycode.cn/categories/golang/</link>
+        <description>golang - 分类 - Funnycode</description>
+        <generator>Hugo -- gohugo.io</generator><language>tc</language><managingEditor>tczjhz@163.com (tiecheng)</managingEditor>
+            <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 18 Nov 2020 09:25:28 &#43;0800</lastBuildDate><atom:link href="https://blog.funnycode.cn/categories/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>一拳搞定 Casbin | 不合理使用导致数据量连接池太多</title>
+    <link>https://blog.funnycode.cn/2020/11/casbin-too-many-connections/</link>
+    <pubDate>Wed, 18 Nov 2020 09:25:28 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://blog.funnycode.cn/2020/11/casbin-too-many-connections/</guid>
+    <description><![CDATA[<p>本文介绍 casbin 使用过程中出现 <code>too Many Connections</code> 的情况</p>]]></description>
+</item></channel>
+</rss>
