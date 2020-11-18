@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="tc">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>一拳搞定 Casbin | 不合理使用导致数据量连接池太多 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="一拳搞定 Casbin | 不合理使用导致数据量连接池太多" />
+<meta property="og:description" content="本文介绍 casbin 使用过程中出现 too Many Connections 的情况" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.funnycode.cn/2020/08/casbin-too-many-connections/" />
+<meta property="article:published_time" content="2020-08-12T09:37:22+08:00" />
+<meta property="article:modified_time" content="2020-10-18T09:29:29+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="一拳搞定 Casbin | 不合理使用导致数据量连接池太多"/>
+<meta name="twitter:description" content="本文介绍 casbin 使用过程中出现 too Many Connections 的情况"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.funnycode.cn/2020/08/casbin-too-many-connections/" /><link rel="prev" href="https://blog.funnycode.cn/2020/07/ddd-optimistic-concurrency/" /><link rel="next" href="https://blog.funnycode.cn/2020/09/talkgo-algorithms-01/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "一拳搞定 Casbin | 不合理使用导致数据量连接池太多",
+        "inLanguage": "tc",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.funnycode.cn\/2020\/08\/casbin-too-many-connections\/"
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "casbin","wordcount":  1395 ,
+        "url": "https:\/\/blog.funnycode.cn\/2020\/08\/casbin-too-many-connections\/","datePublished": "2020-08-12T09:37:22+08:00","dateModified": "2020-10-18T09:29:29+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
+                "@type": "Person",
+                "name": "tiecheng"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Funnycode">Funnycode Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/cityiron" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2020/08/casbin-too-many-connections/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Funnycode">Funnycode Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/cityiron" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2020/08/casbin-too-many-connections/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">一拳搞定 Casbin | 不合理使用导致数据量连接池太多</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-08-12">2020-08-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1395 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id="/2020/08/casbin-too-many-connections/" class="leancloud_visitors" data-flag-title="一拳搞定 Casbin | 不合理使用导致数据量连接池太多">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一前言">一、前言</a></li>
+    <li><a href="#二事情经过">二、事情经过</a>
+      <ul>
+        <li><a href="#21-问题描述">2.1 问题描述</a></li>
+        <li><a href="#22-排查">2.2 排查</a></li>
+      </ul>
+    </li>
+    <li><a href="#三参考">三、参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本文介绍 casbin 使用过程中出现 <code>too Many Connections</code> 的情况</p>
+<h2 id="一前言">一、前言</h2>
+<p>在新的项目中采用<a href="https://github.com/casbin/casbin" target="_blank" rel="noopener noreffer">casbin</a>来对角色权限进行验证，角色和权限的关系保存在数据库，因为对 casbin 的代码不熟悉，直接使用了它官方提供的其他人的示例代码来跑的功能，导致每次都去创建<code>casbin.Enforcer</code>（会有数据库连接），所幸在本地开发过程中发现了这个问题及时纠正。</p>
+<h2 id="二事情经过">二、事情经过</h2>
+<h3 id="21-问题描述">2.1 问题描述</h3>
+<p>开发环境运行，每次页面刷新都会请求后端服务查询用户信息（没有加缓存，每次查询数据库），突然开始数据库报错</p>
+<p><code>too Many Connections</code></p>
+<h3 id="22-排查">2.2 排查</h3>
+<p>数据库连接池满，首先去查看数据库的连接池配置和项目中数据库连接池的配置。</p>
+<h4 id="221-数据库信息">2.2.1 数据库信息</h4>
+<p><strong>数据库配置的连接池数量</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">show</span> <span class="n">variables</span> <span class="k">like</span> <span class="s1">&#39;%max_connections%&#39;</span><span class="p">;</span>
+
+<span class="n">max_connections</span>	<span class="mi">128</span>
+</code></pre></div><blockquote>
+<p>如果要设置数据库连接的最大值呢？</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">//</span> <span class="err">设置最大连接数</span> <span class="mi">1000</span><span class="err">，但是如果数据库重启，就会失效，要永久有效需要配置到</span> <span class="n">MySQL</span> <span class="err">的配置文件</span>
+<span class="k">set</span> <span class="k">GLOBAL</span> <span class="n">max_connections</span><span class="o">=</span><span class="mi">1000</span><span class="p">;</span>
+</code></pre></div><p><strong>查看连接进程</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">show</span> <span class="n">processlist</span><span class="p">;</span>
+
+<span class="mi">2313</span>	<span class="n">root</span>	<span class="n">localhost</span><span class="p">:</span><span class="mi">50629</span>		<span class="n">Sleep</span>	<span class="mi">53111</span>
+<span class="mi">2313</span>	<span class="n">root</span>	<span class="n">localhost</span><span class="p">:</span><span class="mi">60621</span>		<span class="n">Sleep</span>	<span class="mi">33149</span>
+<span class="mi">2313</span>	<span class="n">root</span>	<span class="n">localhost</span><span class="p">:</span><span class="mi">50893</span>		<span class="n">Sleep</span>	<span class="mi">22447</span>
+<span class="p">...</span>
+<span class="mi">2313</span>	<span class="n">root</span>	<span class="n">localhost</span><span class="p">:</span><span class="mi">50609</span>		<span class="n">Sleep</span>	<span class="mi">13143</span>
+<span class="mi">2314</span>	<span class="n">root</span>	<span class="n">localhost</span><span class="p">:</span><span class="mi">50610</span>	<span class="n">casbin</span>	<span class="n">Sleep</span>	<span class="mi">13143</span>
+<span class="p">...</span>
+<span class="mi">2315</span>	<span class="n">root</span>	<span class="n">localhost</span><span class="p">:</span><span class="mi">56672</span>	<span class="n">gdcloud</span>	<span class="n">Query</span>	<span class="mi">0</span>	<span class="n">starting</span>	<span class="k">show</span> <span class="n">processlist</span>
+</code></pre></div><p>可以看到连接有一大波的进程是处于 Sleep 状态，MySQL 被建立了很多连接但是没有使用</p>
+<h4 id="222-项目-gorm-数据库配置">2.2.2 项目 Gorm 数据库配置</h4>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">gormSetting</span><span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">gorm</span><span class="p">.</span><span class="nx">DB</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">// 不需要给表加S
+</span><span class="c1"></span>	<span class="nx">db</span><span class="p">.</span><span class="nf">SingularTable</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+	<span class="c1">// 连接池配置
+</span><span class="c1"></span>	<span class="nx">db</span><span class="p">.</span><span class="nf">DB</span><span class="p">().</span><span class="nf">SetMaxIdleConns</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+	<span class="nx">db</span><span class="p">.</span><span class="nf">DB</span><span class="p">().</span><span class="nf">SetMaxOpenConns</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+	<span class="nx">db</span><span class="p">.</span><span class="nf">DB</span><span class="p">().</span><span class="nf">SetConnMaxLifetime</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Hour</span><span class="p">)</span>
+	<span class="c1">// 打开日志
+</span><span class="c1"></span>	<span class="nx">db</span><span class="p">.</span><span class="nf">LogMode</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+	<span class="nx">db</span><span class="p">.</span><span class="nf">Callback</span><span class="p">().</span><span class="nf">Create</span><span class="p">().</span><span class="nf">Replace</span><span class="p">(</span><span class="s">&#34;gorm:update_time_stamp&#34;</span><span class="p">,</span> <span class="nx">updateTimeStampForCreateCallback</span><span class="p">)</span>
+	<span class="c1">// 设置表名前缀
+</span><span class="c1"></span>	<span class="nx">gorm</span><span class="p">.</span><span class="nx">DefaultTableNameHandler</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">db</span> <span class="o">*</span><span class="nx">gorm</span><span class="p">.</span><span class="nx">DB</span><span class="p">,</span> <span class="nx">defaultTableName</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="s">&#34;gdcloud_&#34;</span> <span class="o">+</span> <span class="nx">defaultTableName</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li>最大打开连接数 100</li>
+<li>最大闲置连接数 10</li>
+<li>连接最大保持时间 1小时</li>
+</ul>
+<p>但是 MySQL 的 process 是大于 100的，并且观察请求日志因为涉及到权限，每次请求都会走 casbin 的代码访问，因为项目中除了 gorm 外就 casbin 和数据库有交互。</p>
+<h4 id="223-casbin-持久化逻辑">2.2.3 Casbin 持久化逻辑</h4>
+<blockquote>
+<p>代码从其它列子抄来的，未曾琢磨</p>
+</blockquote>
+<p><strong>连接</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Persisten to db.
+</span><span class="c1">// %s:%s@(%s:%s)/%s?charset=utf8&amp;parseTime=True&amp;loc=Local
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">Casbin</span><span class="p">()</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">casbin</span><span class="p">.</span><span class="nx">Enforcer</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">gormadapter</span><span class="p">.</span><span class="nf">NewAdapter</span><span class="p">(</span><span class="s">&#34;mysql&#34;</span><span class="p">,</span> <span class="s">&#34;root:root@(127.0.0.1:3306)/&#34;</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">casbin</span><span class="p">.</span><span class="nf">NewEnforcer</span><span class="p">(</span><span class="s">&#34;pkg/config/rbac_model.conf&#34;</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
+		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+			<span class="nx">e</span><span class="p">.</span><span class="nf">LoadPolicy</span><span class="p">()</span>
+			<span class="k">return</span> <span class="nx">e</span><span class="p">,</span> <span class="kc">nil</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p><strong>增加策略</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Add casbin policy.
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">AddPolicy</span><span class="p">(</span><span class="nx">p</span> <span class="nx">permissionModel</span><span class="p">)</span> <span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">Casbin</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">err</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">e</span><span class="p">.</span><span class="nf">AddPolicy</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">V0</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">V1</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">V2</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p><strong>验证权限</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">AuthCheckRole</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">//根据上下文获取 claims 从 claims 获得 roles
+</span><span class="c1"></span>	<span class="nx">claims</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">MustGet</span><span class="p">(</span><span class="s">&#34;claims&#34;</span><span class="p">).(</span><span class="o">*</span><span class="nx">jwt</span><span class="p">.</span><span class="nx">Customclaims</span><span class="p">)</span>
+	<span class="nx">role</span> <span class="o">:=</span> <span class="nx">claims</span><span class="p">.</span><span class="nx">Roles</span>
+	<span class="k">if</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">casbin</span><span class="p">.</span><span class="nf">Casbin</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="o">......</span>
+	<span class="p">}</span>
+
+	<span class="o">......</span>
+<span class="p">}</span>
+</code></pre></div><p>看了下代码，就猜到是 Casbin 的问题了，因为每次页面请求都会验证角色权限，而每次都会调用<code>casbin.Casbin()</code>，它又是调用到了 <code>gormadapter.NewAdapter()</code>，每一次都会<code>New</code>的话就很可能占用了一次连接。继续跟进去：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">NewAdapter</span><span class="p">(</span><span class="nx">driverName</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">dataSourceName</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">dbSpecified</span> <span class="o">...</span><span class="kt">bool</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">Adapter</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">a</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Adapter</span><span class="p">{}</span>
+	<span class="nx">a</span><span class="p">.</span><span class="nx">driverName</span> <span class="p">=</span> <span class="nx">driverName</span>
+	<span class="nx">a</span><span class="p">.</span><span class="nx">dataSourceName</span> <span class="p">=</span> <span class="nx">dataSourceName</span>
+
+	<span class="o">......</span>
+
+	<span class="c1">// Open the DB, create it if not existed.
+</span><span class="c1"></span>	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">a</span><span class="p">.</span><span class="nf">open</span><span class="p">()</span>
+
+	<span class="o">......</span>
+
+	<span class="k">return</span> <span class="nx">a</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div><p>可以看到这里有 a.open() 操作，写着打开一个 DB，点进去看：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">a</span> <span class="o">*</span><span class="nx">Adapter</span><span class="p">)</span> <span class="nf">open</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span>
+	<span class="kd">var</span> <span class="nx">db</span> <span class="o">*</span><span class="nx">gorm</span><span class="p">.</span><span class="nx">DB</span>
+
+	<span class="k">if</span> <span class="nx">a</span><span class="p">.</span><span class="nx">dbSpecified</span> <span class="p">{</span>
+		<span class="nx">db</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nf">openDBConnection</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">driverName</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">dataSourceName</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">err</span>
+		<span class="p">}</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">a</span><span class="p">.</span><span class="nf">createDatabase</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">err</span>
+		<span class="p">}</span>
+		<span class="k">if</span> <span class="nx">a</span><span class="p">.</span><span class="nx">driverName</span> <span class="o">==</span> <span class="s">&#34;postgres&#34;</span> <span class="p">{</span>
+			<span class="nx">db</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nf">openDBConnection</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">driverName</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">dataSourceName</span><span class="o">+</span><span class="s">&#34; dbname=casbin&#34;</span><span class="p">)</span>
+		<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">a</span><span class="p">.</span><span class="nx">driverName</span> <span class="o">==</span> <span class="s">&#34;sqlite3&#34;</span> <span class="p">{</span>
+			<span class="nx">db</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nf">openDBConnection</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">driverName</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">dataSourceName</span><span class="p">)</span>
+		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+			<span class="nx">db</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nf">openDBConnection</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">driverName</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">dataSourceName</span><span class="o">+</span><span class="s">&#34;casbin&#34;</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">err</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="nx">a</span><span class="p">.</span><span class="nx">db</span> <span class="p">=</span> <span class="nx">db</span>
+	<span class="k">return</span> <span class="nx">a</span><span class="p">.</span><span class="nf">createTable</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div><p>看到这里的<code>openDBConnection()</code>就彻底明白了，<code>*gorm.DB</code>对象每一次都会创建，每一次创建都会建立连接，最终导致 MySQL 连接满。</p>
+<h4 id="224-改进">2.2.4 改进</h4>
+<p>每次连接改成创建的对象的时候创建一次连接，后面共用 *gorm.DB。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Permission</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">adapter</span>    <span class="o">*</span><span class="nx">gormadapter</span><span class="p">.</span><span class="nx">Adapter</span>
+	<span class="nx">enforcer</span>   <span class="o">*</span><span class="nx">casbin</span><span class="p">.</span><span class="nx">Enforcer</span>
+	<span class="nx">configPath</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">NewPermission</span><span class="p">(</span><span class="nx">dbModel</span> <span class="nx">config</span><span class="p">.</span><span class="nx">DbConfig</span><span class="p">,</span> <span class="nx">path</span> <span class="kt">string</span><span class="p">)</span> <span class="o">*</span><span class="nx">Permission</span> <span class="p">{</span>
+	<span class="nx">p</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Permission</span><span class="p">{</span>
+		<span class="nx">configPath</span><span class="p">:</span> <span class="nx">path</span><span class="p">,</span> <span class="c1">// &#34;pkg/config/rbac_model.conf&#34;
+</span><span class="c1"></span>	<span class="p">}</span>
+	<span class="nx">connArgs</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s:%s@(%s:%s)/&#34;</span><span class="p">,</span> <span class="nx">dbModel</span><span class="p">.</span><span class="nx">Username</span><span class="p">,</span> <span class="nx">dbModel</span><span class="p">.</span><span class="nx">Password</span><span class="p">,</span> <span class="nx">dbModel</span><span class="p">.</span><span class="nx">Host</span><span class="p">,</span> <span class="nx">dbModel</span><span class="p">.</span><span class="nx">Port</span><span class="p">)</span>
+
+	<span class="k">if</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">gormadapter</span><span class="p">.</span><span class="nf">NewAdapter</span><span class="p">(</span><span class="s">&#34;mysql&#34;</span><span class="p">,</span> <span class="nx">connArgs</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="nx">p</span><span class="p">.</span><span class="nx">adapter</span> <span class="p">=</span> <span class="nx">a</span>
+
+		<span class="k">if</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">casbin</span><span class="p">.</span><span class="nf">NewEnforcer</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">configPath</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">adapter</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+			<span class="nx">p</span><span class="p">.</span><span class="nx">enforcer</span> <span class="p">=</span> <span class="nx">e</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="nx">p</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">GetPermission</span><span class="p">()</span> <span class="o">*</span><span class="nx">Permission</span> <span class="p">{</span>
+	<span class="nx">onceNew</span><span class="p">.</span><span class="nf">Do</span><span class="p">(</span><span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">PermissionService</span> <span class="p">=</span> <span class="nf">NewPermission</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nf">GetMustConfig</span><span class="p">().</span><span class="nx">Orgrimmar</span><span class="p">.</span><span class="nx">DbConfig</span><span class="p">,</span> <span class="nx">config</span><span class="p">.</span><span class="nf">GetMustConfig</span><span class="p">().</span><span class="nx">Orgrimmar</span><span class="p">.</span><span class="nx">CasbinPath</span><span class="p">)</span>
+	<span class="p">})</span>
+
+	<span class="k">return</span> <span class="nx">PermissionService</span>
+<span class="p">}</span>
+
+<span class="c1">// 增加权限
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">Permission</span><span class="p">)</span> <span class="nf">AddPermissionParams</span><span class="p">(</span><span class="nx">params</span> <span class="o">...</span><span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">pm</span> <span class="nx">PermissionModel</span>
+	<span class="nx">l</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span>
+	<span class="k">switch</span> <span class="p">{</span>
+	<span class="k">case</span> <span class="nx">l</span> <span class="o">==</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="nx">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#34;p&#34;</span><span class="p">:</span>
+		<span class="nx">pm</span> <span class="p">=</span> <span class="nx">p</span><span class="p">.</span><span class="nf">make3PermissionModel</span><span class="p">(</span><span class="s">&#34;p&#34;</span><span class="p">,</span> <span class="nx">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+	<span class="k">case</span> <span class="nx">l</span> <span class="o">==</span> <span class="mi">3</span> <span class="o">&amp;&amp;</span> <span class="nx">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#34;g&#34;</span><span class="p">:</span>
+		<span class="nx">pm</span> <span class="p">=</span> <span class="nx">p</span><span class="p">.</span><span class="nf">make2PermissionModel</span><span class="p">(</span><span class="s">&#34;g&#34;</span><span class="p">,</span> <span class="nx">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+	<span class="k">default</span><span class="p">:</span>
+		<span class="k">return</span> <span class="kc">false</span><span class="p">,</span> <span class="kc">nil</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="nx">p</span><span class="p">.</span><span class="nf">AddPermission</span><span class="p">(</span><span class="nx">pm</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// Check 验证权限
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">Permission</span><span class="p">)</span> <span class="nf">Check</span><span class="p">(</span><span class="nx">p1</span><span class="p">,</span> <span class="nx">p2</span><span class="p">,</span> <span class="nx">p3</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nx">p</span><span class="p">.</span><span class="nx">enforcer</span><span class="p">.</span><span class="nf">Enforce</span><span class="p">(</span><span class="nx">p1</span><span class="p">,</span> <span class="nx">p2</span><span class="p">,</span> <span class="nx">p3</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// RemovePolicy 删除策略 传入 p 对应的 v0 v1 v2 参数
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">Permission</span><span class="p">)</span> <span class="nf">RemovePolicy</span><span class="p">(</span><span class="nx">params</span> <span class="o">...</span><span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nx">p</span><span class="p">.</span><span class="nx">enforcer</span><span class="p">.</span><span class="nf">RemovePolicy</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="o">......</span>
+</code></pre></div><p>因为暂时配置目前不需要动态刷新，所以直接共享了下面两个变量：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">adapter</span>    <span class="o">*</span><span class="nx">gormadapter</span><span class="p">.</span><span class="nx">Adapter</span>
+<span class="nx">enforcer</span>   <span class="o">*</span><span class="nx">casbin</span><span class="p">.</span><span class="nx">Enforcer</span>
+</code></pre></div><p>后面对<code>casbin</code>的操作都基于了<code>enforcer</code>即可。</p>
+<blockquote>
+<p>本文中的代码存在 if-else 嵌套的存在不符合 go 的编码规范，仅供参考。</p>
+</blockquote>
+<h2 id="三参考">三、参考</h2>
+<p><a href="https://github.com/casbin/casbin">https://github.com/casbin/casbin</a></p>
+<p><a href="https://darjun.github.io/2020/06/12/godailylib/casbin/">https://darjun.github.io/2020/06/12/godailylib/casbin/</a></p>
+<p><a href="https://casbin.org/zh-CN/">https://casbin.org/zh-CN/</a></p>
+<p><a href="https://www.kancloud.cn/oldlei/casbin/1289450">https://www.kancloud.cn/oldlei/casbin/1289450</a></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-10-18</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2020/08/casbin-too-many-connections/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2020/08/casbin-too-many-connections/" data-title="一拳搞定 Casbin | 不合理使用导致数据量连接池太多" data-hashtags="casbin"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2020/08/casbin-too-many-connections/" data-hashtag="casbin"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2020/08/casbin-too-many-connections/" data-title="一拳搞定 Casbin | 不合理使用导致数据量连接池太多"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2020/08/casbin-too-many-connections/" data-title="一拳搞定 Casbin | 不合理使用导致数据量连接池太多"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2020/08/casbin-too-many-connections/" data-title="一拳搞定 Casbin | 不合理使用导致数据量连接池太多"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/casbin/">casbin</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2020/07/ddd-optimistic-concurrency/" class="prev" rel="prev" title="【翻译】DDD聚合：乐观并发"><i class="fas fa-angle-left fa-fw"></i>【翻译】DDD聚合：乐观并发</a>
+            <a href="/2020/09/talkgo-algorithms-01/" class="next" rel="next" title="TalkGo 算法之美第一期">TalkGo 算法之美第一期<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.76.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2016 - 2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">tiecheng</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp">浙ICP备17037814号</span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"SdYC7ANQL2uMsQuRBj4SFkJo-gzGzoHsz","appKey":"KeHWy0KG8I326gRWY9vsogt6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.tc","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'UA-180197270-1', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-180197270-1" async></script></body>
+</html>
