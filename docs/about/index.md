@@ -14,3 +14,7 @@
 
 :(fab fa-github fa-fw):GitHub：{{< link "https://github.com/cityiron" cityiron >}}
 
+欢迎关注公共号
+
+{{< link "qrcode_for_gh_79a2a60fb645_258" wechat >}}
+
