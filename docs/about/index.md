@@ -16,5 +16,5 @@
 
 欢迎关注公共号
 
-{{< link "qrcode_for_gh_79a2a60fb645_258" wechat >}}
+![wechat](qrcode_for_gh_79a2a60fb645_258.jpg)
 
