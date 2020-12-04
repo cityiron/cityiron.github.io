@@ -99,4 +99,5 @@
                     rel="alternate"
                     hreflang="tc"
                     href="https://blog.funnycode.cn/about/"
-                    /></url></urlset>
+                    /></url><url>
+            <loc>https://blog.funnycode.cn/friend/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url></urlset>
