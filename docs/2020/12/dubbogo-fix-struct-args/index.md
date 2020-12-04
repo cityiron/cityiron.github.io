@@ -172,7 +172,6 @@ func main() {
 
 ```bash
 2020-12-02T17:10:47.739+0800    INFO    getty/listener.go:87    session{session session-closed, Read Bytes: 924, Write Bytes: 199, Read Pkgs: 0, Write Pkgs: 1} got error{java exception:Fail to decode request due to: java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService, sayHello
-java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService, SayHello
         at org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation.decode(DecodeableRpcInvocation.java:134)
         at org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation.decode(DecodeableRpcInvocation.java:80)
         at org.apache.dubbo.remoting.transport.DecodeHandler.decode(DecodeHandler.java:57)

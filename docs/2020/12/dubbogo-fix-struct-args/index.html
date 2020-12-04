@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2020\/12\/dubbogo-fix-struct-args\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "入门, 实战","wordcount":  3611 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "入门, 实战","wordcount":  3606 ,
         "url": "https:\/\/blog.funnycode.cn\/2020\/12\/dubbogo-fix-struct-args\/","datePublished": "2020-12-03T17:13:28+08:00","dateModified": "2020-12-03T17:13:28+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -107,7 +107,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/dubbogo/"><i class="far fa-folder fa-fw"></i>dubbogo</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-03">2020-12-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3611 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-03">2020-12-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3606 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/2020/12/dubbogo-fix-struct-args/" class="leancloud_visitors" data-flag-title="dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -290,7 +290,6 @@
 <p>第一个接口的参数是字符串，可以正常返回 <code>[2020-12-03/18:59:12 main.main: client.go: 29] response result: Hello tc</code>
 第二、三两个接口是 <code>User</code> 对象，无法调用成功。错误信息如下：</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">2020-12-02T17:10:47.739+0800    INFO    getty/listener.go:87    session<span class="o">{</span>session session-closed, Read Bytes: 924, Write Bytes: 199, Read Pkgs: 0, Write Pkgs: 1<span class="o">}</span> got error<span class="o">{</span>java exception:Fail to decode request due to: java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService, sayHello
-java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService, SayHello
         at org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation.decode<span class="o">(</span>DecodeableRpcInvocation.java:134<span class="o">)</span>
         at org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation.decode<span class="o">(</span>DecodeableRpcInvocation.java:80<span class="o">)</span>
         at org.apache.dubbo.remoting.transport.DecodeHandler.decode<span class="o">(</span>DecodeHandler.java:57<span class="o">)</span>
