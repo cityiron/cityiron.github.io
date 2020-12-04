@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2020\/12\/dubbogo-fix-struct-args\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "入门, 实战","wordcount":  3571 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "入门, 实战","wordcount":  3611 ,
         "url": "https:\/\/blog.funnycode.cn\/2020\/12\/dubbogo-fix-struct-args\/","datePublished": "2020-12-03T17:13:28+08:00","dateModified": "2020-12-03T17:13:28+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -107,7 +107,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/dubbogo/"><i class="far fa-folder fa-fw"></i>dubbogo</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-03">2020-12-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3571 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-03">2020-12-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3611 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/2020/12/dubbogo-fix-struct-args/" class="leancloud_visitors" data-flag-title="dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -155,6 +155,7 @@
         <li><a href="#35-hessian序列化源码">3.5 hessian序列化源码</a></li>
         <li><a href="#36-dubbogo-服务提供者的方法对象需要是指针对象">3.6 dubbogo 服务提供者的方法对象需要是指针对象</a></li>
         <li><a href="#37-dubbogo-服务消费者的方法对象可以是非指针对象">3.7 dubbogo 服务消费者的方法对象可以是非指针对象</a></li>
+        <li><a href="#38-复现代码">3.8 复现代码</a></li>
       </ul>
     </li>
     <li><a href="#四参考">四、参考</a></li>
@@ -446,7 +447,7 @@ java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService,
 <span class="p">}</span>
 </code></pre></div><p>很明显当发现是 <code>reflect.Struct</code> 的时候就返回了 <code>java.lang.Object</code>，所以参数就变成了 <code>Object</code>，那么因为 Java 代码那边依赖这个类型所以就调用失败了。</p>
 <h3 id="243-其它版本验证">2.4.3 其它版本验证</h3>
-<p>因为反馈是2.7.7出错，所以先考虑到再之前的版本是否功能正常，于是把服务提供者切换到 dubbo 2.7.3，发现调用仍然有错误，如下：</p>
+<p>因为反馈是2.7.7出错，所以先考虑到在之前的版本是否功能正常，于是把服务提供者切换到 dubbo 2.7.3，发现调用仍然有错误，如下：</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">2020-12-02T21:52:25.945+0800    INFO    getty/listener.go:85    session<span class="o">{</span>session session-closed, Read Bytes: 4586, Write Bytes: 232, Read Pkgs: 0, Write Pkgs: 1<span class="o">}</span> got error<span class="o">{</span>java exception:org.apache.dubbo.rpc.RpcException: Failed to invoke remote proxy method sayHello to registry://127.0.0.1:2181/org.apache.dubbo.registry.RegistryService?application<span class="o">=</span>demoProvider<span class="p">&amp;</span><span class="nv">dubbo</span><span class="o">=</span>2.0.2<span class="p">&amp;</span><span class="nv">export</span><span class="o">=</span>dubbo%3A%2F%2F192.168.0.113%3A12345%2Fcom.funnycode.DemoService%3Fanyhost%3Dtrue%26application%3DdemoProvider%26bind.ip%3D192.168.0.113%26bind.port%3D12345%26deprecated%3Dfalse%26dubbo%3D2.0.2%26dynamic%3Dtrue%26generic%3Dfalse%26group%3Dtc%26interface%3Dcom.funnycode.DemoService%26methods%3DsayHello%26pid%3D23889%26register%3Dtrue%26release%3D2.7.3%26revision%3D1.0.0%26side%3Dprovider%26threads%3D200%26timeout%3D60000%26timestamp%3D1606916702204%26version%3D1.0.0<span class="p">&amp;</span><span class="nv">pid</span><span class="o">=</span>23889<span class="p">&amp;</span><span class="nv">registry</span><span class="o">=</span>zookeeper<span class="p">&amp;</span><span class="nv">release</span><span class="o">=</span>2.7.3<span class="p">&amp;</span><span class="nv">timestamp</span><span class="o">=</span>1606916702193, cause: Not found method <span class="s2">&#34;sayHello&#34;</span> in class com.funnycode.DemoServiceImpl.
 org.apache.dubbo.rpc.RpcException: Failed to invoke remote proxy method sayHello to registry://127.0.0.1:2181/org.apache.dubbo.registry.RegistryService?application<span class="o">=</span>demoProvider<span class="p">&amp;</span><span class="nv">dubbo</span><span class="o">=</span>2.0.2<span class="p">&amp;</span><span class="nv">export</span><span class="o">=</span>dubbo%3A%2F%2F192.168.0.113%3A12345%2Fcom.funnycode.DemoService%3Fanyhost%3Dtrue%26application%3DdemoProvider%26bind.ip%3D192.168.0.113%26bind.port%3D12345%26deprecated%3Dfalse%26dubbo%3D2.0.2%26dynamic%3Dtrue%26generic%3Dfalse%26group%3Dtc%26interface%3Dcom.funnycode.DemoService%26methods%3DsayHello%26pid%3D23889%26register%3Dtrue%26release%3D2.7.3%26revision%3D1.0.0%26side%3Dprovider%26threads%3D200%26timeout%3D60000%26timestamp%3D1606916702204%26version%3D1.0.0<span class="p">&amp;</span><span class="nv">pid</span><span class="o">=</span>23889<span class="p">&amp;</span><span class="nv">registry</span><span class="o">=</span>zookeeper<span class="p">&amp;</span><span class="nv">release</span><span class="o">=</span>2.7.3<span class="p">&amp;</span><span class="nv">timestamp</span><span class="o">=</span>1606916702193, cause: Not found method <span class="s2">&#34;sayHello&#34;</span> in class com.funnycode.DemoServiceImpl.
         at org.apache.dubbo.rpc.proxy.AbstractProxyInvoker.invoke<span class="o">(</span>AbstractProxyInvoker.java:107<span class="o">)</span>
@@ -485,7 +486,7 @@ Caused by: org.apache.dubbo.common.bytecode.NoSuchMethodException: Not found met
 <span class="o">}</span>, will be closed.
 </code></pre></div><p>虽然和 2.7.7 的代码是不一样的，但是通过错误也能看出来是在代理增强类里面方法找不到，大概率是反射找不到方法，所以归根结底也是参数的问题。</p>
 <h3 id="244-修复问题">2.4.4 修复问题</h3>
-<p>修复也很简单，就是拿到 struct 定义的 javaClassName。</p>
+<p>修复相对简单，就是拿到 <code>struct</code> 定义的 <code>JavaClassName</code>。</p>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="k">case</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Struct</span><span class="p">:</span>
   <span class="nx">v</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">v</span><span class="p">.(</span><span class="nx">hessian</span><span class="p">.</span><span class="nx">POJO</span><span class="p">)</span>
   <span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
@@ -542,7 +543,7 @@ Caused by: org.apache.dubbo.common.bytecode.NoSuchMethodException: Not found met
 </span><span class="w">        </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
 </span></code></pre></div><p>从使用的习惯来讲，肯定是 <code>application</code> 表示了全局的配置，但是我发现启动的时候在 <code>application</code> 配置的 <code>version</code> 和 <code>group</code> 并不会赋值给接口，启动会报服务提供方找不到，如下：</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">2020-12-03T20:15:42.208+0800    DEBUG   zookeeper/registry.go:237       Create a zookeeper node:/dubbo/com.funnycode.DemoService/consumers/consumer%3A%2F%2F30.11.176.107%2FDemoProvider%3Fapp.version%3D1.0.0%26application%3DDemo+Micro+Service%26async%3Dfalse%26bean.name%3DDemoProvider%26cluster%3Dfailover%26environment%3Ddev%26generic%3Dfalse%26group%3D%26interface%3Dcom.funnycode.DemoService%26ip%3D30.11.176.107%26loadbalance%3D%26methods.SayHello.loadbalance%3D%26methods.SayHello.retries%3D3%26methods.SayHello.sticky%3Dfalse%26module%3Ddubbogoproxy+tc+client%26name%3DDemo+Micro+Service%26organization%3Ddubbogoproxy.com%26owner%3DZX%26pid%3D38692%26protocol%3Ddubbo%26provided-by%3D%26reference.filter%3Dcshutdown%26registry.role%3D0%26release%3Ddubbo-golang-1.3.0%26retries%3D%26side%3Dconsumer%26sticky%3Dfalse%26timestamp%3D1606997742%26version%3D
-</code></pre></div><p><code>version</code> 和 <code>group</code> 都是空。必须把 <code>DemoProvider</code> 下的 <code>version</code> 和 <code>group</code> 注释打开。</p>
+</code></pre></div><p><code>version</code> 和 <code>group</code> 都是空。必须把 <code>DemoProvider</code> 下的 <code>version</code> 和 <code>group</code> 注释打开。这个细节后面分析配置文件解析的时候会展开说明。</p>
 <h3 id="33-怎么指定调用的方法名">3.3 怎么指定调用的方法名</h3>
 <h4 id="331-go-调用-java">3.3.1 go 调用 java</h4>
 <p>dubbogo 调用 dubbo，因为 go 是大写的方法名，java 里面是小写的方法名，所以会出现如下错误：</p>
@@ -646,15 +647,20 @@ java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService,
 <p>可以自行断点查看，两边基本上一样，我也是通过两边比出来的，RpcInvocation.getParameterTypesDesc() 就是方法的参数</p>
 </blockquote>
 <ul>
-<li><code>protocol/dubbo/impl/hessian.go:120#marshalRequest</code></li>
-<li><code>org.apache.dubbo.rpc.protocol.dubbo.DubboCodec#encodeRequestData(org.apache.dubbo.remoting.Channel, org.apache.dubbo.common.serialize.ObjectOutput, java.lang.Object, java.lang.String)</code></li>
+<li>
+<p><code>protocol/dubbo/impl/hessian.go:120#marshalRequest</code></p>
+</li>
+<li>
+<p><code>org.apache.dubbo.rpc.protocol.dubbo.DubboCodec#encodeRequestData(org.apache.dubbo.remoting.Channel, org.apache.dubbo.common.serialize.ObjectOutput, java.lang.Object, java.lang.String)</code></p>
+</li>
 </ul>
 <h3 id="36-dubbogo-服务提供者的方法对象需要是指针对象">3.6 dubbogo 服务提供者的方法对象需要是指针对象</h3>
 <p>之前的例子都是 copy 的，这次是纯手打的，才发现了这个问题。</p>
 <p>如果你的提供类似：<code>func (p *DemoProvider) SayHello4(ctx context.Context, user User) (string, error)</code>，那么会出现如下错误：</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">2020-12-03T12:42:32.834+0800    ERROR   getty/listener.go:280   OnMessage panic: reflect: Call using *main.User as <span class="nb">type</span> main.User
 github.com/apache/dubbo-go/remoting/getty.<span class="o">(</span>*RpcServerHandler<span class="o">)</span>.OnMessage.func1
-</code></pre></div><h3 id="37-dubbogo-服务消费者的方法对象可以是非指针对象">3.7 dubbogo 服务消费者的方法对象可以是非指针对象</h3>
+</code></pre></div><p>参数里面的 <code>User</code> 需要改成 <code>*User</code>。</p>
+<h3 id="37-dubbogo-服务消费者的方法对象可以是非指针对象">3.7 dubbogo 服务消费者的方法对象可以是非指针对象</h3>
 <div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">SayHello4</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
 <span class="c1">// or
 </span><span class="c1"></span><span class="nx">SayHello4</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
@@ -663,8 +669,7 @@ github.com/apache/dubbo-go/remoting/getty.<span class="o">(</span>*RpcServerHand
 <span class="k">if</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Ptr</span> <span class="o">==</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Kind</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">t</span> <span class="p">=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">v</span><span class="p">).</span><span class="nf">Elem</span><span class="p">())</span>
 <span class="p">}</span>
-</code></pre></div><hr>
-<p>复现代码</p>
+</code></pre></div><h3 id="38-复现代码">3.8 复现代码</h3>
 <ul>
 <li><a href="https://github.com/cityiron/java_study/tree/master/dubbo2.7.7">https://github.com/cityiron/java_study/tree/master/dubbo2.7.7</a></li>
 <li><a href="https://github.com/cityiron/golang_study/tree/master/dubbogo/client">https://github.com/cityiron/golang_study/tree/master/dubbogo/client</a></li>

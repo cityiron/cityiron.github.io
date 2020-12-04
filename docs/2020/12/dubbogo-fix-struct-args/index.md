@@ -348,7 +348,7 @@ func getArgType(v interface{}) string {
 
 ### 2.4.3 其它版本验证
 
-因为反馈是2.7.7出错，所以先考虑到再之前的版本是否功能正常，于是把服务提供者切换到 dubbo 2.7.3，发现调用仍然有错误，如下：
+因为反馈是2.7.7出错，所以先考虑到在之前的版本是否功能正常，于是把服务提供者切换到 dubbo 2.7.3，发现调用仍然有错误，如下：
 
 ```bash
 2020-12-02T21:52:25.945+0800    INFO    getty/listener.go:85    session{session session-closed, Read Bytes: 4586, Write Bytes: 232, Read Pkgs: 0, Write Pkgs: 1} got error{java exception:org.apache.dubbo.rpc.RpcException: Failed to invoke remote proxy method sayHello to registry://127.0.0.1:2181/org.apache.dubbo.registry.RegistryService?application=demoProvider&dubbo=2.0.2&export=dubbo%3A%2F%2F192.168.0.113%3A12345%2Fcom.funnycode.DemoService%3Fanyhost%3Dtrue%26application%3DdemoProvider%26bind.ip%3D192.168.0.113%26bind.port%3D12345%26deprecated%3Dfalse%26dubbo%3D2.0.2%26dynamic%3Dtrue%26generic%3Dfalse%26group%3Dtc%26interface%3Dcom.funnycode.DemoService%26methods%3DsayHello%26pid%3D23889%26register%3Dtrue%26release%3D2.7.3%26revision%3D1.0.0%26side%3Dprovider%26threads%3D200%26timeout%3D60000%26timestamp%3D1606916702204%26version%3D1.0.0&pid=23889&registry=zookeeper&release=2.7.3&timestamp=1606916702193, cause: Not found method "sayHello" in class com.funnycode.DemoServiceImpl.
@@ -393,7 +393,7 @@ Caused by: org.apache.dubbo.common.bytecode.NoSuchMethodException: Not found met
 
 ### 2.4.4 修复问题
 
-修复也很简单，就是拿到 struct 定义的 javaClassName。
+修复相对简单，就是拿到 `struct` 定义的 `JavaClassName`。
 
 ```go
 case reflect.Struct:
@@ -475,7 +475,7 @@ references:
 2020-12-03T20:15:42.208+0800    DEBUG   zookeeper/registry.go:237       Create a zookeeper node:/dubbo/com.funnycode.DemoService/consumers/consumer%3A%2F%2F30.11.176.107%2FDemoProvider%3Fapp.version%3D1.0.0%26application%3DDemo+Micro+Service%26async%3Dfalse%26bean.name%3DDemoProvider%26cluster%3Dfailover%26environment%3Ddev%26generic%3Dfalse%26group%3D%26interface%3Dcom.funnycode.DemoService%26ip%3D30.11.176.107%26loadbalance%3D%26methods.SayHello.loadbalance%3D%26methods.SayHello.retries%3D3%26methods.SayHello.sticky%3Dfalse%26module%3Ddubbogoproxy+tc+client%26name%3DDemo+Micro+Service%26organization%3Ddubbogoproxy.com%26owner%3DZX%26pid%3D38692%26protocol%3Ddubbo%26provided-by%3D%26reference.filter%3Dcshutdown%26registry.role%3D0%26release%3Ddubbo-golang-1.3.0%26retries%3D%26side%3Dconsumer%26sticky%3Dfalse%26timestamp%3D1606997742%26version%3D
 ```
 
-`version` 和 `group` 都是空。必须把 `DemoProvider` 下的 `version` 和 `group` 注释打开。
+`version` 和 `group` 都是空。必须把 `DemoProvider` 下的 `version` 和 `group` 注释打开。这个细节后面分析配置文件解析的时候会展开说明。
 
 ### 3.3 怎么指定调用的方法名
 
@@ -602,6 +602,7 @@ public interface Serialization {
 > 可以自行断点查看，两边基本上一样，我也是通过两边比出来的，RpcInvocation.getParameterTypesDesc() 就是方法的参数
 
 - `protocol/dubbo/impl/hessian.go:120#marshalRequest`
+
 - `org.apache.dubbo.rpc.protocol.dubbo.DubboCodec#encodeRequestData(org.apache.dubbo.remoting.Channel, org.apache.dubbo.common.serialize.ObjectOutput, java.lang.Object, java.lang.String)`
 
 ### 3.6 dubbogo 服务提供者的方法对象需要是指针对象
@@ -614,6 +615,8 @@ public interface Serialization {
 2020-12-03T12:42:32.834+0800    ERROR   getty/listener.go:280   OnMessage panic: reflect: Call using *main.User as type main.User
 github.com/apache/dubbo-go/remoting/getty.(*RpcServerHandler).OnMessage.func1
 ```
+
+参数里面的 `User` 需要改成 `*User`。
 
 ### 3.7 dubbogo 服务消费者的方法对象可以是非指针对象
 
@@ -632,9 +635,7 @@ if reflect.Ptr == t.Kind() {
 }
 ```
 
-***
-
-复现代码
+### 3.8 复现代码
 - https://github.com/cityiron/java_study/tree/master/dubbo2.7.7
 - https://github.com/cityiron/golang_study/tree/master/dubbogo/client
 
