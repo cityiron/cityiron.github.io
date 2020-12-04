@@ -604,7 +604,7 @@ public interface Serialization {
 - `protocol/dubbo/impl/hessian.go:120#marshalRequest`
 - `org.apache.dubbo.rpc.protocol.dubbo.DubboCodec#encodeRequestData(org.apache.dubbo.remoting.Channel, org.apache.dubbo.common.serialize.ObjectOutput, java.lang.Object, java.lang.String)`
 
-### 3.6 dubbogo服务提供方的对象需要是指针对象
+### 3.6 dubbogo 服务提供者的方法对象需要是指针对象
 
 之前的例子都是 copy 的，这次是纯手打的，才发现了这个问题。
 
@@ -613,6 +613,23 @@ public interface Serialization {
 ```bash
 2020-12-03T12:42:32.834+0800    ERROR   getty/listener.go:280   OnMessage panic: reflect: Call using *main.User as type main.User
 github.com/apache/dubbo-go/remoting/getty.(*RpcServerHandler).OnMessage.func1
+```
+
+### 3.7 dubbogo 服务消费者的方法对象可以是非指针对象
+
+```go
+SayHello4 func(ctx context.Context, user *User) (string, error)
+// or
+SayHello4 func(ctx context.Context, user User) (string, error)
+```
+
+因为在参数序列化的时候会对指针做操作：
+
+```go
+t := reflect.TypeOf(v)
+if reflect.Ptr == t.Kind() {
+  t = reflect.TypeOf(reflect.ValueOf(v).Elem())
+}
 ```
 
 ***

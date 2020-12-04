@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2020\/12\/dubbogo-fix-struct-args\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "入门, 实战","wordcount":  3508 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "入门, 实战","wordcount":  3571 ,
         "url": "https:\/\/blog.funnycode.cn\/2020\/12\/dubbogo-fix-struct-args\/","datePublished": "2020-12-03T17:13:28+08:00","dateModified": "2020-12-03T17:13:28+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "tiecheng","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -107,7 +107,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/dubbogo/"><i class="far fa-folder fa-fw"></i>dubbogo</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-03">2020-12-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3508 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-03">2020-12-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3571 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/2020/12/dubbogo-fix-struct-args/" class="leancloud_visitors" data-flag-title="dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -153,7 +153,8 @@
         <li><a href="#33-怎么指定调用的方法名">3.3 怎么指定调用的方法名</a></li>
         <li><a href="#34-为什么会用-hessian2">3.4 为什么会用 hessian2</a></li>
         <li><a href="#35-hessian序列化源码">3.5 hessian序列化源码</a></li>
-        <li><a href="#36-dubbogo服务提供方的对象需要是指针对象">3.6 dubbogo服务提供方的对象需要是指针对象</a></li>
+        <li><a href="#36-dubbogo-服务提供者的方法对象需要是指针对象">3.6 dubbogo 服务提供者的方法对象需要是指针对象</a></li>
+        <li><a href="#37-dubbogo-服务消费者的方法对象可以是非指针对象">3.7 dubbogo 服务消费者的方法对象可以是非指针对象</a></li>
       </ul>
     </li>
     <li><a href="#四参考">四、参考</a></li>
@@ -648,11 +649,20 @@ java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService,
 <li><code>protocol/dubbo/impl/hessian.go:120#marshalRequest</code></li>
 <li><code>org.apache.dubbo.rpc.protocol.dubbo.DubboCodec#encodeRequestData(org.apache.dubbo.remoting.Channel, org.apache.dubbo.common.serialize.ObjectOutput, java.lang.Object, java.lang.String)</code></li>
 </ul>
-<h3 id="36-dubbogo服务提供方的对象需要是指针对象">3.6 dubbogo服务提供方的对象需要是指针对象</h3>
+<h3 id="36-dubbogo-服务提供者的方法对象需要是指针对象">3.6 dubbogo 服务提供者的方法对象需要是指针对象</h3>
 <p>之前的例子都是 copy 的，这次是纯手打的，才发现了这个问题。</p>
 <p>如果你的提供类似：<code>func (p *DemoProvider) SayHello4(ctx context.Context, user User) (string, error)</code>，那么会出现如下错误：</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">2020-12-03T12:42:32.834+0800    ERROR   getty/listener.go:280   OnMessage panic: reflect: Call using *main.User as <span class="nb">type</span> main.User
 github.com/apache/dubbo-go/remoting/getty.<span class="o">(</span>*RpcServerHandler<span class="o">)</span>.OnMessage.func1
+</code></pre></div><h3 id="37-dubbogo-服务消费者的方法对象可以是非指针对象">3.7 dubbogo 服务消费者的方法对象可以是非指针对象</h3>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">SayHello4</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+<span class="c1">// or
+</span><span class="c1"></span><span class="nx">SayHello4</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</code></pre></div><p>因为在参数序列化的时候会对指针做操作：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">t</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Ptr</span> <span class="o">==</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Kind</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">t</span> <span class="p">=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">v</span><span class="p">).</span><span class="nf">Elem</span><span class="p">())</span>
+<span class="p">}</span>
 </code></pre></div><hr>
 <p>复现代码</p>
 <ul>

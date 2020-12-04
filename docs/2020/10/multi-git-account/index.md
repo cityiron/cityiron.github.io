@@ -42,7 +42,7 @@ ssh-rsa AAAAB3NzaC1yc2EAAAFDAQABAAABAQCmz+FyF/uuIYAedTbzQoAE+wnHG3/uzqQ2Mv9QQbjc
 ```bash
 $ ssh -T git@github.com
 
-Hi cityiron! You've successfully authenticated, but GitHub does not provide shell access.
+Hi cityiron! You\'ve successfully authenticated, but GitHub does not provide shell access.
 ```
 
 当出现 `Hi [yourname]`， name 和你要操作的仓库所在的 github 账号一样，那么就可以正常使用 Git 命令。
