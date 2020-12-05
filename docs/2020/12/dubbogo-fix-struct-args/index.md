@@ -5,9 +5,9 @@
 <!--more-->
 
 ## 一、前言
-昨天[邹部长](https://zouyx.github.io/index.html)在群里@我让看一个关于 dubbogo 调用 dubbo 报错的问题 [issue地址](https://github.com/apache/dubbo-go/pull/903)，于是我跑了 dubbogo + dubbbo 的测试代码来定位这个问题，因为之前也没跨语言调用，一路踩坑到最终解决问题折腾了许久，正好可以分析下使用心得。
+昨天[邹部长](https://zouyx.github.io/index.html)在群里@我让看一个关于 dubbogo 调用 dubbo 报错的问题 [issue地址](https://github.com/apache/dubbo-go/pull/903)，于是我跑了 dubbogo + dubbbo 的测试代码来定位这个问题，因为之前也没跨语言调用，从零开始搭建，踩到了一些新人使用dubbogo的坑，把这个过程记录下供大家参考。
 
-## 二、复现问题
+## 二、解决问题
 
 ### 2.1 准备 dubbo 服务提供者
 
@@ -40,7 +40,7 @@ public class User implements Serializable {
 }
 ```
 
-### 2.1.2 启动 dubbo 服务提供者
+#### 2.1.2 启动 dubbo 服务提供者
 
 用的 dubbo 官方示例代码：
 
@@ -95,9 +95,9 @@ $ls /dubbo/com.funnycode.DemoService/providers
 
 如上的输出表示服务提供方已经启动。
 
-## 2.2 准备 dubbo 服务消费者
+### 2.2 准备 dubbo 服务消费者
 
-### 2.2.1 基本定义
+#### 2.2.1 基本定义
 
 定义 `User` 对象：
 
@@ -126,7 +126,7 @@ func (p *DemoProvider) Reference() string {
 }
 ```
 
-### 2.2.2 启动 dubbogo 消费者
+#### 2.2.2 启动 dubbogo 消费者
 
 ```go
 func main() {
@@ -145,14 +145,14 @@ func main() {
 		Age:  18,
 	}
 
-	res, err = demoProvider.SayHello4(context.TODO(), user)
+	res, err = demoProvider.SayHello2(context.TODO(), user)
 	if err != nil {
 		panic(err)
 	}
 
 	gxlog.CInfo("response result: %v\n", res)
 
-	res, err = demoProvider.SayHello5(context.TODO(), user, "tc")
+	res, err = demoProvider.SayHello3(context.TODO(), user, "tc")
 	if err != nil {
 		panic(err)
 	}
@@ -163,9 +163,11 @@ func main() {
 }
 ```
 
-## 2.3 请求结果分析
+### 2.3 请求结果分析
 
-### 2.3.1 直接调用
+#### 2.3.1 直接调用
+
+> 确认问题的存在
 
 第一个接口的参数是字符串，可以正常返回 `[2020-12-03/18:59:12 main.main: client.go: 29] response result: Hello tc`
 第二、三两个接口是 `User` 对象，无法调用成功。错误信息如下：
@@ -185,7 +187,7 @@ func main() {
 
 正如 issue 中描述的一模一样，因为直接给出了 Java 那边的错误信息，所以直接去看 `DecodeableRpcInvocation.decode#134`。
 
-### 2.3.2 断点查看
+#### 2.3.2 断点查看
 
 代码如下：
 
@@ -236,13 +238,13 @@ public MethodDescriptor getMethod(String methodName, String params) {
 
 ![MethodDescriptor](https://raw.githubusercontent.com/cityiron/tuchuang/master/blog/dubbo-decode.01.jpg)
 
-## 2.4 解决问题
+### 2.4 解决问题
 
 > 因为直接撸代码并 hold 不住，所以通过比较来查看问题所在。
 
-### 2.4.1 启动 dubbo 服务消费者
+#### 2.4.1 启动 dubbo 服务消费者
 
-通过 api 模式启动，参考官方例子。
+通过 api 模式启动，参考官方例子。启动这个是为了查看 Java 版本的传输内容。
 
 ```java
 public static void main(String[] args) throws InterruptedException {
@@ -281,7 +283,7 @@ public static void main(String[] args) throws InterruptedException {
 
 desc 肉眼可见的是 `Lcom/funnycode/User`，这个就是正确的对象了。
 
-### 2.4.2 查找dubbogo为什么不对
+#### 2.4.2 查找dubbogo为什么不对
 
 > 感谢提 issue 的同学，把代码已经贴出来了
 
@@ -345,9 +347,9 @@ func getArgType(v interface{}) string {
 
 很明显当发现是 `reflect.Struct` 的时候就返回了 `java.lang.Object`，所以参数就变成了 `Object`，那么因为 Java 代码那边依赖这个类型所以就调用失败了。
 
-### 2.4.3 其它版本验证
+#### 2.4.3 其它版本验证
 
-因为反馈是2.7.7出错，所以先考虑到在之前的版本是否功能正常，于是把服务提供者切换到 dubbo 2.7.3，发现调用仍然有错误，如下：
+因为反馈是 2.7.7 出错，所以先考虑到在之前的版本是否功能正常，于是把服务提供者切换到 dubbo 2.7.3，发现调用仍然有错误，如下：
 
 ```bash
 2020-12-02T21:52:25.945+0800    INFO    getty/listener.go:85    session{session session-closed, Read Bytes: 4586, Write Bytes: 232, Read Pkgs: 0, Write Pkgs: 1} got error{java exception:org.apache.dubbo.rpc.RpcException: Failed to invoke remote proxy method sayHello to registry://127.0.0.1:2181/org.apache.dubbo.registry.RegistryService?application=demoProvider&dubbo=2.0.2&export=dubbo%3A%2F%2F192.168.0.113%3A12345%2Fcom.funnycode.DemoService%3Fanyhost%3Dtrue%26application%3DdemoProvider%26bind.ip%3D192.168.0.113%26bind.port%3D12345%26deprecated%3Dfalse%26dubbo%3D2.0.2%26dynamic%3Dtrue%26generic%3Dfalse%26group%3Dtc%26interface%3Dcom.funnycode.DemoService%26methods%3DsayHello%26pid%3D23889%26register%3Dtrue%26release%3D2.7.3%26revision%3D1.0.0%26side%3Dprovider%26threads%3D200%26timeout%3D60000%26timestamp%3D1606916702204%26version%3D1.0.0&pid=23889&registry=zookeeper&release=2.7.3&timestamp=1606916702193, cause: Not found method "sayHello" in class com.funnycode.DemoServiceImpl.
@@ -390,7 +392,7 @@ Caused by: org.apache.dubbo.common.bytecode.NoSuchMethodException: Not found met
 
 虽然和 2.7.7 的代码是不一样的，但是通过错误也能看出来是在代理增强类里面方法找不到，大概率是反射找不到方法，所以归根结底也是参数的问题。
 
-### 2.4.4 修复问题
+#### 2.4.4 修复问题
 
 修复相对简单，就是拿到 `struct` 定义的 `JavaClassName`。
 
@@ -403,7 +405,7 @@ case reflect.Struct:
   return "java.lang.Object"
 ```
 
-### 2.4.3 验证问题
+#### 2.4.3 验证结果
 
 再次执行消费者，运行（提供方 2.7.7 和 2.7.3）正常，输出如下：
 
@@ -415,7 +417,7 @@ case reflect.Struct:
 [2020-12-03/20:04:09 main.main: client.go: 48] response result: Hello tc You are 18
 ```
 
-## 三、细节讲解
+## 三、细节叨叨
 
 ### 3.1 如何配置 dubbgo 消费者
 
@@ -586,9 +588,11 @@ func main() {
 }
 ```
 
+这里主要注意 `MethodMapper` 方法，像我请求 `SayHello` 变成了 `sayHello`，需要在这个方法中配置这个关系，否则还是会找不到方法。 
+
 ### 3.4 为什么会用 hessian2
 
-SPI机制的默认值就是 hessian2
+老司机都懂，SPI机制的默认值就是 hessian2
 
 ```java
 @SPI("hessian2")
@@ -600,9 +604,9 @@ public interface Serialization {
 
 > 可以自行断点查看，两边基本上一样，我也是通过两边比出来的，RpcInvocation.getParameterTypesDesc() 就是方法的参数
 
-- `protocol/dubbo/impl/hessian.go:120#marshalRequest`
+- go 代码 `protocol/dubbo/impl/hessian.go:120#marshalRequest`
 
-- `org.apache.dubbo.rpc.protocol.dubbo.DubboCodec#encodeRequestData(org.apache.dubbo.remoting.Channel, org.apache.dubbo.common.serialize.ObjectOutput, java.lang.Object, java.lang.String)`
+- java 代码 `org.apache.dubbo.rpc.protocol.dubbo.DubboCodec#encodeRequestData(org.apache.dubbo.remoting.Channel, org.apache.dubbo.common.serialize.ObjectOutput, java.lang.Object, java.lang.String)`
 
 ### 3.6 dubbogo 服务提供者的方法对象需要是指针对象
 
@@ -634,7 +638,10 @@ if reflect.Ptr == t.Kind() {
 }
 ```
 
-### 3.8 复现代码
+### 3.8 繁琐的配置简化
+查看我另一篇文章
+
+### 3.9 复现代码
 - https://github.com/cityiron/java_study/tree/master/dubbo2.7.7
 - https://github.com/cityiron/golang_study/tree/master/dubbogo/client
 
