@@ -5,14 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG" />
+        <title>dubbo-go 白话文 | go 和 java 互通有无 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="dubbo-go 白话文 | go 和 java 互通有无" />
 <meta property="og:description" content="本文从一个 BUG 入手，手把手教你 dubbogo 调用 dubbogo 或 dubbo 服务" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.funnycode.cn/2020/12/dubbogo-fix-struct-args/" />
 <meta property="article:published_time" content="2020-12-03T17:13:28+08:00" />
 <meta property="article:modified_time" content="2020-12-03T17:13:28+08:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG"/>
+<meta name="twitter:title" content="dubbo-go 白话文 | go 和 java 互通有无"/>
 <meta name="twitter:description" content="本文从一个 BUG 入手，手把手教你 dubbogo 调用 dubbogo 或 dubbo 服务"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -21,12 +21,12 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG",
+        "headline": "dubbo-go 白话文 | go 和 java 互通有无",
         "inLanguage": "tc",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2020\/12\/dubbogo-fix-struct-args\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "入门, 实战","wordcount":  3719 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "入门, 实战","wordcount":  4035 ,
         "url": "https:\/\/blog.funnycode.cn\/2020\/12\/dubbogo-fix-struct-args\/","datePublished": "2020-12-03T17:13:28+08:00","dateModified": "2020-12-03T17:13:28+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "IronCity","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -105,10 +105,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">dubbo-go 白话文 | go 和 java 互通有无</h1><h2 class="single-subtitle">基于修复 go 调用 java 方法参数 BUG</h2><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/dubbogo/"><i class="far fa-folder fa-fw"></i>dubbogo</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-03">2020-12-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3719 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/2020/12/dubbogo-fix-struct-args/" class="leancloud_visitors" data-flag-title="dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-03">2020-12-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4035 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;<span id="/2020/12/dubbogo-fix-struct-args/" class="leancloud_visitors" data-flag-title="dubbo-go 白话文 | go 和 java 互通有无">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -145,128 +145,128 @@
 </nav></div>
             </div><div class="content" id="content"><p>本文从一个 BUG 入手，手把手教你 dubbogo 调用 dubbogo 或 dubbo 服务</p>
 <h2 id="一前言">一、前言</h2>
-<p>昨天<a href="https://zouyx.github.io/index.html" target="_blank" rel="noopener noreffer">邹部长</a>在群里@我让看一个关于 dubbogo 调用 dubbo 报错的问题 <a href="https://github.com/apache/dubbo-go/pull/903" target="_blank" rel="noopener noreffer">issue地址</a>，于是我跑了 dubbogo + dubbbo 的测试代码来定位这个问题，因为之前也没跨语言调用，从零开始搭建，踩到了一些新人使用dubbogo的坑，把这个过程记录下供大家参考。</p>
+<p>昨天<a href="https://zouyx.github.io/index.html" target="_blank" rel="noopener noreffer">邹部长</a>在群里@我让看一个关于 dubbogo 调用 dubbo 报错的问题，<!-- raw HTML omitted -->问题<a href="https://github.com/apache/dubbo-go/issues/900" target="_blank" rel="noopener noreffer">issue地址</a><!-- raw HTML omitted -->，于是我跑了 dubbogo + dubbbo 的测试代码来定位这个问题，因为之前也没跨语言调用，从零开始搭建，踩到了一些新人使用dubbogo的坑，把这个过程记录下供大家参考。</p>
 <h2 id="二解决问题">二、解决问题</h2>
 <h3 id="21-准备-dubbo-服务提供者">2.1 准备 dubbo 服务提供者</h3>
 <h4 id="211-基本定义">2.1.1 基本定义</h4>
 <p>定义 <code>DemoService</code> 接口：</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">DemoService</span> <span class="o">{</span>
-
-    <span class="n">String</span> <span class="nf">sayHello</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">);</span>
-
-    <span class="n">String</span> <span class="nf">sayHello</span><span class="o">(</span><span class="n">User</span> <span class="n">user</span><span class="o">);</span>
-
-    <span class="n">String</span> <span class="nf">sayHello</span><span class="o">(</span><span class="n">User</span> <span class="n">user</span><span class="o">,</span> <span class="n">String</span> <span class="n">name</span><span class="o">);</span>
-
-<span class="o">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="ln">1</span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">DemoService</span> <span class="o">{</span>
+<span class="ln">2</span>
+<span class="ln">3</span>    <span class="n">String</span> <span class="nf">sayHello</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">);</span>
+<span class="ln">4</span>
+<span class="ln">5</span>    <span class="n">String</span> <span class="nf">sayHello</span><span class="o">(</span><span class="n">User</span> <span class="n">user</span><span class="o">);</span>
+<span class="ln">6</span>
+<span class="ln">7</span>    <span class="n">String</span> <span class="nf">sayHello</span><span class="o">(</span><span class="n">User</span> <span class="n">user</span><span class="o">,</span> <span class="n">String</span> <span class="n">name</span><span class="o">);</span>
+<span class="ln">8</span>
+<span class="ln">9</span><span class="o">}</span>
 </code></pre></div><p>定义 <code>User</code> 对象：</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
-
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
-
-    <span class="o">......</span>
-<span class="o">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="ln">1</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+<span class="ln">2</span>
+<span class="ln">3</span>    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+<span class="ln">4</span>
+<span class="ln">5</span>    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+<span class="ln">6</span>
+<span class="ln">7</span>    <span class="o">......</span>
+<span class="ln">8</span><span class="o">}</span>
 </code></pre></div><h4 id="212-启动-dubbo-服务提供者">2.1.2 启动 dubbo 服务提供者</h4>
 <p>用的 dubbo 官方示例代码：</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
-    <span class="c1">// 服务实现
-</span><span class="c1"></span>    <span class="n">DemoService</span> <span class="n">demoService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DemoServiceImpl</span><span class="o">();</span>
-
-    <span class="c1">// 当前应用配置
-</span><span class="c1"></span>    <span class="n">ApplicationConfig</span> <span class="n">application</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApplicationConfig</span><span class="o">();</span>
-    <span class="n">application</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&#34;demoProvider&#34;</span><span class="o">);</span>
-
-    <span class="c1">// 连接注册中心配置
-</span><span class="c1"></span>    <span class="n">RegistryConfig</span> <span class="n">registry</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RegistryConfig</span><span class="o">();</span>
-    <span class="n">registry</span><span class="o">.</span><span class="na">setAddress</span><span class="o">(</span><span class="s">&#34;127.0.0.1:2181&#34;</span><span class="o">);</span>
-    <span class="n">registry</span><span class="o">.</span><span class="na">setProtocol</span><span class="o">(</span><span class="s">&#34;zookeeper&#34;</span><span class="o">);</span>
-    <span class="n">registry</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">);</span>
-    <span class="n">registry</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">);</span>
-
-    <span class="c1">// 服务提供者协议配置
-</span><span class="c1"></span>    <span class="n">ProtocolConfig</span> <span class="n">protocol</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProtocolConfig</span><span class="o">();</span>
-    <span class="n">protocol</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&#34;dubbo&#34;</span><span class="o">);</span>
-    <span class="n">protocol</span><span class="o">.</span><span class="na">setPort</span><span class="o">(</span><span class="n">12345</span><span class="o">);</span>
-    <span class="n">protocol</span><span class="o">.</span><span class="na">setThreads</span><span class="o">(</span><span class="n">200</span><span class="o">);</span>
-
-    <span class="c1">// 注意：ServiceConfig为重对象，内部封装了与注册中心的连接，以及开启服务端口
-</span><span class="c1"></span>
-    <span class="c1">// 服务提供者暴露服务配置
-</span><span class="c1"></span>    <span class="n">ServiceConfig</span><span class="o">&lt;</span><span class="n">DemoService</span><span class="o">&gt;</span> <span class="n">service</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ServiceConfig</span><span class="o">&lt;&gt;();</span> <span class="c1">// 此实例很重，封装了与注册中心的连接，请自行缓存，否则可能造成内存和连接泄漏
-</span><span class="c1"></span>    <span class="n">service</span><span class="o">.</span><span class="na">setApplication</span><span class="o">(</span><span class="n">application</span><span class="o">);</span>
-    <span class="n">service</span><span class="o">.</span><span class="na">setRegistry</span><span class="o">(</span><span class="n">registry</span><span class="o">);</span> <span class="c1">// 多个注册中心可以用setRegistries()
-</span><span class="c1"></span>    <span class="n">service</span><span class="o">.</span><span class="na">setProtocol</span><span class="o">(</span><span class="n">protocol</span><span class="o">);</span> <span class="c1">// 多个协议可以用setProtocols()
-</span><span class="c1"></span>    <span class="n">service</span><span class="o">.</span><span class="na">setInterface</span><span class="o">(</span><span class="n">DemoService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-    <span class="n">service</span><span class="o">.</span><span class="na">setRef</span><span class="o">(</span><span class="n">demoService</span><span class="o">);</span>
-    <span class="n">service</span><span class="o">.</span><span class="na">setVersion</span><span class="o">(</span><span class="s">&#34;1.0.0&#34;</span><span class="o">);</span>
-    <span class="n">service</span><span class="o">.</span><span class="na">setGroup</span><span class="o">(</span><span class="s">&#34;tc&#34;</span><span class="o">);</span>
-    <span class="n">service</span><span class="o">.</span><span class="na">setTimeout</span><span class="o">(</span><span class="n">60</span> <span class="o">*</span> <span class="n">1000</span><span class="o">);</span>
-
-    <span class="c1">// 暴露及注册服务
-</span><span class="c1"></span>    <span class="n">service</span><span class="o">.</span><span class="na">export</span><span class="o">();</span>
-
-    <span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span>
-<span class="o">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="ln"> 1</span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+<span class="ln"> 2</span>    <span class="c1">// 服务实现
+</span><span class="ln"> 3</span><span class="c1"></span>    <span class="n">DemoService</span> <span class="n">demoService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DemoServiceImpl</span><span class="o">();</span>
+<span class="ln"> 4</span>
+<span class="ln"> 5</span>    <span class="c1">// 当前应用配置
+</span><span class="ln"> 6</span><span class="c1"></span>    <span class="n">ApplicationConfig</span> <span class="n">application</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApplicationConfig</span><span class="o">();</span>
+<span class="ln"> 7</span>    <span class="n">application</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&#34;demoProvider&#34;</span><span class="o">);</span>
+<span class="ln"> 8</span>
+<span class="ln"> 9</span>    <span class="c1">// 连接注册中心配置
+</span><span class="ln">10</span><span class="c1"></span>    <span class="n">RegistryConfig</span> <span class="n">registry</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RegistryConfig</span><span class="o">();</span>
+<span class="ln">11</span>    <span class="n">registry</span><span class="o">.</span><span class="na">setAddress</span><span class="o">(</span><span class="s">&#34;127.0.0.1:2181&#34;</span><span class="o">);</span>
+<span class="ln">12</span>    <span class="n">registry</span><span class="o">.</span><span class="na">setProtocol</span><span class="o">(</span><span class="s">&#34;zookeeper&#34;</span><span class="o">);</span>
+<span class="ln">13</span>    <span class="n">registry</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">);</span>
+<span class="ln">14</span>    <span class="n">registry</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">);</span>
+<span class="ln">15</span>
+<span class="ln">16</span>    <span class="c1">// 服务提供者协议配置
+</span><span class="ln">17</span><span class="c1"></span>    <span class="n">ProtocolConfig</span> <span class="n">protocol</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProtocolConfig</span><span class="o">();</span>
+<span class="ln">18</span>    <span class="n">protocol</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&#34;dubbo&#34;</span><span class="o">);</span>
+<span class="ln">19</span>    <span class="n">protocol</span><span class="o">.</span><span class="na">setPort</span><span class="o">(</span><span class="n">12345</span><span class="o">);</span>
+<span class="ln">20</span>    <span class="n">protocol</span><span class="o">.</span><span class="na">setThreads</span><span class="o">(</span><span class="n">200</span><span class="o">);</span>
+<span class="ln">21</span>
+<span class="ln">22</span>    <span class="c1">// 注意：ServiceConfig为重对象，内部封装了与注册中心的连接，以及开启服务端口
+</span><span class="ln">23</span><span class="c1"></span>
+<span class="ln">24</span>    <span class="c1">// 服务提供者暴露服务配置
+</span><span class="ln">25</span><span class="c1"></span>    <span class="n">ServiceConfig</span><span class="o">&lt;</span><span class="n">DemoService</span><span class="o">&gt;</span> <span class="n">service</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ServiceConfig</span><span class="o">&lt;&gt;();</span> <span class="c1">// 此实例很重，封装了与注册中心的连接，请自行缓存，否则可能造成内存和连接泄漏
+</span><span class="ln">26</span><span class="c1"></span>    <span class="n">service</span><span class="o">.</span><span class="na">setApplication</span><span class="o">(</span><span class="n">application</span><span class="o">);</span>
+<span class="ln">27</span>    <span class="n">service</span><span class="o">.</span><span class="na">setRegistry</span><span class="o">(</span><span class="n">registry</span><span class="o">);</span> <span class="c1">// 多个注册中心可以用setRegistries()
+</span><span class="ln">28</span><span class="c1"></span>    <span class="n">service</span><span class="o">.</span><span class="na">setProtocol</span><span class="o">(</span><span class="n">protocol</span><span class="o">);</span> <span class="c1">// 多个协议可以用setProtocols()
+</span><span class="ln">29</span><span class="c1"></span>    <span class="n">service</span><span class="o">.</span><span class="na">setInterface</span><span class="o">(</span><span class="n">DemoService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="ln">30</span>    <span class="n">service</span><span class="o">.</span><span class="na">setRef</span><span class="o">(</span><span class="n">demoService</span><span class="o">);</span>
+<span class="ln">31</span>    <span class="n">service</span><span class="o">.</span><span class="na">setVersion</span><span class="o">(</span><span class="s">&#34;1.0.0&#34;</span><span class="o">);</span>
+<span class="ln">32</span>    <span class="n">service</span><span class="o">.</span><span class="na">setGroup</span><span class="o">(</span><span class="s">&#34;tc&#34;</span><span class="o">);</span>
+<span class="ln">33</span>    <span class="n">service</span><span class="o">.</span><span class="na">setTimeout</span><span class="o">(</span><span class="n">60</span> <span class="o">*</span> <span class="n">1000</span><span class="o">);</span>
+<span class="ln">34</span>
+<span class="ln">35</span>    <span class="c1">// 暴露及注册服务
+</span><span class="ln">36</span><span class="c1"></span>    <span class="n">service</span><span class="o">.</span><span class="na">export</span><span class="o">();</span>
+<span class="ln">37</span>
+<span class="ln">38</span>    <span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">.</span><span class="na">read</span><span class="o">();</span>
+<span class="ln">39</span><span class="o">}</span>
 </code></pre></div><p>查看 zookeeper 看是否注册成功：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">$ls</span> /dubbo/com.funnycode.DemoService/providers
-<span class="o">[</span>dubbo%3A%2F%2F127.0.0.1%3A12345%2Fcom.funnycode.DemoService%3Fanyhost%3Dtrue%26application%3DdemoProvider%26deprecated%3Dfalse%26dubbo%3D2.0.2%26dynamic%3Dtrue%26generic%3Dfalse%26group%3Dtc%26interface%3Dcom.funnycode.DemoService%26methods%3DsayHello%26pid%3D18167%26release%3D2.7.7%26revision%3D1.0.0%26side%3Dprovider%26threads%3D200%26timestamp%3D1606896020691%26version%3D1.0.0<span class="o">]</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="nv">$ls</span> /dubbo/com.funnycode.DemoService/providers
+<span class="ln">2</span><span class="o">[</span>dubbo%3A%2F%2F127.0.0.1%3A12345%2Fcom.funnycode.DemoService%3Fanyhost%3Dtrue%26application%3DdemoProvider%26deprecated%3Dfalse%26dubbo%3D2.0.2%26dynamic%3Dtrue%26generic%3Dfalse%26group%3Dtc%26interface%3Dcom.funnycode.DemoService%26methods%3DsayHello%26pid%3D18167%26release%3D2.7.7%26revision%3D1.0.0%26side%3Dprovider%26threads%3D200%26timestamp%3D1606896020691%26version%3D1.0.0<span class="o">]</span>
 </code></pre></div><p>如上的输出表示服务提供方已经启动。</p>
 <h3 id="22-准备-dubbo-服务消费者">2.2 准备 dubbo 服务消费者</h3>
 <h4 id="221-基本定义">2.2.1 基本定义</h4>
 <p>定义 <code>User</code> 对象：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">Name</span> <span class="kt">string</span>
-	<span class="nx">Age</span>  <span class="kt">int</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">User</span><span class="p">)</span> <span class="nf">JavaClassName</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="s">&#34;com.funnycode.User&#34;</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="kd">type</span> <span class="nx">User</span> <span class="kd">struct</span> <span class="p">{</span>
+<span class="ln">2</span>	<span class="nx">Name</span> <span class="kt">string</span>
+<span class="ln">3</span>	<span class="nx">Age</span>  <span class="kt">int</span>
+<span class="ln">4</span><span class="p">}</span>
+<span class="ln">5</span>
+<span class="ln">6</span><span class="kd">func</span> <span class="p">(</span><span class="nx">User</span><span class="p">)</span> <span class="nf">JavaClassName</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+<span class="ln">7</span>	<span class="k">return</span> <span class="s">&#34;com.funnycode.User&#34;</span>
+<span class="ln">8</span><span class="p">}</span>
 </code></pre></div><p>定义 <code>DemoProvider</code> 接口：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">DemoProvider</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">SayHello</span>  <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>            <span class="s">`dubbo:&#34;sayHello&#34;`</span>
-	<span class="nx">SayHello2</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>              <span class="s">`dubbo:&#34;sayHello&#34;`</span>
-	<span class="nx">SayHello3</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="nx">User</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="s">`dubbo:&#34;sayHello&#34;`</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">DemoProvider</span><span class="p">)</span> <span class="nf">Reference</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="s">&#34;DemoProvider&#34;</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="kd">type</span> <span class="nx">DemoProvider</span> <span class="kd">struct</span> <span class="p">{</span>
+<span class="ln">2</span>	<span class="nx">SayHello</span>  <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>            <span class="s">`dubbo:&#34;sayHello&#34;`</span>
+<span class="ln">3</span>	<span class="nx">SayHello2</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>              <span class="s">`dubbo:&#34;sayHello&#34;`</span>
+<span class="ln">4</span>	<span class="nx">SayHello3</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="nx">User</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="s">`dubbo:&#34;sayHello&#34;`</span>
+<span class="ln">5</span><span class="p">}</span>
+<span class="ln">6</span>
+<span class="ln">7</span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">DemoProvider</span><span class="p">)</span> <span class="nf">Reference</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+<span class="ln">8</span>	<span class="k">return</span> <span class="s">&#34;DemoProvider&#34;</span>
+<span class="ln">9</span><span class="p">}</span>
 </code></pre></div><h4 id="222-启动-dubbogo-消费者">2.2.2 启动 dubbogo 消费者</h4>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">config</span><span class="p">.</span><span class="nf">Load</span><span class="p">()</span>
-	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;\n\n\nstart to test dubbo&#34;</span><span class="p">)</span>
-
-	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">demoProvider</span><span class="p">.</span><span class="nf">SayHello</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="s">&#34;tc&#34;</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;response result: %v\n&#34;</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
-
-	<span class="nx">user</span> <span class="o">:=</span> <span class="nx">User</span><span class="p">{</span>
-		<span class="nx">Name</span><span class="p">:</span> <span class="s">&#34;tc&#34;</span><span class="p">,</span>
-		<span class="nx">Age</span><span class="p">:</span>  <span class="mi">18</span><span class="p">,</span>
-	<span class="p">}</span>
-
-	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">demoProvider</span><span class="p">.</span><span class="nf">SayHello2</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="nx">user</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;response result: %v\n&#34;</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
-
-	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">demoProvider</span><span class="p">.</span><span class="nf">SayHello3</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="nx">user</span><span class="p">,</span> <span class="s">&#34;tc&#34;</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;response result: %v\n&#34;</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
-
-	<span class="nf">initSignal</span><span class="p">()</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="nx">config</span><span class="p">.</span><span class="nf">Load</span><span class="p">()</span>
+<span class="ln"> 3</span>	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;\n\n\nstart to test dubbo&#34;</span><span class="p">)</span>
+<span class="ln"> 4</span>
+<span class="ln"> 5</span>	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">demoProvider</span><span class="p">.</span><span class="nf">SayHello</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="s">&#34;tc&#34;</span><span class="p">)</span>
+<span class="ln"> 6</span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln"> 7</span>		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="ln"> 8</span>	<span class="p">}</span>
+<span class="ln"> 9</span>
+<span class="ln">10</span>	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;response result: %v\n&#34;</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
+<span class="ln">11</span>
+<span class="ln">12</span>	<span class="nx">user</span> <span class="o">:=</span> <span class="nx">User</span><span class="p">{</span>
+<span class="ln">13</span>		<span class="nx">Name</span><span class="p">:</span> <span class="s">&#34;tc&#34;</span><span class="p">,</span>
+<span class="ln">14</span>		<span class="nx">Age</span><span class="p">:</span>  <span class="mi">18</span><span class="p">,</span>
+<span class="ln">15</span>	<span class="p">}</span>
+<span class="ln">16</span>
+<span class="ln">17</span>	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">demoProvider</span><span class="p">.</span><span class="nf">SayHello2</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="nx">user</span><span class="p">)</span>
+<span class="ln">18</span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln">19</span>		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="ln">20</span>	<span class="p">}</span>
+<span class="ln">21</span>
+<span class="ln">22</span>	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;response result: %v\n&#34;</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
+<span class="ln">23</span>
+<span class="ln">24</span>	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">demoProvider</span><span class="p">.</span><span class="nf">SayHello3</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="nx">user</span><span class="p">,</span> <span class="s">&#34;tc&#34;</span><span class="p">)</span>
+<span class="ln">25</span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln">26</span>		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="ln">27</span>	<span class="p">}</span>
+<span class="ln">28</span>
+<span class="ln">29</span>	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;response result: %v\n&#34;</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
+<span class="ln">30</span>
+<span class="ln">31</span>	<span class="nf">initSignal</span><span class="p">()</span>
+<span class="ln">32</span><span class="p">}</span>
 </code></pre></div><h3 id="23-请求结果分析">2.3 请求结果分析</h3>
 <h4 id="231-直接调用">2.3.1 直接调用</h4>
 <blockquote>
@@ -274,38 +274,38 @@
 </blockquote>
 <p>第一个接口的参数是字符串，可以正常返回 <code>[2020-12-03/18:59:12 main.main: client.go: 29] response result: Hello tc</code>
 第二、三两个接口是 <code>User</code> 对象，无法调用成功。错误信息如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">2020-12-02T17:10:47.739+0800    INFO    getty/listener.go:87    session<span class="o">{</span>session session-closed, Read Bytes: 924, Write Bytes: 199, Read Pkgs: 0, Write Pkgs: 1<span class="o">}</span> got error<span class="o">{</span>java exception:Fail to decode request due to: java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService, sayHello
-        at org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation.decode<span class="o">(</span>DecodeableRpcInvocation.java:134<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation.decode<span class="o">(</span>DecodeableRpcInvocation.java:80<span class="o">)</span>
-        at org.apache.dubbo.remoting.transport.DecodeHandler.decode<span class="o">(</span>DecodeHandler.java:57<span class="o">)</span>
-        at org.apache.dubbo.remoting.transport.DecodeHandler.received<span class="o">(</span>DecodeHandler.java:44<span class="o">)</span>
-        at org.apache.dubbo.remoting.transport.dispatcher.ChannelEventRunnable.run<span class="o">(</span>ChannelEventRunnable.java:57<span class="o">)</span>
-        at java.util.concurrent.ThreadPoolExecutor.runWorker<span class="o">(</span>ThreadPoolExecutor.java:1149<span class="o">)</span>
-        at java.util.concurrent.ThreadPoolExecutor<span class="nv">$Worker</span>.run<span class="o">(</span>ThreadPoolExecutor.java:624<span class="o">)</span>
-        at java.lang.Thread.run<span class="o">(</span>Thread.java:748<span class="o">)</span>
-<span class="o">}</span>, will be closed.
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln"> 1</span>2020-12-02T17:10:47.739+0800    INFO    getty/listener.go:87    session<span class="o">{</span>session session-closed, Read Bytes: 924, Write Bytes: 199, Read Pkgs: 0, Write Pkgs: 1<span class="o">}</span> got error<span class="o">{</span>java exception:Fail to decode request due to: java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService, sayHello
+<span class="ln"> 2</span>        at org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation.decode<span class="o">(</span>DecodeableRpcInvocation.java:134<span class="o">)</span>
+<span class="ln"> 3</span>        at org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation.decode<span class="o">(</span>DecodeableRpcInvocation.java:80<span class="o">)</span>
+<span class="ln"> 4</span>        at org.apache.dubbo.remoting.transport.DecodeHandler.decode<span class="o">(</span>DecodeHandler.java:57<span class="o">)</span>
+<span class="ln"> 5</span>        at org.apache.dubbo.remoting.transport.DecodeHandler.received<span class="o">(</span>DecodeHandler.java:44<span class="o">)</span>
+<span class="ln"> 6</span>        at org.apache.dubbo.remoting.transport.dispatcher.ChannelEventRunnable.run<span class="o">(</span>ChannelEventRunnable.java:57<span class="o">)</span>
+<span class="ln"> 7</span>        at java.util.concurrent.ThreadPoolExecutor.runWorker<span class="o">(</span>ThreadPoolExecutor.java:1149<span class="o">)</span>
+<span class="ln"> 8</span>        at java.util.concurrent.ThreadPoolExecutor<span class="nv">$Worker</span>.run<span class="o">(</span>ThreadPoolExecutor.java:624<span class="o">)</span>
+<span class="ln"> 9</span>        at java.lang.Thread.run<span class="o">(</span>Thread.java:748<span class="o">)</span>
+<span class="ln">10</span><span class="o">}</span>, will be closed.
 </code></pre></div><p>正如 issue 中描述的一模一样，因为直接给出了 Java 那边的错误信息，所以直接去看 <code>DecodeableRpcInvocation.decode#134</code>。</p>
 <h4 id="232-断点查看">2.3.2 断点查看</h4>
 <p>代码如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DecodeableRpcInvocation</span> <span class="kd">extends</span> <span class="n">RpcInvocation</span> <span class="kd">implements</span> <span class="n">Codec</span><span class="o">,</span> <span class="n">Decodeable</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">decode</span><span class="o">(</span><span class="n">Channel</span> <span class="n">channel</span><span class="o">,</span> <span class="n">InputStream</span> <span class="n">input</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
-      <span class="o">......</span>
-      <span class="k">if</span> <span class="o">(</span><span class="n">serviceDescriptor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-          <span class="n">MethodDescriptor</span> <span class="n">methodDescriptor</span> <span class="o">=</span> <span class="n">serviceDescriptor</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(</span><span class="n">getMethodName</span><span class="o">(),</span> <span class="n">desc</span><span class="o">);</span>
-          <span class="k">if</span> <span class="o">(</span><span class="n">methodDescriptor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-              <span class="n">pts</span> <span class="o">=</span> <span class="n">methodDescriptor</span><span class="o">.</span><span class="na">getParameterClasses</span><span class="o">();</span>
-              <span class="k">this</span><span class="o">.</span><span class="na">setReturnTypes</span><span class="o">(</span><span class="n">methodDescriptor</span><span class="o">.</span><span class="na">getReturnTypes</span><span class="o">());</span>
-          <span class="o">}</span>
-      <span class="o">}</span>
-      <span class="k">if</span> <span class="o">(</span><span class="n">pts</span> <span class="o">==</span> <span class="n">DubboCodec</span><span class="o">.</span><span class="na">EMPTY_CLASS_ARRAY</span><span class="o">)</span> <span class="o">{</span>
-          <span class="k">if</span> <span class="o">(!</span><span class="n">RpcUtils</span><span class="o">.</span><span class="na">isGenericCall</span><span class="o">(</span><span class="n">path</span><span class="o">,</span> <span class="n">getMethodName</span><span class="o">())</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">RpcUtils</span><span class="o">.</span><span class="na">isEcho</span><span class="o">(</span><span class="n">path</span><span class="o">,</span> <span class="n">getMethodName</span><span class="o">()))</span> <span class="o">{</span>
-              <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalArgumentException</span><span class="o">(</span><span class="s">&#34;Service not found:&#34;</span> <span class="o">+</span> <span class="n">path</span> <span class="o">+</span> <span class="s">&#34;, &#34;</span> <span class="o">+</span> <span class="n">getMethodName</span><span class="o">());</span>
-          <span class="o">}</span>
-          <span class="n">pts</span> <span class="o">=</span> <span class="n">ReflectUtils</span><span class="o">.</span><span class="na">desc2classArray</span><span class="o">(</span><span class="n">desc</span><span class="o">);</span>
-      <span class="o">}</span>
-      <span class="o">......</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="ln"> 1</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DecodeableRpcInvocation</span> <span class="kd">extends</span> <span class="n">RpcInvocation</span> <span class="kd">implements</span> <span class="n">Codec</span><span class="o">,</span> <span class="n">Decodeable</span> <span class="o">{</span>
+<span class="ln"> 2</span>    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">decode</span><span class="o">(</span><span class="n">Channel</span> <span class="n">channel</span><span class="o">,</span> <span class="n">InputStream</span> <span class="n">input</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+<span class="ln"> 3</span>      <span class="o">......</span>
+<span class="ln"> 4</span>      <span class="k">if</span> <span class="o">(</span><span class="n">serviceDescriptor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+<span class="ln"> 5</span>          <span class="n">MethodDescriptor</span> <span class="n">methodDescriptor</span> <span class="o">=</span> <span class="n">serviceDescriptor</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(</span><span class="n">getMethodName</span><span class="o">(),</span> <span class="n">desc</span><span class="o">);</span>
+<span class="ln"> 6</span>          <span class="k">if</span> <span class="o">(</span><span class="n">methodDescriptor</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+<span class="ln"> 7</span>              <span class="n">pts</span> <span class="o">=</span> <span class="n">methodDescriptor</span><span class="o">.</span><span class="na">getParameterClasses</span><span class="o">();</span>
+<span class="ln"> 8</span>              <span class="k">this</span><span class="o">.</span><span class="na">setReturnTypes</span><span class="o">(</span><span class="n">methodDescriptor</span><span class="o">.</span><span class="na">getReturnTypes</span><span class="o">());</span>
+<span class="ln"> 9</span>          <span class="o">}</span>
+<span class="ln">10</span>      <span class="o">}</span>
+<span class="ln">11</span>      <span class="k">if</span> <span class="o">(</span><span class="n">pts</span> <span class="o">==</span> <span class="n">DubboCodec</span><span class="o">.</span><span class="na">EMPTY_CLASS_ARRAY</span><span class="o">)</span> <span class="o">{</span>
+<span class="ln">12</span>          <span class="k">if</span> <span class="o">(!</span><span class="n">RpcUtils</span><span class="o">.</span><span class="na">isGenericCall</span><span class="o">(</span><span class="n">path</span><span class="o">,</span> <span class="n">getMethodName</span><span class="o">())</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">RpcUtils</span><span class="o">.</span><span class="na">isEcho</span><span class="o">(</span><span class="n">path</span><span class="o">,</span> <span class="n">getMethodName</span><span class="o">()))</span> <span class="o">{</span>
+<span class="ln">13</span>              <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalArgumentException</span><span class="o">(</span><span class="s">&#34;Service not found:&#34;</span> <span class="o">+</span> <span class="n">path</span> <span class="o">+</span> <span class="s">&#34;, &#34;</span> <span class="o">+</span> <span class="n">getMethodName</span><span class="o">());</span>
+<span class="ln">14</span>          <span class="o">}</span>
+<span class="ln">15</span>          <span class="n">pts</span> <span class="o">=</span> <span class="n">ReflectUtils</span><span class="o">.</span><span class="na">desc2classArray</span><span class="o">(</span><span class="n">desc</span><span class="o">);</span>
+<span class="ln">16</span>      <span class="o">}</span>
+<span class="ln">17</span>      <span class="o">......</span>
+<span class="ln">18</span>    <span class="o">}</span>
+<span class="ln">19</span><span class="o">}</span>
 </code></pre></div><ul>
 <li>查看 <code>MethodDescriptor</code>，即找方法是否存在，存在的话就会设置好 <code>ParameterClasses</code></li>
 <li>如果上面没找到，<code>pts == DubboCodec.EMPTY_CLASS_ARRAY</code> 就会满足条件，进而判断是否是泛化调用或者是 echo 调用，如果都不是则报服务找不到方法错误</li>
@@ -314,13 +314,13 @@
 <p>补充说明：</p>
 <p><strong>方法查询</strong></p>
 <p>代码如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">MethodDescriptor</span> <span class="nf">getMethod</span><span class="o">(</span><span class="n">String</span> <span class="n">methodName</span><span class="o">,</span> <span class="n">String</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">MethodDescriptor</span><span class="o">&gt;</span> <span class="n">methods</span> <span class="o">=</span> <span class="n">descToMethods</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">methodName</span><span class="o">);</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">CollectionUtils</span><span class="o">.</span><span class="na">isNotEmptyMap</span><span class="o">(</span><span class="n">methods</span><span class="o">))</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">methods</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">params</span><span class="o">);</span>
-    <span class="o">}</span>
-    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-<span class="o">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="ln">1</span><span class="kd">public</span> <span class="n">MethodDescriptor</span> <span class="nf">getMethod</span><span class="o">(</span><span class="n">String</span> <span class="n">methodName</span><span class="o">,</span> <span class="n">String</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+<span class="ln">2</span>    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">MethodDescriptor</span><span class="o">&gt;</span> <span class="n">methods</span> <span class="o">=</span> <span class="n">descToMethods</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">methodName</span><span class="o">);</span>
+<span class="ln">3</span>    <span class="k">if</span> <span class="o">(</span><span class="n">CollectionUtils</span><span class="o">.</span><span class="na">isNotEmptyMap</span><span class="o">(</span><span class="n">methods</span><span class="o">))</span> <span class="o">{</span>
+<span class="ln">4</span>        <span class="k">return</span> <span class="n">methods</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">params</span><span class="o">);</span>
+<span class="ln">5</span>    <span class="o">}</span>
+<span class="ln">6</span>    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+<span class="ln">7</span><span class="o">}</span>
 </code></pre></div><p>优点：</p>
 <p>比之前的版本加了方法的元信息缓存起来，不使用反射可以提高效率，可以理解用空间换时间。</p>
 <p><img
@@ -337,36 +337,36 @@
 </blockquote>
 <h4 id="241-启动-dubbo-服务消费者">2.4.1 启动 dubbo 服务消费者</h4>
 <p>通过 api 模式启动，参考官方例子。启动这个是为了查看 Java 版本的传输内容。</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
-    <span class="c1">// 当前应用配置
-</span><span class="c1"></span>    <span class="n">ApplicationConfig</span> <span class="n">application</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApplicationConfig</span><span class="o">();</span>
-    <span class="n">application</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&#34;demoProvider2&#34;</span><span class="o">);</span>
-
-    <span class="c1">// 连接注册中心配置
-</span><span class="c1"></span>    <span class="n">RegistryConfig</span> <span class="n">registry</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RegistryConfig</span><span class="o">();</span>
-    <span class="n">registry</span><span class="o">.</span><span class="na">setAddress</span><span class="o">(</span><span class="s">&#34;127.0.0.1:2181&#34;</span><span class="o">);</span>
-    <span class="n">registry</span><span class="o">.</span><span class="na">setProtocol</span><span class="o">(</span><span class="s">&#34;zookeeper&#34;</span><span class="o">);</span>
-    <span class="n">registry</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">);</span>
-    <span class="n">registry</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">);</span>
-    <span class="c1">// 注意：ReferenceConfig为重对象，内部封装了与注册中心的连接，以及与服务提供方的连接
-</span><span class="c1"></span>
-    <span class="c1">// 引用远程服务
-</span><span class="c1"></span>    <span class="n">ReferenceConfig</span><span class="o">&lt;</span><span class="n">DemoService</span><span class="o">&gt;</span> <span class="n">reference</span>
-        <span class="o">=</span> <span class="k">new</span> <span class="n">ReferenceConfig</span><span class="o">&lt;&gt;();</span> <span class="c1">// 此实例很重，封装了与注册中心的连接以及与提供者的连接，请自行缓存，否则可能造成内存和连接泄漏
-</span><span class="c1"></span>    <span class="n">reference</span><span class="o">.</span><span class="na">setApplication</span><span class="o">(</span><span class="n">application</span><span class="o">);</span>
-    <span class="n">reference</span><span class="o">.</span><span class="na">setRegistry</span><span class="o">(</span><span class="n">registry</span><span class="o">);</span> <span class="c1">// 多个注册中心可以用setRegistries()
-</span><span class="c1"></span>    <span class="n">reference</span><span class="o">.</span><span class="na">setInterface</span><span class="o">(</span><span class="n">DemoService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-    <span class="n">reference</span><span class="o">.</span><span class="na">setVersion</span><span class="o">(</span><span class="s">&#34;1.0.0&#34;</span><span class="o">);</span>
-    <span class="n">reference</span><span class="o">.</span><span class="na">setGroup</span><span class="o">(</span><span class="s">&#34;tc&#34;</span><span class="o">);</span>
-    <span class="n">reference</span><span class="o">.</span><span class="na">setCheck</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-    <span class="n">reference</span><span class="o">.</span><span class="na">setTimeout</span><span class="o">(</span><span class="n">1000</span> <span class="o">*</span> <span class="n">60</span><span class="o">);</span>
-
-    <span class="c1">// 和本地bean一样使用xxxService
-</span><span class="c1"></span>    <span class="n">DemoService</span> <span class="n">demoService</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="na">get</span><span class="o">();</span> <span class="c1">// 注意：此代理对象内部封装了所有通讯细节，对象较重，请缓存复用
-</span><span class="c1"></span>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">demoService</span><span class="o">.</span><span class="na">sayHello</span><span class="o">(</span><span class="k">new</span> <span class="n">User</span><span class="o">(</span><span class="s">&#34;tc&#34;</span><span class="o">,</span> <span class="n">18</span><span class="o">)));</span>
-
-    <span class="n">TimeUnit</span><span class="o">.</span><span class="na">MINUTES</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">10</span><span class="o">);</span>
-<span class="o">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="ln"> 1</span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+<span class="ln"> 2</span>    <span class="c1">// 当前应用配置
+</span><span class="ln"> 3</span><span class="c1"></span>    <span class="n">ApplicationConfig</span> <span class="n">application</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApplicationConfig</span><span class="o">();</span>
+<span class="ln"> 4</span>    <span class="n">application</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&#34;demoProvider2&#34;</span><span class="o">);</span>
+<span class="ln"> 5</span>
+<span class="ln"> 6</span>    <span class="c1">// 连接注册中心配置
+</span><span class="ln"> 7</span><span class="c1"></span>    <span class="n">RegistryConfig</span> <span class="n">registry</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RegistryConfig</span><span class="o">();</span>
+<span class="ln"> 8</span>    <span class="n">registry</span><span class="o">.</span><span class="na">setAddress</span><span class="o">(</span><span class="s">&#34;127.0.0.1:2181&#34;</span><span class="o">);</span>
+<span class="ln"> 9</span>    <span class="n">registry</span><span class="o">.</span><span class="na">setProtocol</span><span class="o">(</span><span class="s">&#34;zookeeper&#34;</span><span class="o">);</span>
+<span class="ln">10</span>    <span class="n">registry</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">);</span>
+<span class="ln">11</span>    <span class="n">registry</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">);</span>
+<span class="ln">12</span>    <span class="c1">// 注意：ReferenceConfig为重对象，内部封装了与注册中心的连接，以及与服务提供方的连接
+</span><span class="ln">13</span><span class="c1"></span>
+<span class="ln">14</span>    <span class="c1">// 引用远程服务
+</span><span class="ln">15</span><span class="c1"></span>    <span class="n">ReferenceConfig</span><span class="o">&lt;</span><span class="n">DemoService</span><span class="o">&gt;</span> <span class="n">reference</span>
+<span class="ln">16</span>        <span class="o">=</span> <span class="k">new</span> <span class="n">ReferenceConfig</span><span class="o">&lt;&gt;();</span> <span class="c1">// 此实例很重，封装了与注册中心的连接以及与提供者的连接，请自行缓存，否则可能造成内存和连接泄漏
+</span><span class="ln">17</span><span class="c1"></span>    <span class="n">reference</span><span class="o">.</span><span class="na">setApplication</span><span class="o">(</span><span class="n">application</span><span class="o">);</span>
+<span class="ln">18</span>    <span class="n">reference</span><span class="o">.</span><span class="na">setRegistry</span><span class="o">(</span><span class="n">registry</span><span class="o">);</span> <span class="c1">// 多个注册中心可以用setRegistries()
+</span><span class="ln">19</span><span class="c1"></span>    <span class="n">reference</span><span class="o">.</span><span class="na">setInterface</span><span class="o">(</span><span class="n">DemoService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="ln">20</span>    <span class="n">reference</span><span class="o">.</span><span class="na">setVersion</span><span class="o">(</span><span class="s">&#34;1.0.0&#34;</span><span class="o">);</span>
+<span class="ln">21</span>    <span class="n">reference</span><span class="o">.</span><span class="na">setGroup</span><span class="o">(</span><span class="s">&#34;tc&#34;</span><span class="o">);</span>
+<span class="ln">22</span>    <span class="n">reference</span><span class="o">.</span><span class="na">setCheck</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="ln">23</span>    <span class="n">reference</span><span class="o">.</span><span class="na">setTimeout</span><span class="o">(</span><span class="n">1000</span> <span class="o">*</span> <span class="n">60</span><span class="o">);</span>
+<span class="ln">24</span>
+<span class="ln">25</span>    <span class="c1">// 和本地bean一样使用xxxService
+</span><span class="ln">26</span><span class="c1"></span>    <span class="n">DemoService</span> <span class="n">demoService</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="na">get</span><span class="o">();</span> <span class="c1">// 注意：此代理对象内部封装了所有通讯细节，对象较重，请缓存复用
+</span><span class="ln">27</span><span class="c1"></span>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">demoService</span><span class="o">.</span><span class="na">sayHello</span><span class="o">(</span><span class="k">new</span> <span class="n">User</span><span class="o">(</span><span class="s">&#34;tc&#34;</span><span class="o">,</span> <span class="n">18</span><span class="o">)));</span>
+<span class="ln">28</span>
+<span class="ln">29</span>    <span class="n">TimeUnit</span><span class="o">.</span><span class="na">MINUTES</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">10</span><span class="o">);</span>
+<span class="ln">30</span><span class="o">}</span>
 </code></pre></div><p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -383,165 +383,165 @@
 <p>代码位置：</p>
 <p><code>protocol/dubbo/impl/hessian.go:120#marshalRequest</code></p>
 <p>代码实现：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">marshalRequest</span><span class="p">(</span><span class="nx">encoder</span> <span class="o">*</span><span class="nx">hessian</span><span class="p">.</span><span class="nx">Encoder</span><span class="p">,</span> <span class="nx">p</span> <span class="nx">DubboPackage</span><span class="p">)</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">service</span> <span class="o">:=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">Service</span>
-	<span class="nx">request</span> <span class="o">:=</span> <span class="nf">EnsureRequestPayload</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">Body</span><span class="p">)</span>
-	<span class="nx">encoder</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">DEFAULT_DUBBO_PROTOCOL_VERSION</span><span class="p">)</span>
-	<span class="nx">encoder</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">service</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span>
-	<span class="nx">encoder</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">service</span><span class="p">.</span><span class="nx">Version</span><span class="p">)</span>
-	<span class="nx">encoder</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">service</span><span class="p">.</span><span class="nx">Method</span><span class="p">)</span>
-
-	<span class="nx">args</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">Params</span><span class="p">.([]</span><span class="kd">interface</span><span class="p">{})</span>
-
-	<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
-		<span class="nx">logger</span><span class="p">.</span><span class="nf">Infof</span><span class="p">(</span><span class="s">&#34;request args are: %+v&#34;</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">Params</span><span class="p">)</span>
-		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">perrors</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;@params is not of type: []interface{}&#34;</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="nx">types</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">getArgsTypeList</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">perrors</span><span class="p">.</span><span class="nf">Wrapf</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34; PackRequest(args:%+v)&#34;</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="nx">encoder</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">types</span><span class="p">)</span>
-	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">args</span> <span class="p">{</span>
-		<span class="nx">encoder</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="o">......</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="nf">marshalRequest</span><span class="p">(</span><span class="nx">encoder</span> <span class="o">*</span><span class="nx">hessian</span><span class="p">.</span><span class="nx">Encoder</span><span class="p">,</span> <span class="nx">p</span> <span class="nx">DubboPackage</span><span class="p">)</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="nx">service</span> <span class="o">:=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">Service</span>
+<span class="ln"> 3</span>	<span class="nx">request</span> <span class="o">:=</span> <span class="nf">EnsureRequestPayload</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">Body</span><span class="p">)</span>
+<span class="ln"> 4</span>	<span class="nx">encoder</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">DEFAULT_DUBBO_PROTOCOL_VERSION</span><span class="p">)</span>
+<span class="ln"> 5</span>	<span class="nx">encoder</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">service</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span>
+<span class="ln"> 6</span>	<span class="nx">encoder</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">service</span><span class="p">.</span><span class="nx">Version</span><span class="p">)</span>
+<span class="ln"> 7</span>	<span class="nx">encoder</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">service</span><span class="p">.</span><span class="nx">Method</span><span class="p">)</span>
+<span class="ln"> 8</span>
+<span class="ln"> 9</span>	<span class="nx">args</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">Params</span><span class="p">.([]</span><span class="kd">interface</span><span class="p">{})</span>
+<span class="ln">10</span>
+<span class="ln">11</span>	<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+<span class="ln">12</span>		<span class="nx">logger</span><span class="p">.</span><span class="nf">Infof</span><span class="p">(</span><span class="s">&#34;request args are: %+v&#34;</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">Params</span><span class="p">)</span>
+<span class="ln">13</span>		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">perrors</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;@params is not of type: []interface{}&#34;</span><span class="p">)</span>
+<span class="ln">14</span>	<span class="p">}</span>
+<span class="ln">15</span>	<span class="nx">types</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">getArgsTypeList</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span>
+<span class="ln">16</span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln">17</span>		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">perrors</span><span class="p">.</span><span class="nf">Wrapf</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34; PackRequest(args:%+v)&#34;</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
+<span class="ln">18</span>	<span class="p">}</span>
+<span class="ln">19</span>	<span class="nx">encoder</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">types</span><span class="p">)</span>
+<span class="ln">20</span>	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">args</span> <span class="p">{</span>
+<span class="ln">21</span>		<span class="nx">encoder</span><span class="p">.</span><span class="nf">Encode</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+<span class="ln">22</span>	<span class="p">}</span>
+<span class="ln">23</span>
+<span class="ln">24</span>	<span class="o">......</span>
+<span class="ln">25</span><span class="p">}</span>
 </code></pre></div><p>断点可以发现，types 返回的时候就已经是 <code>Object</code> 了，没有返回 <code>User</code>，那么继续跟进去查看代码。</p>
 <ul>
 <li><code>protocol/dubbo/impl/hessian.go:394#getArgsTypeList</code></li>
 <li><code>protocol/dubbo/impl/hessian.go:418#getArgType</code></li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">getArgType</span><span class="p">(</span><span class="nx">v</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">string</span> <span class="p">{</span>
-  <span class="c1">// 常见的类型处理
-</span><span class="c1"></span>
-  <span class="o">......</span>
-
-  <span class="k">default</span><span class="p">:</span>
-    <span class="nx">t</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Ptr</span> <span class="o">==</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Kind</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">t</span> <span class="p">=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">v</span><span class="p">).</span><span class="nf">Elem</span><span class="p">())</span>
-    <span class="p">}</span>
-    <span class="k">switch</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Kind</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Struct</span><span class="p">:</span>
-      <span class="k">return</span> <span class="s">&#34;java.lang.Object&#34;</span>
-    <span class="p">}</span>
-    <span class="o">......</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="nf">getArgType</span><span class="p">(</span><span class="nx">v</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">string</span> <span class="p">{</span>
+<span class="ln"> 2</span>  <span class="c1">// 常见的类型处理
+</span><span class="ln"> 3</span><span class="c1"></span>
+<span class="ln"> 4</span>  <span class="o">......</span>
+<span class="ln"> 5</span>
+<span class="ln"> 6</span>  <span class="k">default</span><span class="p">:</span>
+<span class="ln"> 7</span>    <span class="nx">t</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+<span class="ln"> 8</span>    <span class="k">if</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Ptr</span> <span class="o">==</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Kind</span><span class="p">()</span> <span class="p">{</span>
+<span class="ln"> 9</span>      <span class="nx">t</span> <span class="p">=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">v</span><span class="p">).</span><span class="nf">Elem</span><span class="p">())</span>
+<span class="ln">10</span>    <span class="p">}</span>
+<span class="ln">11</span>    <span class="k">switch</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Kind</span><span class="p">()</span> <span class="p">{</span>
+<span class="ln">12</span>    <span class="k">case</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Struct</span><span class="p">:</span>
+<span class="ln">13</span>      <span class="k">return</span> <span class="s">&#34;java.lang.Object&#34;</span>
+<span class="ln">14</span>    <span class="p">}</span>
+<span class="ln">15</span>    <span class="o">......</span>
+<span class="ln">16</span><span class="p">}</span>
 </code></pre></div><p>很明显当发现是 <code>reflect.Struct</code> 的时候就返回了 <code>java.lang.Object</code>，所以参数就变成了 <code>Object</code>，那么因为 Java 代码那边依赖这个类型所以就调用失败了。</p>
 <h4 id="243-其它版本验证">2.4.3 其它版本验证</h4>
 <p>因为反馈是 2.7.7 出错，所以先考虑到在之前的版本是否功能正常，于是把服务提供者切换到 dubbo 2.7.3，发现调用仍然有错误，如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">2020-12-02T21:52:25.945+0800    INFO    getty/listener.go:85    session<span class="o">{</span>session session-closed, Read Bytes: 4586, Write Bytes: 232, Read Pkgs: 0, Write Pkgs: 1<span class="o">}</span> got error<span class="o">{</span>java exception:org.apache.dubbo.rpc.RpcException: Failed to invoke remote proxy method sayHello to registry://127.0.0.1:2181/org.apache.dubbo.registry.RegistryService?application<span class="o">=</span>demoProvider<span class="p">&amp;</span><span class="nv">dubbo</span><span class="o">=</span>2.0.2<span class="p">&amp;</span><span class="nv">export</span><span class="o">=</span>dubbo%3A%2F%2F192.168.0.113%3A12345%2Fcom.funnycode.DemoService%3Fanyhost%3Dtrue%26application%3DdemoProvider%26bind.ip%3D192.168.0.113%26bind.port%3D12345%26deprecated%3Dfalse%26dubbo%3D2.0.2%26dynamic%3Dtrue%26generic%3Dfalse%26group%3Dtc%26interface%3Dcom.funnycode.DemoService%26methods%3DsayHello%26pid%3D23889%26register%3Dtrue%26release%3D2.7.3%26revision%3D1.0.0%26side%3Dprovider%26threads%3D200%26timeout%3D60000%26timestamp%3D1606916702204%26version%3D1.0.0<span class="p">&amp;</span><span class="nv">pid</span><span class="o">=</span>23889<span class="p">&amp;</span><span class="nv">registry</span><span class="o">=</span>zookeeper<span class="p">&amp;</span><span class="nv">release</span><span class="o">=</span>2.7.3<span class="p">&amp;</span><span class="nv">timestamp</span><span class="o">=</span>1606916702193, cause: Not found method <span class="s2">&#34;sayHello&#34;</span> in class com.funnycode.DemoServiceImpl.
-org.apache.dubbo.rpc.RpcException: Failed to invoke remote proxy method sayHello to registry://127.0.0.1:2181/org.apache.dubbo.registry.RegistryService?application<span class="o">=</span>demoProvider<span class="p">&amp;</span><span class="nv">dubbo</span><span class="o">=</span>2.0.2<span class="p">&amp;</span><span class="nv">export</span><span class="o">=</span>dubbo%3A%2F%2F192.168.0.113%3A12345%2Fcom.funnycode.DemoService%3Fanyhost%3Dtrue%26application%3DdemoProvider%26bind.ip%3D192.168.0.113%26bind.port%3D12345%26deprecated%3Dfalse%26dubbo%3D2.0.2%26dynamic%3Dtrue%26generic%3Dfalse%26group%3Dtc%26interface%3Dcom.funnycode.DemoService%26methods%3DsayHello%26pid%3D23889%26register%3Dtrue%26release%3D2.7.3%26revision%3D1.0.0%26side%3Dprovider%26threads%3D200%26timeout%3D60000%26timestamp%3D1606916702204%26version%3D1.0.0<span class="p">&amp;</span><span class="nv">pid</span><span class="o">=</span>23889<span class="p">&amp;</span><span class="nv">registry</span><span class="o">=</span>zookeeper<span class="p">&amp;</span><span class="nv">release</span><span class="o">=</span>2.7.3<span class="p">&amp;</span><span class="nv">timestamp</span><span class="o">=</span>1606916702193, cause: Not found method <span class="s2">&#34;sayHello&#34;</span> in class com.funnycode.DemoServiceImpl.
-        at org.apache.dubbo.rpc.proxy.AbstractProxyInvoker.invoke<span class="o">(</span>AbstractProxyInvoker.java:107<span class="o">)</span>
-        at org.apache.dubbo.config.invoker.DelegateProviderMetaDataInvoker.invoke<span class="o">(</span>DelegateProviderMetaDataInvoker.java:56<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.InvokerWrapper.invoke<span class="o">(</span>InvokerWrapper.java:56<span class="o">)</span>
-        at org.apache.dubbo.rpc.filter.ExceptionFilter.invoke<span class="o">(</span>ExceptionFilter.java:55<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
-        at org.apache.dubbo.monitor.support.MonitorFilter.invoke<span class="o">(</span>MonitorFilter.java:92<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
-        at org.apache.dubbo.rpc.filter.TimeoutFilter.invoke<span class="o">(</span>TimeoutFilter.java:48<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.dubbo.filter.TraceFilter.invoke<span class="o">(</span>TraceFilter.java:81<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
-        at org.apache.dubbo.rpc.filter.ContextFilter.invoke<span class="o">(</span>ContextFilter.java:96<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
-        at org.apache.dubbo.rpc.filter.GenericFilter.invoke<span class="o">(</span>GenericFilter.java:148<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
-        at org.apache.dubbo.rpc.filter.ClassLoaderFilter.invoke<span class="o">(</span>ClassLoaderFilter.java:38<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
-        at org.apache.dubbo.rpc.filter.EchoFilter.invoke<span class="o">(</span>EchoFilter.java:41<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$CallbackRegistrationInvoker</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:157<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.dubbo.DubboProtocol<span class="nv">$1</span>.reply<span class="o">(</span>DubboProtocol.java:152<span class="o">)</span>
-        at org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeHandler.handleRequest<span class="o">(</span>HeaderExchangeHandler.java:102<span class="o">)</span>
-        at org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeHandler.received<span class="o">(</span>HeaderExchangeHandler.java:193<span class="o">)</span>
-        at org.apache.dubbo.remoting.transport.DecodeHandler.received<span class="o">(</span>DecodeHandler.java:51<span class="o">)</span>
-        at org.apache.dubbo.remoting.transport.dispatcher.ChannelEventRunnable.run<span class="o">(</span>ChannelEventRunnable.java:57<span class="o">)</span>
-        at java.util.concurrent.ThreadPoolExecutor.runWorker<span class="o">(</span>ThreadPoolExecutor.java:1149<span class="o">)</span>
-        at java.util.concurrent.ThreadPoolExecutor<span class="nv">$Worker</span>.run<span class="o">(</span>ThreadPoolExecutor.java:624<span class="o">)</span>
-        at java.lang.Thread.run<span class="o">(</span>Thread.java:748<span class="o">)</span>
-Caused by: org.apache.dubbo.common.bytecode.NoSuchMethodException: Not found method <span class="s2">&#34;sayHello&#34;</span> in class com.funnycode.DemoServiceImpl.
-        at org.apache.dubbo.common.bytecode.Wrapper1.invokeMethod<span class="o">(</span>Wrapper1.java<span class="o">)</span>
-        at org.apache.dubbo.rpc.proxy.javassist.JavassistProxyFactory<span class="nv">$1</span>.doInvoke<span class="o">(</span>JavassistProxyFactory.java:47<span class="o">)</span>
-        at org.apache.dubbo.rpc.proxy.AbstractProxyInvoker.invoke<span class="o">(</span>AbstractProxyInvoker.java:84<span class="o">)</span>
-        ... <span class="m">27</span> more
-<span class="o">}</span>, will be closed.
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln"> 1</span>2020-12-02T21:52:25.945+0800    INFO    getty/listener.go:85    session<span class="o">{</span>session session-closed, Read Bytes: 4586, Write Bytes: 232, Read Pkgs: 0, Write Pkgs: 1<span class="o">}</span> got error<span class="o">{</span>java exception:org.apache.dubbo.rpc.RpcException: Failed to invoke remote proxy method sayHello to registry://127.0.0.1:2181/org.apache.dubbo.registry.RegistryService?application<span class="o">=</span>demoProvider<span class="p">&amp;</span><span class="nv">dubbo</span><span class="o">=</span>2.0.2<span class="p">&amp;</span><span class="nv">export</span><span class="o">=</span>dubbo%3A%2F%2F192.168.0.113%3A12345%2Fcom.funnycode.DemoService%3Fanyhost%3Dtrue%26application%3DdemoProvider%26bind.ip%3D192.168.0.113%26bind.port%3D12345%26deprecated%3Dfalse%26dubbo%3D2.0.2%26dynamic%3Dtrue%26generic%3Dfalse%26group%3Dtc%26interface%3Dcom.funnycode.DemoService%26methods%3DsayHello%26pid%3D23889%26register%3Dtrue%26release%3D2.7.3%26revision%3D1.0.0%26side%3Dprovider%26threads%3D200%26timeout%3D60000%26timestamp%3D1606916702204%26version%3D1.0.0<span class="p">&amp;</span><span class="nv">pid</span><span class="o">=</span>23889<span class="p">&amp;</span><span class="nv">registry</span><span class="o">=</span>zookeeper<span class="p">&amp;</span><span class="nv">release</span><span class="o">=</span>2.7.3<span class="p">&amp;</span><span class="nv">timestamp</span><span class="o">=</span>1606916702193, cause: Not found method <span class="s2">&#34;sayHello&#34;</span> in class com.funnycode.DemoServiceImpl.
+<span class="ln"> 2</span>org.apache.dubbo.rpc.RpcException: Failed to invoke remote proxy method sayHello to registry://127.0.0.1:2181/org.apache.dubbo.registry.RegistryService?application<span class="o">=</span>demoProvider<span class="p">&amp;</span><span class="nv">dubbo</span><span class="o">=</span>2.0.2<span class="p">&amp;</span><span class="nv">export</span><span class="o">=</span>dubbo%3A%2F%2F192.168.0.113%3A12345%2Fcom.funnycode.DemoService%3Fanyhost%3Dtrue%26application%3DdemoProvider%26bind.ip%3D192.168.0.113%26bind.port%3D12345%26deprecated%3Dfalse%26dubbo%3D2.0.2%26dynamic%3Dtrue%26generic%3Dfalse%26group%3Dtc%26interface%3Dcom.funnycode.DemoService%26methods%3DsayHello%26pid%3D23889%26register%3Dtrue%26release%3D2.7.3%26revision%3D1.0.0%26side%3Dprovider%26threads%3D200%26timeout%3D60000%26timestamp%3D1606916702204%26version%3D1.0.0<span class="p">&amp;</span><span class="nv">pid</span><span class="o">=</span>23889<span class="p">&amp;</span><span class="nv">registry</span><span class="o">=</span>zookeeper<span class="p">&amp;</span><span class="nv">release</span><span class="o">=</span>2.7.3<span class="p">&amp;</span><span class="nv">timestamp</span><span class="o">=</span>1606916702193, cause: Not found method <span class="s2">&#34;sayHello&#34;</span> in class com.funnycode.DemoServiceImpl.
+<span class="ln"> 3</span>        at org.apache.dubbo.rpc.proxy.AbstractProxyInvoker.invoke<span class="o">(</span>AbstractProxyInvoker.java:107<span class="o">)</span>
+<span class="ln"> 4</span>        at org.apache.dubbo.config.invoker.DelegateProviderMetaDataInvoker.invoke<span class="o">(</span>DelegateProviderMetaDataInvoker.java:56<span class="o">)</span>
+<span class="ln"> 5</span>        at org.apache.dubbo.rpc.protocol.InvokerWrapper.invoke<span class="o">(</span>InvokerWrapper.java:56<span class="o">)</span>
+<span class="ln"> 6</span>        at org.apache.dubbo.rpc.filter.ExceptionFilter.invoke<span class="o">(</span>ExceptionFilter.java:55<span class="o">)</span>
+<span class="ln"> 7</span>        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
+<span class="ln"> 8</span>        at org.apache.dubbo.monitor.support.MonitorFilter.invoke<span class="o">(</span>MonitorFilter.java:92<span class="o">)</span>
+<span class="ln"> 9</span>        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
+<span class="ln">10</span>        at org.apache.dubbo.rpc.filter.TimeoutFilter.invoke<span class="o">(</span>TimeoutFilter.java:48<span class="o">)</span>
+<span class="ln">11</span>        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
+<span class="ln">12</span>        at org.apache.dubbo.rpc.protocol.dubbo.filter.TraceFilter.invoke<span class="o">(</span>TraceFilter.java:81<span class="o">)</span>
+<span class="ln">13</span>        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
+<span class="ln">14</span>        at org.apache.dubbo.rpc.filter.ContextFilter.invoke<span class="o">(</span>ContextFilter.java:96<span class="o">)</span>
+<span class="ln">15</span>        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
+<span class="ln">16</span>        at org.apache.dubbo.rpc.filter.GenericFilter.invoke<span class="o">(</span>GenericFilter.java:148<span class="o">)</span>
+<span class="ln">17</span>        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
+<span class="ln">18</span>        at org.apache.dubbo.rpc.filter.ClassLoaderFilter.invoke<span class="o">(</span>ClassLoaderFilter.java:38<span class="o">)</span>
+<span class="ln">19</span>        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
+<span class="ln">20</span>        at org.apache.dubbo.rpc.filter.EchoFilter.invoke<span class="o">(</span>EchoFilter.java:41<span class="o">)</span>
+<span class="ln">21</span>        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$1</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:82<span class="o">)</span>
+<span class="ln">22</span>        at org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper<span class="nv">$CallbackRegistrationInvoker</span>.invoke<span class="o">(</span>ProtocolFilterWrapper.java:157<span class="o">)</span>
+<span class="ln">23</span>        at org.apache.dubbo.rpc.protocol.dubbo.DubboProtocol<span class="nv">$1</span>.reply<span class="o">(</span>DubboProtocol.java:152<span class="o">)</span>
+<span class="ln">24</span>        at org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeHandler.handleRequest<span class="o">(</span>HeaderExchangeHandler.java:102<span class="o">)</span>
+<span class="ln">25</span>        at org.apache.dubbo.remoting.exchange.support.header.HeaderExchangeHandler.received<span class="o">(</span>HeaderExchangeHandler.java:193<span class="o">)</span>
+<span class="ln">26</span>        at org.apache.dubbo.remoting.transport.DecodeHandler.received<span class="o">(</span>DecodeHandler.java:51<span class="o">)</span>
+<span class="ln">27</span>        at org.apache.dubbo.remoting.transport.dispatcher.ChannelEventRunnable.run<span class="o">(</span>ChannelEventRunnable.java:57<span class="o">)</span>
+<span class="ln">28</span>        at java.util.concurrent.ThreadPoolExecutor.runWorker<span class="o">(</span>ThreadPoolExecutor.java:1149<span class="o">)</span>
+<span class="ln">29</span>        at java.util.concurrent.ThreadPoolExecutor<span class="nv">$Worker</span>.run<span class="o">(</span>ThreadPoolExecutor.java:624<span class="o">)</span>
+<span class="ln">30</span>        at java.lang.Thread.run<span class="o">(</span>Thread.java:748<span class="o">)</span>
+<span class="ln">31</span>Caused by: org.apache.dubbo.common.bytecode.NoSuchMethodException: Not found method <span class="s2">&#34;sayHello&#34;</span> in class com.funnycode.DemoServiceImpl.
+<span class="ln">32</span>        at org.apache.dubbo.common.bytecode.Wrapper1.invokeMethod<span class="o">(</span>Wrapper1.java<span class="o">)</span>
+<span class="ln">33</span>        at org.apache.dubbo.rpc.proxy.javassist.JavassistProxyFactory<span class="nv">$1</span>.doInvoke<span class="o">(</span>JavassistProxyFactory.java:47<span class="o">)</span>
+<span class="ln">34</span>        at org.apache.dubbo.rpc.proxy.AbstractProxyInvoker.invoke<span class="o">(</span>AbstractProxyInvoker.java:84<span class="o">)</span>
+<span class="ln">35</span>        ... <span class="m">27</span> more
+<span class="ln">36</span><span class="o">}</span>, will be closed.
 </code></pre></div><p>虽然和 2.7.7 的代码是不一样的，但是通过错误也能看出来是在代理增强类里面方法找不到，大概率是反射找不到方法，所以归根结底也是参数的问题。</p>
 <h4 id="244-修复问题">2.4.4 修复问题</h4>
 <p>修复相对简单，就是拿到 <code>struct</code> 定义的 <code>JavaClassName</code>。</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="k">case</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Struct</span><span class="p">:</span>
-  <span class="nx">v</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">v</span><span class="p">.(</span><span class="nx">hessian</span><span class="p">.</span><span class="nx">POJO</span><span class="p">)</span>
-  <span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">v</span><span class="p">.</span><span class="nf">JavaClassName</span><span class="p">()</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="s">&#34;java.lang.Object&#34;</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="k">case</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Struct</span><span class="p">:</span>
+<span class="ln">2</span>  <span class="nx">v</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">v</span><span class="p">.(</span><span class="nx">hessian</span><span class="p">.</span><span class="nx">POJO</span><span class="p">)</span>
+<span class="ln">3</span>  <span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
+<span class="ln">4</span>    <span class="k">return</span> <span class="nx">v</span><span class="p">.</span><span class="nf">JavaClassName</span><span class="p">()</span>
+<span class="ln">5</span>  <span class="p">}</span>
+<span class="ln">6</span>  <span class="k">return</span> <span class="s">&#34;java.lang.Object&#34;</span>
 </code></pre></div><h4 id="243-验证结果">2.4.3 验证结果</h4>
 <p>再次执行消费者，运行（提供方 2.7.7 和 2.7.3）正常，输出如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>2020-12-03/20:04:06 main.main: client.go: 29<span class="o">]</span> response result: Hello tc
-...
-<span class="o">[</span>2020-12-03/20:04:09 main.main: client.go: 41<span class="o">]</span> response result: Hello tc You are <span class="m">18</span>
-...
-<span class="o">[</span>2020-12-03/20:04:09 main.main: client.go: 48<span class="o">]</span> response result: Hello tc You are <span class="m">18</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="o">[</span>2020-12-03/20:04:06 main.main: client.go: 29<span class="o">]</span> response result: Hello tc
+<span class="ln">2</span>...
+<span class="ln">3</span><span class="o">[</span>2020-12-03/20:04:09 main.main: client.go: 41<span class="o">]</span> response result: Hello tc You are <span class="m">18</span>
+<span class="ln">4</span>...
+<span class="ln">5</span><span class="o">[</span>2020-12-03/20:04:09 main.main: client.go: 48<span class="o">]</span> response result: Hello tc You are <span class="m">18</span>
 </code></pre></div><h2 id="三细节叨叨">三、细节叨叨</h2>
 <h3 id="31-如何配置-dubbgo-消费者">3.1 如何配置 dubbgo 消费者</h3>
 <p>细心的你是否已经发现，在我 dubbogo 的消费端接口叫 <code>DemoProvider</code>，然后发现提供者叫 <code>DemoService</code>，这个又是如何正常运行的？</p>
 <p>实际上和 <code>client.yml</code> 中配置项 <code>references</code> 有关，在配置文件详细说明了 <code>interface</code>，<code>version</code>，<code>group</code> 等，你还可以通过 methods 配置方法的超时时间等信息。</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">references</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="s2">&#34;DemoProvider&#34;</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="c"># 可以指定多个registry，使用逗号隔开;不指定默认向所有注册中心注册</span><span class="w">
-</span><span class="w">    </span><span class="nt">registry</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;zk1&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;dubbo&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">interface</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;com.funnycode.DemoService&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;failover&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;1.0.0&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;tc&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">methods</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;SayHello&#34;</span><span class="w">
-</span><span class="w">        </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
-</span><span class="w">    </span><span class="l">......</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="ln"> 1</span><span class="nt">references</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 2</span><span class="w">  </span><span class="s2">&#34;DemoProvider&#34;</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 3</span><span class="w">    </span><span class="c"># 可以指定多个registry，使用逗号隔开;不指定默认向所有注册中心注册</span><span class="w">
+</span><span class="ln"> 4</span><span class="w">    </span><span class="nt">registry</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;zk1&#34;</span><span class="w">
+</span><span class="ln"> 5</span><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;dubbo&#34;</span><span class="w">
+</span><span class="ln"> 6</span><span class="w">    </span><span class="nt">interface</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;com.funnycode.DemoService&#34;</span><span class="w">
+</span><span class="ln"> 7</span><span class="w">    </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;failover&#34;</span><span class="w">
+</span><span class="ln"> 8</span><span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;1.0.0&#34;</span><span class="w">
+</span><span class="ln"> 9</span><span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;tc&#34;</span><span class="w">
+</span><span class="ln">10</span><span class="w">    </span><span class="nt">methods</span><span class="p">:</span><span class="w">
+</span><span class="ln">11</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;SayHello&#34;</span><span class="w">
+</span><span class="ln">12</span><span class="w">        </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span><span class="ln">13</span><span class="w">    </span><span class="l">......</span><span class="w">
 </span></code></pre></div><h3 id="32-全局的-group-和-version-怎么配置">3.2 全局的 group 和 version 怎么配置</h3>
 <p>配置文件如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># application config</span><span class="w">
-</span><span class="w"></span><span class="nt">application</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">organization</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;dubbogoproxy.com&#34;</span><span class="w">
-</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Demo Micro Service&#34;</span><span class="w">
-</span><span class="w">  </span><span class="nt">module</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;dubbogoproxy tc client&#34;</span><span class="w">
-</span><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;1.0.0&#34;</span><span class="w">
-</span><span class="w">  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;tc&#34;</span><span class="w">
-</span><span class="w">  </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ZX&#34;</span><span class="w">
-</span><span class="w">  </span><span class="nt">environment</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;dev&#34;</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="nt">references</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="s2">&#34;DemoProvider&#34;</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="c"># 可以指定多个registry，使用逗号隔开;不指定默认向所有注册中心注册</span><span class="w">
-</span><span class="w">    </span><span class="nt">registry</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;zk1&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;dubbo&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">interface</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;com.funnycode.DemoService&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;failover&#34;</span><span class="w">
-</span><span class="w"></span><span class="c">#    version: &#34;1.0.0&#34;</span><span class="w">
-</span><span class="w"></span><span class="c">#    group: &#34;tc&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">methods</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;SayHello&#34;</span><span class="w">
-</span><span class="w">        </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="ln"> 1</span><span class="c"># application config</span><span class="w">
+</span><span class="ln"> 2</span><span class="w"></span><span class="nt">application</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 3</span><span class="w">  </span><span class="nt">organization</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;dubbogoproxy.com&#34;</span><span class="w">
+</span><span class="ln"> 4</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Demo Micro Service&#34;</span><span class="w">
+</span><span class="ln"> 5</span><span class="w">  </span><span class="nt">module</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;dubbogoproxy tc client&#34;</span><span class="w">
+</span><span class="ln"> 6</span><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;1.0.0&#34;</span><span class="w">
+</span><span class="ln"> 7</span><span class="w">  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;tc&#34;</span><span class="w">
+</span><span class="ln"> 8</span><span class="w">  </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;ZX&#34;</span><span class="w">
+</span><span class="ln"> 9</span><span class="w">  </span><span class="nt">environment</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;dev&#34;</span><span class="w">
+</span><span class="ln">10</span><span class="w">
+</span><span class="ln">11</span><span class="w"></span><span class="nt">references</span><span class="p">:</span><span class="w">
+</span><span class="ln">12</span><span class="w">  </span><span class="s2">&#34;DemoProvider&#34;</span><span class="p">:</span><span class="w">
+</span><span class="ln">13</span><span class="w">    </span><span class="c"># 可以指定多个registry，使用逗号隔开;不指定默认向所有注册中心注册</span><span class="w">
+</span><span class="ln">14</span><span class="w">    </span><span class="nt">registry</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;zk1&#34;</span><span class="w">
+</span><span class="ln">15</span><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;dubbo&#34;</span><span class="w">
+</span><span class="ln">16</span><span class="w">    </span><span class="nt">interface</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;com.funnycode.DemoService&#34;</span><span class="w">
+</span><span class="ln">17</span><span class="w">    </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;failover&#34;</span><span class="w">
+</span><span class="ln">18</span><span class="w"></span><span class="c">#    version: &#34;1.0.0&#34;</span><span class="w">
+</span><span class="ln">19</span><span class="w"></span><span class="c">#    group: &#34;tc&#34;</span><span class="w">
+</span><span class="ln">20</span><span class="w">    </span><span class="nt">methods</span><span class="p">:</span><span class="w">
+</span><span class="ln">21</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;SayHello&#34;</span><span class="w">
+</span><span class="ln">22</span><span class="w">        </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
 </span></code></pre></div><p>从使用的习惯来讲，肯定是 <code>application</code> 表示了全局的配置，但是我发现启动的时候在 <code>application</code> 配置的 <code>version</code> 和 <code>group</code> 并不会赋值给接口，启动会报服务提供方找不到，如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">2020-12-03T20:15:42.208+0800    DEBUG   zookeeper/registry.go:237       Create a zookeeper node:/dubbo/com.funnycode.DemoService/consumers/consumer%3A%2F%2F30.11.176.107%2FDemoProvider%3Fapp.version%3D1.0.0%26application%3DDemo+Micro+Service%26async%3Dfalse%26bean.name%3DDemoProvider%26cluster%3Dfailover%26environment%3Ddev%26generic%3Dfalse%26group%3D%26interface%3Dcom.funnycode.DemoService%26ip%3D30.11.176.107%26loadbalance%3D%26methods.SayHello.loadbalance%3D%26methods.SayHello.retries%3D3%26methods.SayHello.sticky%3Dfalse%26module%3Ddubbogoproxy+tc+client%26name%3DDemo+Micro+Service%26organization%3Ddubbogoproxy.com%26owner%3DZX%26pid%3D38692%26protocol%3Ddubbo%26provided-by%3D%26reference.filter%3Dcshutdown%26registry.role%3D0%26release%3Ddubbo-golang-1.3.0%26retries%3D%26side%3Dconsumer%26sticky%3Dfalse%26timestamp%3D1606997742%26version%3D
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>2020-12-03T20:15:42.208+0800    DEBUG   zookeeper/registry.go:237       Create a zookeeper node:/dubbo/com.funnycode.DemoService/consumers/consumer%3A%2F%2F30.11.176.107%2FDemoProvider%3Fapp.version%3D1.0.0%26application%3DDemo+Micro+Service%26async%3Dfalse%26bean.name%3DDemoProvider%26cluster%3Dfailover%26environment%3Ddev%26generic%3Dfalse%26group%3D%26interface%3Dcom.funnycode.DemoService%26ip%3D30.11.176.107%26loadbalance%3D%26methods.SayHello.loadbalance%3D%26methods.SayHello.retries%3D3%26methods.SayHello.sticky%3Dfalse%26module%3Ddubbogoproxy+tc+client%26name%3DDemo+Micro+Service%26organization%3Ddubbogoproxy.com%26owner%3DZX%26pid%3D38692%26protocol%3Ddubbo%26provided-by%3D%26reference.filter%3Dcshutdown%26registry.role%3D0%26release%3Ddubbo-golang-1.3.0%26retries%3D%26side%3Dconsumer%26sticky%3Dfalse%26timestamp%3D1606997742%26version%3D
 </code></pre></div><p><code>version</code> 和 <code>group</code> 都是空。必须把 <code>DemoProvider</code> 下的 <code>version</code> 和 <code>group</code> 注释打开。这个细节后面分析配置文件解析的时候会展开说明。</p>
 <h3 id="33-怎么指定调用的方法名">3.3 怎么指定调用的方法名</h3>
 <h4 id="331-go-调用-java">3.3.1 go 调用 java</h4>
 <p>dubbogo 调用 dubbo，因为 go 是大写的方法名，java 里面是小写的方法名，所以会出现如下错误：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">2020-12-02T17:10:47.739+0800    INFO    getty/listener.go:87    session<span class="o">{</span>session session-closed, Read Bytes: 924, Write Bytes: 199, Read Pkgs: 0, Write Pkgs: 1<span class="o">}</span> got error<span class="o">{</span>java exception:Fail to decode request due to: java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService, SayHello
-java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService, SayHello
-        at org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation.decode<span class="o">(</span>DecodeableRpcInvocation.java:134<span class="o">)</span>
-        at org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation.decode<span class="o">(</span>DecodeableRpcInvocation.java:80<span class="o">)</span>
-        at org.apache.dubbo.remoting.transport.DecodeHandler.decode<span class="o">(</span>DecodeHandler.java:57<span class="o">)</span>
-        at org.apache.dubbo.remoting.transport.DecodeHandler.received<span class="o">(</span>DecodeHandler.java:44<span class="o">)</span>
-        at org.apache.dubbo.remoting.transport.dispatcher.ChannelEventRunnable.run<span class="o">(</span>ChannelEventRunnable.java:57<span class="o">)</span>
-        at java.util.concurrent.ThreadPoolExecutor.runWorker<span class="o">(</span>ThreadPoolExecutor.java:1149<span class="o">)</span>
-        at java.util.concurrent.ThreadPoolExecutor<span class="nv">$Worker</span>.run<span class="o">(</span>ThreadPoolExecutor.java:624<span class="o">)</span>
-        at java.lang.Thread.run<span class="o">(</span>Thread.java:748<span class="o">)</span>
-<span class="o">}</span>, will be closed.
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln"> 1</span>2020-12-02T17:10:47.739+0800    INFO    getty/listener.go:87    session<span class="o">{</span>session session-closed, Read Bytes: 924, Write Bytes: 199, Read Pkgs: 0, Write Pkgs: 1<span class="o">}</span> got error<span class="o">{</span>java exception:Fail to decode request due to: java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService, SayHello
+<span class="ln"> 2</span>java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService, SayHello
+<span class="ln"> 3</span>        at org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation.decode<span class="o">(</span>DecodeableRpcInvocation.java:134<span class="o">)</span>
+<span class="ln"> 4</span>        at org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation.decode<span class="o">(</span>DecodeableRpcInvocation.java:80<span class="o">)</span>
+<span class="ln"> 5</span>        at org.apache.dubbo.remoting.transport.DecodeHandler.decode<span class="o">(</span>DecodeHandler.java:57<span class="o">)</span>
+<span class="ln"> 6</span>        at org.apache.dubbo.remoting.transport.DecodeHandler.received<span class="o">(</span>DecodeHandler.java:44<span class="o">)</span>
+<span class="ln"> 7</span>        at org.apache.dubbo.remoting.transport.dispatcher.ChannelEventRunnable.run<span class="o">(</span>ChannelEventRunnable.java:57<span class="o">)</span>
+<span class="ln"> 8</span>        at java.util.concurrent.ThreadPoolExecutor.runWorker<span class="o">(</span>ThreadPoolExecutor.java:1149<span class="o">)</span>
+<span class="ln"> 9</span>        at java.util.concurrent.ThreadPoolExecutor<span class="nv">$Worker</span>.run<span class="o">(</span>ThreadPoolExecutor.java:624<span class="o">)</span>
+<span class="ln">10</span>        at java.lang.Thread.run<span class="o">(</span>Thread.java:748<span class="o">)</span>
+<span class="ln">11</span><span class="o">}</span>, will be closed.
 </code></pre></div><blockquote>
 <p><a href="https://github.com/apache/dubbo-go/issues/257" target="_blank" rel="noopener noreffer">关联的issue</a></p>
 </blockquote>
@@ -555,78 +555,78 @@ java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService,
 <p>直接贴能跑通的代码</p>
 </blockquote>
 <p>我的提供者接口：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">DemoProvider</span> <span class="kd">struct</span><span class="p">{}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">DemoProvider</span><span class="p">)</span> <span class="nf">SayHello</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="s">&#34;Hello &#34;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">,</span> <span class="kc">nil</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">DemoProvider</span><span class="p">)</span> <span class="nf">SayHello4</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="s">&#34;Hello &#34;</span> <span class="o">+</span> <span class="nx">user</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34; You are &#34;</span> <span class="o">+</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">Age</span><span class="p">),</span> <span class="kc">nil</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">DemoProvider</span><span class="p">)</span> <span class="nf">SayHello5</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="s">&#34;Hello &#34;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s">&#34; You are &#34;</span> <span class="o">+</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">Age</span><span class="p">),</span> <span class="kc">nil</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">DemoProvider</span><span class="p">)</span> <span class="nf">Reference</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="s">&#34;DemoProvider&#34;</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">DemoProvider</span><span class="p">)</span> <span class="nf">MethodMapper</span><span class="p">()</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
-		<span class="s">&#34;SayHello&#34;</span><span class="p">:</span> <span class="s">&#34;sayHello&#34;</span><span class="p">,</span>
-	<span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">type</span> <span class="nx">DemoProvider</span> <span class="kd">struct</span><span class="p">{}</span>
+<span class="ln"> 2</span>
+<span class="ln"> 3</span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">DemoProvider</span><span class="p">)</span> <span class="nf">SayHello</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 4</span>	<span class="k">return</span> <span class="s">&#34;Hello &#34;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="ln"> 5</span><span class="p">}</span>
+<span class="ln"> 6</span>
+<span class="ln"> 7</span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">DemoProvider</span><span class="p">)</span> <span class="nf">SayHello4</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 8</span>	<span class="k">return</span> <span class="s">&#34;Hello &#34;</span> <span class="o">+</span> <span class="nx">user</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34; You are &#34;</span> <span class="o">+</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">Age</span><span class="p">),</span> <span class="kc">nil</span>
+<span class="ln"> 9</span><span class="p">}</span>
+<span class="ln">10</span>
+<span class="ln">11</span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">DemoProvider</span><span class="p">)</span> <span class="nf">SayHello5</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">12</span>	<span class="k">return</span> <span class="s">&#34;Hello &#34;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s">&#34; You are &#34;</span> <span class="o">+</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">Age</span><span class="p">),</span> <span class="kc">nil</span>
+<span class="ln">13</span><span class="p">}</span>
+<span class="ln">14</span>
+<span class="ln">15</span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">DemoProvider</span><span class="p">)</span> <span class="nf">Reference</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+<span class="ln">16</span>	<span class="k">return</span> <span class="s">&#34;DemoProvider&#34;</span>
+<span class="ln">17</span><span class="p">}</span>
+<span class="ln">18</span>
+<span class="ln">19</span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">DemoProvider</span><span class="p">)</span> <span class="nf">MethodMapper</span><span class="p">()</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span> <span class="p">{</span>
+<span class="ln">20</span>	<span class="k">return</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+<span class="ln">21</span>		<span class="s">&#34;SayHello&#34;</span><span class="p">:</span> <span class="s">&#34;sayHello&#34;</span><span class="p">,</span>
+<span class="ln">22</span>	<span class="p">}</span>
+<span class="ln">23</span><span class="p">}</span>
 </code></pre></div><p>我的消费者使用：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">DemoProvider</span> <span class="kd">struct</span> <span class="p">{</span>
-  <span class="c1">// 调用 java 和 go
-</span><span class="c1"></span>	<span class="nx">SayHello</span>  <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>             <span class="s">`dubbo:&#34;sayHello&#34;`</span>
-  <span class="c1">// 只调用 java
-</span><span class="c1"></span>	<span class="nx">SayHello2</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>              <span class="s">`dubbo:&#34;sayHello&#34;`</span>
-	<span class="nx">SayHello3</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="s">`dubbo:&#34;sayHello&#34;`</span>
-  <span class="c1">// 只调用 go
-</span><span class="c1"></span>	<span class="nx">SayHello4</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
-	<span class="nx">SayHello5</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">config</span><span class="p">.</span><span class="nf">Load</span><span class="p">()</span>
-	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;\n\n\nstart to test dubbo&#34;</span><span class="p">)</span>
-
-	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">demoProvider</span><span class="p">.</span><span class="nf">SayHello</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="s">&#34;tc&#34;</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;response result: %v\n&#34;</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
-
-	<span class="nx">user</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">User</span><span class="p">{</span>
-		<span class="nx">Name</span><span class="p">:</span> <span class="s">&#34;tc&#34;</span><span class="p">,</span>
-		<span class="nx">Age</span><span class="p">:</span>  <span class="mi">18</span><span class="p">,</span>
-	<span class="p">}</span>
-
-	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">demoProvider</span><span class="p">.</span><span class="nf">SayHello4</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="nx">user</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;response result: %v\n&#34;</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
-
-	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">demoProvider</span><span class="p">.</span><span class="nf">SayHello5</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="nx">user</span><span class="p">,</span> <span class="s">&#34;tc&#34;</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-	<span class="p">}</span>
-
-	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;response result: %v\n&#34;</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
-
-	<span class="nf">initSignal</span><span class="p">()</span>
-<span class="p">}</span>
-</code></pre></div><p>这里主要注意 <code>MethodMapper</code> 方法，像我请求 <code>SayHello</code> 变成了 <code>sayHello</code>，需要在这个方法中配置这个关系，否则还是会找不到方法。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">type</span> <span class="nx">DemoProvider</span> <span class="kd">struct</span> <span class="p">{</span>
+<span class="ln"> 2</span>  <span class="c1">// 调用 java 和 go
+</span><span class="ln"> 3</span><span class="c1"></span>	<span class="nx">SayHello</span>  <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>             <span class="s">`dubbo:&#34;sayHello&#34;`</span>
+<span class="ln"> 4</span>  <span class="c1">// 只调用 java
+</span><span class="ln"> 5</span><span class="c1"></span>	<span class="nx">SayHello2</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>              <span class="s">`dubbo:&#34;sayHello&#34;`</span>
+<span class="ln"> 6</span>	<span class="nx">SayHello3</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="s">`dubbo:&#34;sayHello&#34;`</span>
+<span class="ln"> 7</span>  <span class="c1">// 只调用 go
+</span><span class="ln"> 8</span><span class="c1"></span>	<span class="nx">SayHello4</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+<span class="ln"> 9</span>	<span class="nx">SayHello5</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+<span class="ln">10</span><span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="nx">config</span><span class="p">.</span><span class="nf">Load</span><span class="p">()</span>
+<span class="ln"> 3</span>	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;\n\n\nstart to test dubbo&#34;</span><span class="p">)</span>
+<span class="ln"> 4</span>
+<span class="ln"> 5</span>	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">demoProvider</span><span class="p">.</span><span class="nf">SayHello</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="s">&#34;tc&#34;</span><span class="p">)</span>
+<span class="ln"> 6</span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln"> 7</span>		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="ln"> 8</span>	<span class="p">}</span>
+<span class="ln"> 9</span>
+<span class="ln">10</span>	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;response result: %v\n&#34;</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
+<span class="ln">11</span>
+<span class="ln">12</span>	<span class="nx">user</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">User</span><span class="p">{</span>
+<span class="ln">13</span>		<span class="nx">Name</span><span class="p">:</span> <span class="s">&#34;tc&#34;</span><span class="p">,</span>
+<span class="ln">14</span>		<span class="nx">Age</span><span class="p">:</span>  <span class="mi">18</span><span class="p">,</span>
+<span class="ln">15</span>	<span class="p">}</span>
+<span class="ln">16</span>
+<span class="ln">17</span>	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">demoProvider</span><span class="p">.</span><span class="nf">SayHello4</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="nx">user</span><span class="p">)</span>
+<span class="ln">18</span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln">19</span>		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="ln">20</span>	<span class="p">}</span>
+<span class="ln">21</span>
+<span class="ln">22</span>	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;response result: %v\n&#34;</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
+<span class="ln">23</span>
+<span class="ln">24</span>	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">demoProvider</span><span class="p">.</span><span class="nf">SayHello5</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="nx">user</span><span class="p">,</span> <span class="s">&#34;tc&#34;</span><span class="p">)</span>
+<span class="ln">25</span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln">26</span>		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="ln">27</span>	<span class="p">}</span>
+<span class="ln">28</span>
+<span class="ln">29</span>	<span class="nx">gxlog</span><span class="p">.</span><span class="nf">CInfo</span><span class="p">(</span><span class="s">&#34;response result: %v\n&#34;</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
+<span class="ln">30</span>
+<span class="ln">31</span>	<span class="nf">initSignal</span><span class="p">()</span>
+<span class="ln">32</span><span class="p">}</span>
+</code></pre></div><p>这里主要注意 <code>MethodMapper</code> 方法，像我请求 <code>SayHello</code> 变成了 <code>sayHello</code>，需要在这个方法中配置这个映射关系，否则还是会找不到方法。</p>
 <h3 id="34-为什么会用-hessian2">3.4 为什么会用 hessian2</h3>
 <p>老司机都懂，SPI机制的默认值就是 hessian2</p>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@SPI</span><span class="o">(</span><span class="s">&#34;hessian2&#34;</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Serialization</span> <span class="o">{</span>
-<span class="o">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="ln">1</span><span class="nd">@SPI</span><span class="o">(</span><span class="s">&#34;hessian2&#34;</span><span class="o">)</span>
+<span class="ln">2</span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Serialization</span> <span class="o">{</span>
+<span class="ln">3</span><span class="o">}</span>
 </code></pre></div><h3 id="35-hessian序列化源码">3.5 hessian序列化源码</h3>
 <blockquote>
 <p>可以自行断点查看，两边基本上一样，我也是通过两边比出来的，RpcInvocation.getParameterTypesDesc() 就是方法的参数</p>
@@ -642,20 +642,20 @@ java.lang.IllegalArgumentException: Service not found:com.funnycode.DemoService,
 <h3 id="36-dubbogo-服务提供者的方法对象需要是指针对象">3.6 dubbogo 服务提供者的方法对象需要是指针对象</h3>
 <p>之前的例子都是 copy 的，这次是纯手打的，才发现了这个问题。</p>
 <p>如果你的提供类似：<code>func (p *DemoProvider) SayHello4(ctx context.Context, user User) (string, error)</code>，那么会出现如下错误：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">2020-12-03T12:42:32.834+0800    ERROR   getty/listener.go:280   OnMessage panic: reflect: Call using *main.User as <span class="nb">type</span> main.User
-github.com/apache/dubbo-go/remoting/getty.<span class="o">(</span>*RpcServerHandler<span class="o">)</span>.OnMessage.func1
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>2020-12-03T12:42:32.834+0800    ERROR   getty/listener.go:280   OnMessage panic: reflect: Call using *main.User as <span class="nb">type</span> main.User
+<span class="ln">2</span>github.com/apache/dubbo-go/remoting/getty.<span class="o">(</span>*RpcServerHandler<span class="o">)</span>.OnMessage.func1
 </code></pre></div><p>参数里面的 <code>User</code> 需要改成 <code>*User</code>。</p>
 <h3 id="37-dubbogo-服务消费者的方法对象可以是非指针对象">3.7 dubbogo 服务消费者的方法对象可以是非指针对象</h3>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">SayHello4</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
-<span class="c1">// or
-</span><span class="c1"></span><span class="nx">SayHello4</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="nx">SayHello4</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="o">*</span><span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+<span class="ln">2</span><span class="c1">// or
+</span><span class="ln">3</span><span class="c1"></span><span class="nx">SayHello4</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">user</span> <span class="nx">User</span><span class="p">)</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
 </code></pre></div><p>因为在参数序列化的时候会对指针做操作：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">t</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
-<span class="k">if</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Ptr</span> <span class="o">==</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Kind</span><span class="p">()</span> <span class="p">{</span>
-  <span class="nx">t</span> <span class="p">=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">v</span><span class="p">).</span><span class="nf">Elem</span><span class="p">())</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="nx">t</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+<span class="ln">2</span><span class="k">if</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Ptr</span> <span class="o">==</span> <span class="nx">t</span><span class="p">.</span><span class="nf">Kind</span><span class="p">()</span> <span class="p">{</span>
+<span class="ln">3</span>  <span class="nx">t</span> <span class="p">=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">v</span><span class="p">).</span><span class="nf">Elem</span><span class="p">())</span>
+<span class="ln">4</span><span class="p">}</span>
 </code></pre></div><h3 id="38-繁琐的配置简化">3.8 繁琐的配置简化</h3>
-<p>查看我另一篇文章</p>
+<p>查看我另一篇文章 <a href="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" rel="">dubbo配置简化</a></p>
 <h3 id="39-复现代码">3.9 复现代码</h3>
 <ul>
 <li><a href="https://github.com/cityiron/java_study/tree/master/dubbo2.7.7">https://github.com/cityiron/java_study/tree/master/dubbo2.7.7</a></li>
@@ -675,7 +675,7 @@ github.com/apache/dubbo-go/remoting/getty.<span class="o">(</span>*RpcServerHand
                             <a class="link-to-markdown" href="/2020/12/dubbogo-fix-struct-args/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2020/12/dubbogo-fix-struct-args/" data-title="dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG" data-hashtags="入门,实战"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2020/12/dubbogo-fix-struct-args/" data-hashtag="入门"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2020/12/dubbogo-fix-struct-args/" data-title="dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2020/12/dubbogo-fix-struct-args/" data-title="dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2020/12/dubbogo-fix-struct-args/" data-title="dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2020/12/dubbogo-fix-struct-args/" data-title="dubbo-go 白话文 | go 和 java 互通有无" data-hashtags="入门,实战"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2020/12/dubbogo-fix-struct-args/" data-hashtag="入门"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2020/12/dubbogo-fix-struct-args/" data-title="dubbo-go 白话文 | go 和 java 互通有无"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2020/12/dubbogo-fix-struct-args/" data-title="dubbo-go 白话文 | go 和 java 互通有无"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2020/12/dubbogo-fix-struct-args/" data-title="dubbo-go 白话文 | go 和 java 互通有无"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>
@@ -687,7 +687,7 @@ github.com/apache/dubbo-go/remoting/getty.<span class="o">(</span>*RpcServerHand
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2020/11/dubbo-go-no-config/" class="prev" rel="prev" title="dubbo-go 白话文 | 不想通过标准的配置文件来启动"><i class="fas fa-angle-left fa-fw"></i>dubbo-go 白话文 | 不想通过标准的配置文件来启动</a></div>
+    <div class="post-nav"><a href="/2020/11/dubbo-go-no-config/" class="prev" rel="prev" title="dubbo-go 白话文 | 配置文件内容太多怎么简化"><i class="fas fa-angle-left fa-fw"></i>dubbo-go 白话文 | 配置文件内容太多怎么简化</a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.

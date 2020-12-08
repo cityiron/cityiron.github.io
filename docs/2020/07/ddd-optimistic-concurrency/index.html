@@ -187,12 +187,12 @@
 <h3 id="43-如何实现它">4.3 如何实现它？</h3>
 <p>例如，事件存储就有这个内置功能。</p>
 <p>例如，.NET 客户端的一个写方法是这样的:</p>
-<pre><code class="language-net" data-lang="net">Task&lt;WriteResult&gt; AppendToStreamAsync(string stream, long expectedVersion, params EventData[] events)
-</code></pre><p>第二个参数是告诉事件存储您期望的版本的位置。如果不是那个版本，就像上面的例子一样，那么事件存储会告诉您。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>Task&lt;WriteResult&gt; AppendToStreamAsync(string stream, long expectedVersion, params EventData[] events)
+</code></pre></div><p>第二个参数是告诉事件存储您期望的版本的位置。如果不是那个版本，就像上面的例子一样，那么事件存储会告诉您。</p>
 <p>在关系数据库中，你可能会这样做:</p>
-<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">UPDATE</span> <span class="n">sometable</span> <span class="n">T</span>
-<span class="k">SET</span> <span class="n">something</span> <span class="o">=</span> <span class="o">@</span><span class="n">someDataParam</span>
-<span class="k">WHERE</span> <span class="n">T</span><span class="p">.</span><span class="n">RowVersion</span> <span class="o">=</span> <span class="o">@</span><span class="n">expectedRowVersionParam</span>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="ln">1</span><span class="k">UPDATE</span> <span class="n">sometable</span> <span class="n">T</span>
+<span class="ln">2</span><span class="k">SET</span> <span class="n">something</span> <span class="o">=</span> <span class="o">@</span><span class="n">someDataParam</span>
+<span class="ln">3</span><span class="k">WHERE</span> <span class="n">T</span><span class="p">.</span><span class="n">RowVersion</span> <span class="o">=</span> <span class="o">@</span><span class="n">expectedRowVersionParam</span>
 </code></pre></div><p>这将返回受影响的行数，具体取决于数据库引擎。如果没有受到影响，那么您就知道事务“失败”，因为另一个操作在此操作之前写入了数据存储。
 咨询</p>
 <h2 id="五小结">五、小结</h2>

@@ -5,15 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>dubbo-go 白话文 | 不想通过标准的配置文件来启动 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="dubbo-go 白话文 | 不想通过标准的配置文件来启动" />
-<meta property="og:description" content="本文介绍如何玩转 dubbogo 的配置文件" />
+        <title>dubbo-go 白话文 | 配置文件内容太多怎么简化 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="dubbo-go 白话文 | 配置文件内容太多怎么简化" />
+<meta property="og:description" content="本文介绍如何减少 dubbogo 的配置文件内容" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" />
 <meta property="article:published_time" content="2020-11-10T21:10:29+08:00" />
 <meta property="article:modified_time" content="2020-11-10T21:10:29+08:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="dubbo-go 白话文 | 不想通过标准的配置文件来启动"/>
-<meta name="twitter:description" content="本文介绍如何玩转 dubbogo 的配置文件"/>
+<meta name="twitter:title" content="dubbo-go 白话文 | 配置文件内容太多怎么简化"/>
+<meta name="twitter:description" content="本文介绍如何减少 dubbogo 的配置文件内容"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -21,12 +21,12 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "dubbo-go 白话文 | 不想通过标准的配置文件来启动",
+        "headline": "dubbo-go 白话文 | 配置文件内容太多怎么简化",
         "inLanguage": "tc",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2020\/11\/dubbo-go-no-config\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "去除配置文件","wordcount":  477 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "入门, 实战","wordcount":  492 ,
         "url": "https:\/\/blog.funnycode.cn\/2020\/11\/dubbo-go-no-config\/","datePublished": "2020-11-10T21:10:29+08:00","dateModified": "2020-11-10T21:10:29+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "IronCity","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -105,10 +105,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">dubbo-go 白话文 | 不想通过标准的配置文件来启动</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">dubbo-go 白话文 | 配置文件内容太多怎么简化</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/dubbogo/"><i class="far fa-folder fa-fw"></i>dubbogo</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-10">2020-11-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 477 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2020/11/dubbo-go-no-config/" class="leancloud_visitors" data-flag-title="dubbo-go 白话文 | 不想通过标准的配置文件来启动">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-10">2020-11-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 492 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2020/11/dubbo-go-no-config/" class="leancloud_visitors" data-flag-title="dubbo-go 白话文 | 配置文件内容太多怎么简化">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -127,7 +127,7 @@
     <li><a href="#三参考">三、参考</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>本文介绍如何玩转 dubbogo 的配置文件</p>
+            </div><div class="content" id="content"><p>本文介绍如何减少 dubbogo 的配置文件内容</p>
 <h2 id="一前言">一、前言</h2>
 <blockquote>
 <p>请注意，本文基于 dubbogo1.5.1，目前最新的1.5.4不是稳定版本，部分包已经挪到 gost</p>
@@ -139,36 +139,36 @@
 <h4 id="211-泛化调用-consumer-端">2.1.1 泛化调用 consumer 端</h4>
 <p><strong>应用配置</strong></p>
 <p>你可以定义一个默认的应用配置，如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">defaultApplication</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">dg</span><span class="p">.</span><span class="nx">ApplicationConfig</span><span class="p">{</span>
-  <span class="nx">Organization</span><span class="p">:</span> <span class="s">&#34;dubbo-go-proxy&#34;</span><span class="p">,</span>
-  <span class="nx">Name</span><span class="p">:</span>         <span class="s">&#34;Dubbogo Proxy&#34;</span><span class="p">,</span>
-  <span class="nx">Module</span><span class="p">:</span>       <span class="s">&#34;dubbogo proxy&#34;</span><span class="p">,</span>
-  <span class="nx">Version</span><span class="p">:</span>      <span class="s">&#34;0.1.0&#34;</span><span class="p">,</span>
-  <span class="nx">Owner</span><span class="p">:</span>        <span class="s">&#34;Dubbogo Proxy&#34;</span><span class="p">,</span>
-  <span class="nx">Environment</span><span class="p">:</span>  <span class="s">&#34;dev&#34;</span><span class="p">,</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="nx">defaultApplication</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">dg</span><span class="p">.</span><span class="nx">ApplicationConfig</span><span class="p">{</span>
+<span class="ln">2</span>  <span class="nx">Organization</span><span class="p">:</span> <span class="s">&#34;dubbo-go-proxy&#34;</span><span class="p">,</span>
+<span class="ln">3</span>  <span class="nx">Name</span><span class="p">:</span>         <span class="s">&#34;Dubbogo Proxy&#34;</span><span class="p">,</span>
+<span class="ln">4</span>  <span class="nx">Module</span><span class="p">:</span>       <span class="s">&#34;dubbogo proxy&#34;</span><span class="p">,</span>
+<span class="ln">5</span>  <span class="nx">Version</span><span class="p">:</span>      <span class="s">&#34;0.1.0&#34;</span><span class="p">,</span>
+<span class="ln">6</span>  <span class="nx">Owner</span><span class="p">:</span>        <span class="s">&#34;Dubbogo Proxy&#34;</span><span class="p">,</span>
+<span class="ln">7</span>  <span class="nx">Environment</span><span class="p">:</span>  <span class="s">&#34;dev&#34;</span><span class="p">,</span>
+<span class="ln">8</span><span class="p">}</span>
 </code></pre></div><p>实际使用的时候，应用会有系统环境变量指明应用名称和环境等，上述的几个标准参数应该从业务约定的系统环境变量读取。</p>
 <p><strong>构建 ConsumerConfig</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// dubbogo comsumer config
-</span><span class="c1"></span><span class="nx">dgCfg</span> <span class="p">=</span> <span class="nx">dg</span><span class="p">.</span><span class="nx">ConsumerConfig</span><span class="p">{</span>
-  <span class="nx">Check</span><span class="p">:</span>      <span class="nb">new</span><span class="p">(</span><span class="kt">bool</span><span class="p">),</span>
-  <span class="nx">Registries</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">dg</span><span class="p">.</span><span class="nx">RegistryConfig</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="c1">// dubbogo comsumer config
+</span><span class="ln">2</span><span class="c1"></span><span class="nx">dgCfg</span> <span class="p">=</span> <span class="nx">dg</span><span class="p">.</span><span class="nx">ConsumerConfig</span><span class="p">{</span>
+<span class="ln">3</span>  <span class="nx">Check</span><span class="p">:</span>      <span class="nb">new</span><span class="p">(</span><span class="kt">bool</span><span class="p">),</span>
+<span class="ln">4</span>  <span class="nx">Registries</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">dg</span><span class="p">.</span><span class="nx">RegistryConfig</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+<span class="ln">5</span><span class="p">}</span>
 </code></pre></div><p>自定义系统变量获取 registry，比如：-REGISTRY=dubbo:127.0.0.1:2181。</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">r</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Getenv</span><span class="p">(</span><span class="s">&#34;REGISTRY&#34;</span><span class="p">)</span>
-<span class="nx">ss</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">SplitN</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="s">&#34;:&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">ss</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">{</span>
-  <span class="nx">dgCfg</span><span class="p">.</span><span class="nx">Registries</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">dg</span><span class="p">.</span><span class="nx">RegistryConfig</span><span class="p">{</span>
-    <span class="nx">Protocol</span><span class="p">:</span>   <span class="nx">ss</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-    <span class="nx">Address</span><span class="p">:</span>    <span class="nx">ss</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-    <span class="nx">TimeoutStr</span><span class="p">:</span> <span class="s">&#34;3s&#34;</span><span class="p">,</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="nx">r</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Getenv</span><span class="p">(</span><span class="s">&#34;REGISTRY&#34;</span><span class="p">)</span>
+<span class="ln">2</span><span class="nx">ss</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">SplitN</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="s">&#34;:&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="ln">3</span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">ss</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">{</span>
+<span class="ln">4</span>  <span class="nx">dgCfg</span><span class="p">.</span><span class="nx">Registries</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">dg</span><span class="p">.</span><span class="nx">RegistryConfig</span><span class="p">{</span>
+<span class="ln">5</span>    <span class="nx">Protocol</span><span class="p">:</span>   <span class="nx">ss</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+<span class="ln">6</span>    <span class="nx">Address</span><span class="p">:</span>    <span class="nx">ss</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+<span class="ln">7</span>    <span class="nx">TimeoutStr</span><span class="p">:</span> <span class="s">&#34;3s&#34;</span><span class="p">,</span>
+<span class="ln">8</span>  <span class="p">}</span>
+<span class="ln">9</span><span class="p">}</span>
 </code></pre></div><p>把参数设置到 ConsumerConfig 就行。</p>
 <p><strong>设置默认 ClientConfig</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">dubbo</span><span class="p">.</span><span class="nf">SetClientConf</span><span class="p">(</span><span class="nx">dubbo</span><span class="p">.</span><span class="nf">GetDefaultClientConfig</span><span class="p">())</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="nx">dubbo</span><span class="p">.</span><span class="nf">SetClientConf</span><span class="p">(</span><span class="nx">dubbo</span><span class="p">.</span><span class="nf">GetDefaultClientConfig</span><span class="p">())</span>
 </code></pre></div><p><strong>调用 dubbogo 加载</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">dg</span><span class="p">.</span><span class="nf">Load</span><span class="p">()</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="nx">dg</span><span class="p">.</span><span class="nf">Load</span><span class="p">()</span>
 </code></pre></div><h2 id="三参考">三、参考</h2>
 <p><a href="https://github.com/apache/dubbo-go/blob/master/README_CN.md">https://github.com/apache/dubbo-go/blob/master/README_CN.md</a></p></div><div class="post-footer" id="post-footer">
     <div class="post-info">
@@ -183,20 +183,20 @@
                             <a class="link-to-markdown" href="/2020/11/dubbo-go-no-config/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-title="dubbo-go 白话文 | 不想通过标准的配置文件来启动" data-hashtags="去除配置文件"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-hashtag="去除配置文件"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-title="dubbo-go 白话文 | 不想通过标准的配置文件来启动"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-title="dubbo-go 白话文 | 不想通过标准的配置文件来启动"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-title="dubbo-go 白话文 | 不想通过标准的配置文件来启动"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-title="dubbo-go 白话文 | 配置文件内容太多怎么简化" data-hashtags="入门,实战"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-hashtag="入门"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-title="dubbo-go 白话文 | 配置文件内容太多怎么简化"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-title="dubbo-go 白话文 | 配置文件内容太多怎么简化"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2020/11/dubbo-go-no-config/" data-title="dubbo-go 白话文 | 配置文件内容太多怎么简化"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%8E%BB%E9%99%A4%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">去除配置文件</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%85%A5%E9%97%A8/">入门</a>,&nbsp;<a href="/tags/%E5%AE%9E%E6%88%98/">实战</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
     <div class="post-nav"><a href="/2020/11/keyboard-mac/" class="prev" rel="prev" title="外设 | 斐尔可圣手二代键盘"><i class="fas fa-angle-left fa-fw"></i>外设 | 斐尔可圣手二代键盘</a>
-            <a href="/2020/12/dubbogo-fix-struct-args/" class="next" rel="next" title="dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG">dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG<i class="fas fa-angle-right fa-fw"></i></a></div>
+            <a href="/2020/12/dubbogo-fix-struct-args/" class="next" rel="next" title="dubbo-go 白话文 | go 和 java 互通有无">dubbo-go 白话文 | go 和 java 互通有无<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.

@@ -5,14 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>一拳搞定 Gin | 前后端分离下静态资源部署到后端访问 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="一拳搞定 Gin | 前后端分离下静态资源部署到后端访问" />
+        <title>一拳搞定 Gin | 配置前后端分离后的静态资源访问 - Funnycode</title><meta name="Description" content="关于 LoveIt 主题"><meta property="og:title" content="一拳搞定 Gin | 配置前后端分离后的静态资源访问" />
 <meta property="og:description" content="本文介绍通过 Gin 框架访问后端的静态资源" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.funnycode.cn/2020/10/gin-static/" />
 <meta property="article:published_time" content="2020-10-23T19:02:31+08:00" />
 <meta property="article:modified_time" content="2020-10-23T19:02:31+08:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="一拳搞定 Gin | 前后端分离下静态资源部署到后端访问"/>
+<meta name="twitter:title" content="一拳搞定 Gin | 配置前后端分离后的静态资源访问"/>
 <meta name="twitter:description" content="本文介绍通过 Gin 框架访问后端的静态资源"/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -21,12 +21,12 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "一拳搞定 Gin | 前后端分离下静态资源部署到后端访问",
+        "headline": "一拳搞定 Gin | 配置前后端分离后的静态资源访问",
         "inLanguage": "tc",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2020\/10\/gin-static\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "静态资源, React, Ant Design, Gin","wordcount":  2006 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "静态资源, React, Ant Design, Gin","wordcount":  2221 ,
         "url": "https:\/\/blog.funnycode.cn\/2020\/10\/gin-static\/","datePublished": "2020-10-23T19:02:31+08:00","dateModified": "2020-10-23T19:02:31+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "IronCity","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -105,10 +105,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">一拳搞定 Gin | 前后端分离下静态资源部署到后端访问</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">一拳搞定 Gin | 配置前后端分离后的静态资源访问</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-23">2020-10-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2006 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="/2020/10/gin-static/" class="leancloud_visitors" data-flag-title="一拳搞定 Gin | 前后端分离下静态资源部署到后端访问">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-23">2020-10-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2221 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="/2020/10/gin-static/" class="leancloud_visitors" data-flag-title="一拳搞定 Gin | 配置前后端分离后的静态资源访问">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -135,53 +135,53 @@
 <h2 id="二实战分析">二、实战分析</h2>
 <h3 id="21-静态资源">2.1 静态资源</h3>
 <p>代码：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">r</span> <span class="o">:=</span> <span class="nx">gin</span><span class="p">.</span><span class="nf">Default</span><span class="p">()</span>
-
-	<span class="nx">dir</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Getwd</span><span class="p">()</span>
-	<span class="c1">// static
-</span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">Static</span><span class="p">(</span><span class="s">&#34;/assets&#34;</span><span class="p">,</span> <span class="nx">dir</span><span class="o">+</span><span class="s">&#34;/src/gin/assets&#34;</span><span class="p">)</span>
-	<span class="nx">r</span><span class="p">.</span><span class="nf">StaticFS</span><span class="p">(</span><span class="s">&#34;/more_static&#34;</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Dir</span><span class="p">(</span><span class="nx">dir</span><span class="o">+</span><span class="s">&#34;/src/gin/assets&#34;</span><span class="p">))</span>
-	<span class="nx">r</span><span class="p">.</span><span class="nf">StaticFile</span><span class="p">(</span><span class="s">&#34;/favicon.ico&#34;</span><span class="p">,</span> <span class="nx">dir</span><span class="o">+</span><span class="s">&#34;/src/gin/resources/favicon.ico&#34;</span><span class="p">)</span>
-
-	<span class="c1">// Listen and serve on 0.0.0.0:8080
-</span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">)</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="nx">r</span> <span class="o">:=</span> <span class="nx">gin</span><span class="p">.</span><span class="nf">Default</span><span class="p">()</span>
+<span class="ln"> 3</span>
+<span class="ln"> 4</span>	<span class="nx">dir</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Getwd</span><span class="p">()</span>
+<span class="ln"> 5</span>	<span class="c1">// static
+</span><span class="ln"> 6</span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">Static</span><span class="p">(</span><span class="s">&#34;/assets&#34;</span><span class="p">,</span> <span class="nx">dir</span><span class="o">+</span><span class="s">&#34;/src/gin/assets&#34;</span><span class="p">)</span>
+<span class="ln"> 7</span>	<span class="nx">r</span><span class="p">.</span><span class="nf">StaticFS</span><span class="p">(</span><span class="s">&#34;/more_static&#34;</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Dir</span><span class="p">(</span><span class="nx">dir</span><span class="o">+</span><span class="s">&#34;/src/gin/assets&#34;</span><span class="p">))</span>
+<span class="ln"> 8</span>	<span class="nx">r</span><span class="p">.</span><span class="nf">StaticFile</span><span class="p">(</span><span class="s">&#34;/favicon.ico&#34;</span><span class="p">,</span> <span class="nx">dir</span><span class="o">+</span><span class="s">&#34;/src/gin/resources/favicon.ico&#34;</span><span class="p">)</span>
+<span class="ln"> 9</span>
+<span class="ln">10</span>	<span class="c1">// Listen and serve on 0.0.0.0:8080
+</span><span class="ln">11</span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">)</span>
+<span class="ln">12</span><span class="p">}</span>
 </code></pre></div><p>访问如下地址：</p>
-<pre><code>http://127.0.0.1:8080/more_static/favicon.ico
-http://127.0.0.1:8080/assets/favicon.ico
-http://127.0.0.1:8080/favicon.ico
-</code></pre><p>均可以请求到头像图片。</p>
+<div class="highlight"><pre class="chroma"><code class="language-fallback" data-lang="fallback"><span class="ln">1</span>http://127.0.0.1:8080/more_static/favicon.ico
+<span class="ln">2</span>http://127.0.0.1:8080/assets/favicon.ico
+<span class="ln">3</span>http://127.0.0.1:8080/favicon.ico
+</code></pre></div><p>均可以请求到头像图片。</p>
 <h4 id="211-静态文件">2.1.1 静态文件</h4>
 <blockquote>
 <p>访问某个路径，直接找到对应的资源返回。</p>
 </blockquote>
 <p>使用：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">  <span class="nx">r</span><span class="p">.</span><span class="nf">StaticFile</span><span class="p">(</span><span class="s">&#34;/favicon.ico&#34;</span><span class="p">,</span> <span class="nx">dir</span><span class="o">+</span><span class="s">&#34;/src/gin/resources/favicon.ico&#34;</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span>  <span class="nx">r</span><span class="p">.</span><span class="nf">StaticFile</span><span class="p">(</span><span class="s">&#34;/favicon.ico&#34;</span><span class="p">,</span> <span class="nx">dir</span><span class="o">+</span><span class="s">&#34;/src/gin/resources/favicon.ico&#34;</span><span class="p">)</span>
 </code></pre></div><p>源码分析：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// File writes the specified file into the body stream in a efficient way.
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span> <span class="nf">File</span><span class="p">(</span><span class="nx">filepath</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">http</span><span class="p">.</span><span class="nf">ServeFile</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">filepath</span><span class="p">)</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="c1">// File writes the specified file into the body stream in a efficient way.
+</span><span class="ln">2</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span> <span class="nf">File</span><span class="p">(</span><span class="nx">filepath</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">3</span>	<span class="nx">http</span><span class="p">.</span><span class="nf">ServeFile</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">filepath</span><span class="p">)</span>
+<span class="ln">4</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>Gin 接收到的 HTTP 请求会到这里，然后交给 http 文件服务。</li>
 </ul>
 <blockquote>
 <p>/net/http/fs.go:674</p>
 </blockquote>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">ServeFile</span><span class="p">(</span><span class="nx">w</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
-	<span class="k">if</span> <span class="nf">containsDotDot</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span> <span class="p">{</span>
-		<span class="c1">// Too many programs use r.URL.Path to construct the argument to
-</span><span class="c1"></span>		<span class="c1">// serveFile. Reject the request under the assumption that happened
-</span><span class="c1"></span>		<span class="c1">// here and &#34;..&#34; may not be wanted.
-</span><span class="c1"></span>		<span class="c1">// Note that name might not contain &#34;..&#34;, for example if code (still
-</span><span class="c1"></span>		<span class="c1">// incorrectly) used filepath.Join(myDir, r.URL.Path).
-</span><span class="c1"></span>		<span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;invalid URL path&#34;</span><span class="p">,</span> <span class="nx">StatusBadRequest</span><span class="p">)</span>
-		<span class="k">return</span>
-	<span class="p">}</span>
-	<span class="nx">dir</span><span class="p">,</span> <span class="nx">file</span> <span class="o">:=</span> <span class="nx">filepath</span><span class="p">.</span><span class="nf">Split</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
-	<span class="nf">serveFile</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nf">Dir</span><span class="p">(</span><span class="nx">dir</span><span class="p">),</span> <span class="nx">file</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="nf">ServeFile</span><span class="p">(</span><span class="nx">w</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="k">if</span> <span class="nf">containsDotDot</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 3</span>		<span class="c1">// Too many programs use r.URL.Path to construct the argument to
+</span><span class="ln"> 4</span><span class="c1"></span>		<span class="c1">// serveFile. Reject the request under the assumption that happened
+</span><span class="ln"> 5</span><span class="c1"></span>		<span class="c1">// here and &#34;..&#34; may not be wanted.
+</span><span class="ln"> 6</span><span class="c1"></span>		<span class="c1">// Note that name might not contain &#34;..&#34;, for example if code (still
+</span><span class="ln"> 7</span><span class="c1"></span>		<span class="c1">// incorrectly) used filepath.Join(myDir, r.URL.Path).
+</span><span class="ln"> 8</span><span class="c1"></span>		<span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;invalid URL path&#34;</span><span class="p">,</span> <span class="nx">StatusBadRequest</span><span class="p">)</span>
+<span class="ln"> 9</span>		<span class="k">return</span>
+<span class="ln">10</span>	<span class="p">}</span>
+<span class="ln">11</span>	<span class="nx">dir</span><span class="p">,</span> <span class="nx">file</span> <span class="o">:=</span> <span class="nx">filepath</span><span class="p">.</span><span class="nf">Split</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+<span class="ln">12</span>	<span class="nf">serveFile</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nf">Dir</span><span class="p">(</span><span class="nx">dir</span><span class="p">),</span> <span class="nx">file</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+<span class="ln">13</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>分隔名称，会分离出资源的路径和名称</li>
 <li>然后调用寻找文件的逻辑</li>
@@ -189,54 +189,54 @@ http://127.0.0.1:8080/favicon.ico
 <blockquote>
 <p>/net/http/fs.go:546</p>
 </blockquote>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// name is &#39;/&#39;-separated, not filepath.Separator.
-</span><span class="c1"></span><span class="kd">func</span> <span class="nf">serveFile</span><span class="p">(</span><span class="nx">w</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">fs</span> <span class="nx">FileSystem</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">redirect</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
-	<span class="kd">const</span> <span class="nx">indexPage</span> <span class="p">=</span> <span class="s">&#34;/index.html&#34;</span>
-
-	<span class="c1">// redirect .../index.html to .../
-</span><span class="c1"></span>	<span class="c1">// can&#39;t use Redirect() because that would make the path absolute,
-</span><span class="c1"></span>	<span class="c1">// which would be a problem running under StripPrefix
-</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">HasSuffix</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">indexPage</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nf">localRedirect</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="s">&#34;./&#34;</span><span class="p">)</span>
-		<span class="k">return</span>
-	<span class="p">}</span>
-
-	<span class="nx">f</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">fs</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">msg</span><span class="p">,</span> <span class="nx">code</span> <span class="o">:=</span> <span class="nf">toHTTPError</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-		<span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">msg</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span>
-		<span class="k">return</span>
-	<span class="p">}</span>
-	<span class="k">defer</span> <span class="nx">f</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
-
-	<span class="nx">d</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.</span><span class="nf">Stat</span><span class="p">()</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">msg</span><span class="p">,</span> <span class="nx">code</span> <span class="o">:=</span> <span class="nf">toHTTPError</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-		<span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">msg</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span>
-		<span class="k">return</span>
-	<span class="p">}</span>
-
-  <span class="o">...</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="c1">// name is &#39;/&#39;-separated, not filepath.Separator.
+</span><span class="ln"> 2</span><span class="c1"></span><span class="kd">func</span> <span class="nf">serveFile</span><span class="p">(</span><span class="nx">w</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">Request</span><span class="p">,</span> <span class="nx">fs</span> <span class="nx">FileSystem</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">redirect</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 3</span>	<span class="kd">const</span> <span class="nx">indexPage</span> <span class="p">=</span> <span class="s">&#34;/index.html&#34;</span>
+<span class="ln"> 4</span>
+<span class="ln"> 5</span>	<span class="c1">// redirect .../index.html to .../
+</span><span class="ln"> 6</span><span class="c1"></span>	<span class="c1">// can&#39;t use Redirect() because that would make the path absolute,
+</span><span class="ln"> 7</span><span class="c1"></span>	<span class="c1">// which would be a problem running under StripPrefix
+</span><span class="ln"> 8</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">HasSuffix</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">indexPage</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 9</span>		<span class="nf">localRedirect</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="s">&#34;./&#34;</span><span class="p">)</span>
+<span class="ln">10</span>		<span class="k">return</span>
+<span class="ln">11</span>	<span class="p">}</span>
+<span class="ln">12</span>
+<span class="ln">13</span>	<span class="nx">f</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">fs</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+<span class="ln">14</span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln">15</span>		<span class="nx">msg</span><span class="p">,</span> <span class="nx">code</span> <span class="o">:=</span> <span class="nf">toHTTPError</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="ln">16</span>		<span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">msg</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span>
+<span class="ln">17</span>		<span class="k">return</span>
+<span class="ln">18</span>	<span class="p">}</span>
+<span class="ln">19</span>	<span class="k">defer</span> <span class="nx">f</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+<span class="ln">20</span>
+<span class="ln">21</span>	<span class="nx">d</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.</span><span class="nf">Stat</span><span class="p">()</span>
+<span class="ln">22</span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln">23</span>		<span class="nx">msg</span><span class="p">,</span> <span class="nx">code</span> <span class="o">:=</span> <span class="nf">toHTTPError</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="ln">24</span>		<span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">msg</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span>
+<span class="ln">25</span>		<span class="k">return</span>
+<span class="ln">26</span>	<span class="p">}</span>
+<span class="ln">27</span>
+<span class="ln">28</span>  <span class="o">...</span>
+<span class="ln">29</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>用的 net 包的 filesystem 打开文件，如果不存在则包 HTTP 的 404 错误</li>
 <li>如果是文件夹会找 index.html 文件，本文不扩展</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">d</span> <span class="nx">Dir</span><span class="p">)</span> <span class="nf">Open</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">File</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-	<span class="k">if</span> <span class="nx">filepath</span><span class="p">.</span><span class="nx">Separator</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">ContainsRune</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">filepath</span><span class="p">.</span><span class="nx">Separator</span><span class="p">)</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;http: invalid character in file path&#34;</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="nx">dir</span> <span class="o">:=</span> <span class="nb">string</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">dir</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
-		<span class="nx">dir</span> <span class="p">=</span> <span class="s">&#34;.&#34;</span>
-	<span class="p">}</span>
-	<span class="nx">fullName</span> <span class="o">:=</span> <span class="nx">filepath</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">dir</span><span class="p">,</span> <span class="nx">filepath</span><span class="p">.</span><span class="nf">FromSlash</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nf">Clean</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="o">+</span><span class="nx">name</span><span class="p">)))</span>
-	<span class="nx">f</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">fullName</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nf">mapDirOpenError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">fullName</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="k">return</span> <span class="nx">f</span><span class="p">,</span> <span class="kc">nil</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="p">(</span><span class="nx">d</span> <span class="nx">Dir</span><span class="p">)</span> <span class="nf">Open</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">File</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="k">if</span> <span class="nx">filepath</span><span class="p">.</span><span class="nx">Separator</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">ContainsRune</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">filepath</span><span class="p">.</span><span class="nx">Separator</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 3</span>		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;http: invalid character in file path&#34;</span><span class="p">)</span>
+<span class="ln"> 4</span>	<span class="p">}</span>
+<span class="ln"> 5</span>	<span class="nx">dir</span> <span class="o">:=</span> <span class="nb">string</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span>
+<span class="ln"> 6</span>	<span class="k">if</span> <span class="nx">dir</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+<span class="ln"> 7</span>		<span class="nx">dir</span> <span class="p">=</span> <span class="s">&#34;.&#34;</span>
+<span class="ln"> 8</span>	<span class="p">}</span>
+<span class="ln"> 9</span>	<span class="nx">fullName</span> <span class="o">:=</span> <span class="nx">filepath</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">dir</span><span class="p">,</span> <span class="nx">filepath</span><span class="p">.</span><span class="nf">FromSlash</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nf">Clean</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="o">+</span><span class="nx">name</span><span class="p">)))</span>
+<span class="ln">10</span>	<span class="nx">f</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">fullName</span><span class="p">)</span>
+<span class="ln">11</span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln">12</span>		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nf">mapDirOpenError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">fullName</span><span class="p">)</span>
+<span class="ln">13</span>	<span class="p">}</span>
+<span class="ln">14</span>	<span class="k">return</span> <span class="nx">f</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="ln">15</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>拼接完整的路径</li>
 <li>使用标准的 <code>os.Open()</code> 打开</li>
@@ -246,32 +246,32 @@ http://127.0.0.1:8080/favicon.ico
 <p>路径加上某个前缀对应访问某个目录下的资源。</p>
 </blockquote>
 <p>使用：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">r</span><span class="p">.</span><span class="nf">Static</span><span class="p">(</span><span class="s">&#34;/assets&#34;</span><span class="p">,</span> <span class="nx">dir</span><span class="o">+</span><span class="s">&#34;/src/gin/assets&#34;</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span>	<span class="nx">r</span><span class="p">.</span><span class="nf">Static</span><span class="p">(</span><span class="s">&#34;/assets&#34;</span><span class="p">,</span> <span class="nx">dir</span><span class="o">+</span><span class="s">&#34;/src/gin/assets&#34;</span><span class="p">)</span>
 </code></pre></div><p>源码分析：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">group</span> <span class="o">*</span><span class="nx">RouterGroup</span><span class="p">)</span> <span class="nf">Static</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="nx">root</span> <span class="kt">string</span><span class="p">)</span> <span class="nx">IRoutes</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="nx">group</span><span class="p">.</span><span class="nf">StaticFS</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="nf">Dir</span><span class="p">(</span><span class="nx">root</span><span class="p">,</span> <span class="kc">false</span><span class="p">))</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="kd">func</span> <span class="p">(</span><span class="nx">group</span> <span class="o">*</span><span class="nx">RouterGroup</span><span class="p">)</span> <span class="nf">Static</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="nx">root</span> <span class="kt">string</span><span class="p">)</span> <span class="nx">IRoutes</span> <span class="p">{</span>
+<span class="ln">2</span>	<span class="k">return</span> <span class="nx">group</span><span class="p">.</span><span class="nf">StaticFS</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="nf">Dir</span><span class="p">(</span><span class="nx">root</span><span class="p">,</span> <span class="kc">false</span><span class="p">))</span>
+<span class="ln">3</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>实际调用也是 <code>StaticFS</code> 方法，加了个是否展示目录下的内容的控制</li>
 </ul>
 <blockquote>
 <p>/github.com/gin-gonic/gin/fs.go:24</p>
 </blockquote>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Dir</span><span class="p">(</span><span class="nx">root</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">listDirectory</span> <span class="kt">bool</span><span class="p">)</span> <span class="nx">http</span><span class="p">.</span><span class="nx">FileSystem</span> <span class="p">{</span>
-	<span class="nx">fs</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Dir</span><span class="p">(</span><span class="nx">root</span><span class="p">)</span>
-	<span class="k">if</span> <span class="nx">listDirectory</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">fs</span>
-	<span class="p">}</span>
-	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">onlyfilesFS</span><span class="p">{</span><span class="nx">fs</span><span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="kd">func</span> <span class="nf">Dir</span><span class="p">(</span><span class="nx">root</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">listDirectory</span> <span class="kt">bool</span><span class="p">)</span> <span class="nx">http</span><span class="p">.</span><span class="nx">FileSystem</span> <span class="p">{</span>
+<span class="ln">2</span>	<span class="nx">fs</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Dir</span><span class="p">(</span><span class="nx">root</span><span class="p">)</span>
+<span class="ln">3</span>	<span class="k">if</span> <span class="nx">listDirectory</span> <span class="p">{</span>
+<span class="ln">4</span>		<span class="k">return</span> <span class="nx">fs</span>
+<span class="ln">5</span>	<span class="p">}</span>
+<span class="ln">6</span>	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">onlyfilesFS</span><span class="p">{</span><span class="nx">fs</span><span class="p">}</span>
+<span class="ln">7</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>这里主要是能够支持是否列出目录下的内容（HTTP 默认文件的实现）</li>
 <li>静态目录是关闭的，文件服务器也可以配置一样的效果</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="nx">neuteredReaddirFile</span><span class="p">)</span> <span class="nf">Readdir</span><span class="p">(</span><span class="nx">count</span> <span class="kt">int</span><span class="p">)</span> <span class="p">([]</span><span class="nx">os</span><span class="p">.</span><span class="nx">FileInfo</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-	<span class="c1">// this disables directory listing
-</span><span class="c1"></span>	<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="nx">neuteredReaddirFile</span><span class="p">)</span> <span class="nf">Readdir</span><span class="p">(</span><span class="nx">count</span> <span class="kt">int</span><span class="p">)</span> <span class="p">([]</span><span class="nx">os</span><span class="p">.</span><span class="nx">FileInfo</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">2</span>	<span class="c1">// this disables directory listing
+</span><span class="ln">3</span><span class="c1"></span>	<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="ln">4</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>实现返回 nil，和 <code>Dir(root, false)</code> 配置的 false 关联</li>
 </ul>
@@ -280,7 +280,7 @@ http://127.0.0.1:8080/favicon.ico
 <p>能够通过 HTTP 请求访问文件，类似于 FTP 服务器。</p>
 </blockquote>
 <p>使用：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">r</span><span class="p">.</span><span class="nf">StaticFS</span><span class="p">(</span><span class="s">&#34;/more_static&#34;</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Dir</span><span class="p">(</span><span class="nx">dir</span><span class="o">+</span><span class="s">&#34;/src/gin/assets&#34;</span><span class="p">))</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span>	<span class="nx">r</span><span class="p">.</span><span class="nf">StaticFS</span><span class="p">(</span><span class="s">&#34;/more_static&#34;</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Dir</span><span class="p">(</span><span class="nx">dir</span><span class="o">+</span><span class="s">&#34;/src/gin/assets&#34;</span><span class="p">))</span>
 </code></pre></div><p>效果如下：</p>
 <figure>
     <img src="/2020/10/gin-static/fs.jpg"/> <figcaption>
@@ -289,89 +289,89 @@ http://127.0.0.1:8080/favicon.ico
 </figure>
 
 <p>源码分析：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// StaticFS works just like `Static()` but a custom `http.FileSystem` can be used instead.
-</span><span class="c1">// Gin by default user: gin.Dir()
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">group</span> <span class="o">*</span><span class="nx">RouterGroup</span><span class="p">)</span> <span class="nf">StaticFS</span><span class="p">(</span><span class="nx">relativePath</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">fs</span> <span class="nx">http</span><span class="p">.</span><span class="nx">FileSystem</span><span class="p">)</span> <span class="nx">IRoutes</span> <span class="p">{</span>
-	<span class="k">if</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="s">&#34;:&#34;</span><span class="p">)</span> <span class="o">||</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="s">&#34;*&#34;</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;URL parameters can not be used when serving a static folder&#34;</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="nx">handler</span> <span class="o">:=</span> <span class="nx">group</span><span class="p">.</span><span class="nf">createStaticHandler</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="nx">fs</span><span class="p">)</span>
-	<span class="nx">urlPattern</span> <span class="o">:=</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="s">&#34;/*filepath&#34;</span><span class="p">)</span>
-
-	<span class="c1">// Register GET and HEAD handlers
-</span><span class="c1"></span>	<span class="nx">group</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="nx">urlPattern</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
-	<span class="nx">group</span><span class="p">.</span><span class="nf">HEAD</span><span class="p">(</span><span class="nx">urlPattern</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
-	<span class="k">return</span> <span class="nx">group</span><span class="p">.</span><span class="nf">returnObj</span><span class="p">()</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="c1">// StaticFS works just like `Static()` but a custom `http.FileSystem` can be used instead.
+</span><span class="ln"> 2</span><span class="c1">// Gin by default user: gin.Dir()
+</span><span class="ln"> 3</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">group</span> <span class="o">*</span><span class="nx">RouterGroup</span><span class="p">)</span> <span class="nf">StaticFS</span><span class="p">(</span><span class="nx">relativePath</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">fs</span> <span class="nx">http</span><span class="p">.</span><span class="nx">FileSystem</span><span class="p">)</span> <span class="nx">IRoutes</span> <span class="p">{</span>
+<span class="ln"> 4</span>	<span class="k">if</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="s">&#34;:&#34;</span><span class="p">)</span> <span class="o">||</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="s">&#34;*&#34;</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 5</span>		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;URL parameters can not be used when serving a static folder&#34;</span><span class="p">)</span>
+<span class="ln"> 6</span>	<span class="p">}</span>
+<span class="ln"> 7</span>	<span class="nx">handler</span> <span class="o">:=</span> <span class="nx">group</span><span class="p">.</span><span class="nf">createStaticHandler</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="nx">fs</span><span class="p">)</span>
+<span class="ln"> 8</span>	<span class="nx">urlPattern</span> <span class="o">:=</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="s">&#34;/*filepath&#34;</span><span class="p">)</span>
+<span class="ln"> 9</span>
+<span class="ln">10</span>	<span class="c1">// Register GET and HEAD handlers
+</span><span class="ln">11</span><span class="c1"></span>	<span class="nx">group</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="nx">urlPattern</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
+<span class="ln">12</span>	<span class="nx">group</span><span class="p">.</span><span class="nf">HEAD</span><span class="p">(</span><span class="nx">urlPattern</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
+<span class="ln">13</span>	<span class="k">return</span> <span class="nx">group</span><span class="p">.</span><span class="nf">returnObj</span><span class="p">()</span>
+<span class="ln">14</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>GET 和 HEAD 请求都会到 StaticHandler，所以看下面代码如何创建这个 Handler 即可</li>
 </ul>
 <blockquote>
 <p>/github.com/gin-gonic/gin/routergroup.go:185</p>
 </blockquote>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">group</span> <span class="o">*</span><span class="nx">RouterGroup</span><span class="p">)</span> <span class="nf">createStaticHandler</span><span class="p">(</span><span class="nx">relativePath</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">fs</span> <span class="nx">http</span><span class="p">.</span><span class="nx">FileSystem</span><span class="p">)</span> <span class="nx">HandlerFunc</span> <span class="p">{</span>
-	<span class="nx">absolutePath</span> <span class="o">:=</span> <span class="nx">group</span><span class="p">.</span><span class="nf">calculateAbsolutePath</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">)</span>
-	<span class="nx">fileServer</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">StripPrefix</span><span class="p">(</span><span class="nx">absolutePath</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nf">FileServer</span><span class="p">(</span><span class="nx">fs</span><span class="p">))</span>
-
-	<span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">nolisting</span> <span class="o">:=</span> <span class="nx">fs</span><span class="p">.(</span><span class="o">*</span><span class="nx">onlyfilesFS</span><span class="p">);</span> <span class="nx">nolisting</span> <span class="p">{</span>
-			<span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">.</span><span class="nf">WriteHeader</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusNotFound</span><span class="p">)</span>
-		<span class="p">}</span>
-
-		<span class="nx">file</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">Param</span><span class="p">(</span><span class="s">&#34;filepath&#34;</span><span class="p">)</span>
-		<span class="c1">// Check if file exists and/or if we have permission to access it
-</span><span class="c1"></span>		<span class="nx">f</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">fs</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
-		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-			<span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">.</span><span class="nf">WriteHeader</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusNotFound</span><span class="p">)</span>
-			<span class="nx">c</span><span class="p">.</span><span class="nx">handlers</span> <span class="p">=</span> <span class="nx">group</span><span class="p">.</span><span class="nx">engine</span><span class="p">.</span><span class="nx">noRoute</span>
-			<span class="c1">// Reset index
-</span><span class="c1"></span>			<span class="nx">c</span><span class="p">.</span><span class="nx">index</span> <span class="p">=</span> <span class="o">-</span><span class="mi">1</span>
-			<span class="k">return</span>
-		<span class="p">}</span>
-		<span class="nx">f</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
-
-		<span class="nx">fileServer</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span>
-	<span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="p">(</span><span class="nx">group</span> <span class="o">*</span><span class="nx">RouterGroup</span><span class="p">)</span> <span class="nf">createStaticHandler</span><span class="p">(</span><span class="nx">relativePath</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">fs</span> <span class="nx">http</span><span class="p">.</span><span class="nx">FileSystem</span><span class="p">)</span> <span class="nx">HandlerFunc</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="nx">absolutePath</span> <span class="o">:=</span> <span class="nx">group</span><span class="p">.</span><span class="nf">calculateAbsolutePath</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">)</span>
+<span class="ln"> 3</span>	<span class="nx">fileServer</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">StripPrefix</span><span class="p">(</span><span class="nx">absolutePath</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nf">FileServer</span><span class="p">(</span><span class="nx">fs</span><span class="p">))</span>
+<span class="ln"> 4</span>
+<span class="ln"> 5</span>	<span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 6</span>		<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">nolisting</span> <span class="o">:=</span> <span class="nx">fs</span><span class="p">.(</span><span class="o">*</span><span class="nx">onlyfilesFS</span><span class="p">);</span> <span class="nx">nolisting</span> <span class="p">{</span>
+<span class="ln"> 7</span>			<span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">.</span><span class="nf">WriteHeader</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusNotFound</span><span class="p">)</span>
+<span class="ln"> 8</span>		<span class="p">}</span>
+<span class="ln"> 9</span>
+<span class="ln">10</span>		<span class="nx">file</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">Param</span><span class="p">(</span><span class="s">&#34;filepath&#34;</span><span class="p">)</span>
+<span class="ln">11</span>		<span class="c1">// Check if file exists and/or if we have permission to access it
+</span><span class="ln">12</span><span class="c1"></span>		<span class="nx">f</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">fs</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+<span class="ln">13</span>		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln">14</span>			<span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">.</span><span class="nf">WriteHeader</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusNotFound</span><span class="p">)</span>
+<span class="ln">15</span>			<span class="nx">c</span><span class="p">.</span><span class="nx">handlers</span> <span class="p">=</span> <span class="nx">group</span><span class="p">.</span><span class="nx">engine</span><span class="p">.</span><span class="nx">noRoute</span>
+<span class="ln">16</span>			<span class="c1">// Reset index
+</span><span class="ln">17</span><span class="c1"></span>			<span class="nx">c</span><span class="p">.</span><span class="nx">index</span> <span class="p">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="ln">18</span>			<span class="k">return</span>
+<span class="ln">19</span>		<span class="p">}</span>
+<span class="ln">20</span>		<span class="nx">f</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+<span class="ln">21</span>
+<span class="ln">22</span>		<span class="nx">fileServer</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span>
+<span class="ln">23</span>	<span class="p">}</span>
+<span class="ln">24</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>正常执行会走 <code>fileServer.ServeHTTP(c.Writer, c.Request)</code>，HTTP 包的逻辑</li>
 </ul>
 <blockquote>
 <p>/net/http/server.go:2040</p>
 </blockquote>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">StripPrefix</span><span class="p">(</span><span class="nx">prefix</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">h</span> <span class="nx">Handler</span><span class="p">)</span> <span class="nx">Handler</span> <span class="p">{</span>
-	<span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">h</span>
-	<span class="p">}</span>
-	<span class="k">return</span> <span class="nf">HandlerFunc</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="nx">p</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">TrimPrefix</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">prefix</span><span class="p">);</span> <span class="nb">len</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span> <span class="p">{</span>
-			<span class="nx">r2</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">Request</span><span class="p">)</span>
-			<span class="o">*</span><span class="nx">r2</span> <span class="p">=</span> <span class="o">*</span><span class="nx">r</span>
-			<span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">URL</span><span class="p">)</span>
-			<span class="o">*</span><span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span> <span class="p">=</span> <span class="o">*</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span>
-			<span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span> <span class="p">=</span> <span class="nx">p</span>
-			<span class="nx">h</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r2</span><span class="p">)</span>
-		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-			<span class="nf">NotFound</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
-		<span class="p">}</span>
-	<span class="p">})</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="nf">StripPrefix</span><span class="p">(</span><span class="nx">prefix</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">h</span> <span class="nx">Handler</span><span class="p">)</span> <span class="nx">Handler</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+<span class="ln"> 3</span>		<span class="k">return</span> <span class="nx">h</span>
+<span class="ln"> 4</span>	<span class="p">}</span>
+<span class="ln"> 5</span>	<span class="k">return</span> <span class="nf">HandlerFunc</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 6</span>		<span class="k">if</span> <span class="nx">p</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">TrimPrefix</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">prefix</span><span class="p">);</span> <span class="nb">len</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 7</span>			<span class="nx">r2</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">Request</span><span class="p">)</span>
+<span class="ln"> 8</span>			<span class="o">*</span><span class="nx">r2</span> <span class="p">=</span> <span class="o">*</span><span class="nx">r</span>
+<span class="ln"> 9</span>			<span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">URL</span><span class="p">)</span>
+<span class="ln">10</span>			<span class="o">*</span><span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span> <span class="p">=</span> <span class="o">*</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span>
+<span class="ln">11</span>			<span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span> <span class="p">=</span> <span class="nx">p</span>
+<span class="ln">12</span>			<span class="nx">h</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r2</span><span class="p">)</span>
+<span class="ln">13</span>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<span class="ln">14</span>			<span class="nf">NotFound</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+<span class="ln">15</span>		<span class="p">}</span>
+<span class="ln">16</span>	<span class="p">})</span>
+<span class="ln">17</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>去除下前缀的空格</li>
 <li>copy 了 request 去执行接下去的任务</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">FileServer</span><span class="p">(</span><span class="nx">root</span> <span class="nx">FileSystem</span><span class="p">)</span> <span class="nx">Handler</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">fileHandler</span><span class="p">{</span><span class="nx">root</span><span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="o">*</span><span class="nx">fileHandler</span><span class="p">)</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">w</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">upath</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span>
-	<span class="k">if</span> <span class="p">!</span><span class="nx">strings</span><span class="p">.</span><span class="nf">HasPrefix</span><span class="p">(</span><span class="nx">upath</span><span class="p">,</span> <span class="s">&#34;/&#34;</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">upath</span> <span class="p">=</span> <span class="s">&#34;/&#34;</span> <span class="o">+</span> <span class="nx">upath</span>
-		<span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span> <span class="p">=</span> <span class="nx">upath</span>
-	<span class="p">}</span>
-	<span class="nf">serveFile</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">f</span><span class="p">.</span><span class="nx">root</span><span class="p">,</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Clean</span><span class="p">(</span><span class="nx">upath</span><span class="p">),</span> <span class="kc">true</span><span class="p">)</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="nf">FileServer</span><span class="p">(</span><span class="nx">root</span> <span class="nx">FileSystem</span><span class="p">)</span> <span class="nx">Handler</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">fileHandler</span><span class="p">{</span><span class="nx">root</span><span class="p">}</span>
+<span class="ln"> 3</span><span class="p">}</span>
+<span class="ln"> 4</span>
+<span class="ln"> 5</span><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="o">*</span><span class="nx">fileHandler</span><span class="p">)</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">w</span> <span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 6</span>	<span class="nx">upath</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span>
+<span class="ln"> 7</span>	<span class="k">if</span> <span class="p">!</span><span class="nx">strings</span><span class="p">.</span><span class="nf">HasPrefix</span><span class="p">(</span><span class="nx">upath</span><span class="p">,</span> <span class="s">&#34;/&#34;</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 8</span>		<span class="nx">upath</span> <span class="p">=</span> <span class="s">&#34;/&#34;</span> <span class="o">+</span> <span class="nx">upath</span>
+<span class="ln"> 9</span>		<span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span> <span class="p">=</span> <span class="nx">upath</span>
+<span class="ln">10</span>	<span class="p">}</span>
+<span class="ln">11</span>	<span class="nf">serveFile</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">f</span><span class="p">.</span><span class="nx">root</span><span class="p">,</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Clean</span><span class="p">(</span><span class="nx">upath</span><span class="p">),</span> <span class="kc">true</span><span class="p">)</span>
+<span class="ln">12</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>前缀 URL 加上 /</li>
 <li>文件服务逻辑，和静态文件部分调用是一样的方法，这里是 true</li>
@@ -401,9 +401,9 @@ http://127.0.0.1:8080/favicon.ico
 </ul>
 <h4 id="222-项目配置">2.2.2 项目配置</h4>
 <p>通过下面代码加到 gin 里面。</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">root</span> <span class="o">:=</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">dir</span><span class="p">,</span> <span class="s">&#34;dist&#34;</span><span class="p">)</span>
-
-<span class="nx">r</span><span class="p">.</span><span class="nf">Use</span><span class="p">(</span><span class="nx">static</span><span class="p">.</span><span class="nf">NewFileSystem</span><span class="p">(</span><span class="nx">root</span><span class="p">,</span> <span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="nx">constant</span><span class="p">.</span><span class="nx">ApiVersion</span><span class="p">,</span> <span class="kc">false</span><span class="p">).</span><span class="nf">HandlerFunc</span><span class="p">())</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="nx">root</span> <span class="o">:=</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">dir</span><span class="p">,</span> <span class="s">&#34;dist&#34;</span><span class="p">)</span>
+<span class="ln">2</span>
+<span class="ln">3</span><span class="nx">r</span><span class="p">.</span><span class="nf">Use</span><span class="p">(</span><span class="nx">static</span><span class="p">.</span><span class="nf">NewFileSystem</span><span class="p">(</span><span class="nx">root</span><span class="p">,</span> <span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="nx">constant</span><span class="p">.</span><span class="nx">ApiVersion</span><span class="p">,</span> <span class="kc">false</span><span class="p">).</span><span class="nf">HandlerFunc</span><span class="p">())</span>
 </code></pre></div><p>参数说明：</p>
 <ul>
 <li>root 文件服务的根目录</li>
@@ -413,14 +413,14 @@ http://127.0.0.1:8080/favicon.ico
 </ul>
 <h4 id="223-原理说明">2.2.3 原理说明</h4>
 <p><strong>自定义的 fileSystem</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">FileSystem</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">root</span> <span class="kt">string</span>
-	<span class="nx">prefix</span>  <span class="kt">string</span>
-	<span class="nx">exclude</span> <span class="kt">string</span>
-	<span class="nx">indexes</span> <span class="kt">bool</span>
-	<span class="nx">http</span><span class="p">.</span><span class="nx">FileSystem</span>
-	<span class="nx">http</span><span class="p">.</span><span class="nx">Handler</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="kd">type</span> <span class="nx">FileSystem</span> <span class="kd">struct</span> <span class="p">{</span>
+<span class="ln">2</span>	<span class="nx">root</span> <span class="kt">string</span>
+<span class="ln">3</span>	<span class="nx">prefix</span>  <span class="kt">string</span>
+<span class="ln">4</span>	<span class="nx">exclude</span> <span class="kt">string</span>
+<span class="ln">5</span>	<span class="nx">indexes</span> <span class="kt">bool</span>
+<span class="ln">6</span>	<span class="nx">http</span><span class="p">.</span><span class="nx">FileSystem</span>
+<span class="ln">7</span>	<span class="nx">http</span><span class="p">.</span><span class="nx">Handler</span>
+<span class="ln">8</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>root 根路径，文件系统用</li>
 <li>prefix 请求前缀，按我的场景是 <code>&quot;/&quot;</code>，如果你有类似 <code>/health</code> 的这种接口，那么请扩展 exclude 的逻辑</li>
@@ -428,75 +428,75 @@ http://127.0.0.1:8080/favicon.ico
 <li>indexes 是否遍历子目录查找，我的场景是不需要的，所以配置 <code>false</code></li>
 </ul>
 <p><strong>gin 对请求的处理逻辑</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">fs</span> <span class="o">*</span><span class="nx">FileSystem</span><span class="p">)</span> <span class="nf">HandlerFunc</span><span class="p">()</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">HandlerFunc</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">exclude</span> <span class="o">!=</span> <span class="s">&#34;&#34;</span> <span class="o">&amp;&amp;</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">HasPrefix</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">exclude</span><span class="p">)</span> <span class="p">{</span>
-			<span class="nx">c</span><span class="p">.</span><span class="nf">Next</span><span class="p">()</span>
-		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-			<span class="k">if</span> <span class="nx">fs</span><span class="p">.</span><span class="nf">Exist</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
-				<span class="nx">fs</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span>
-				<span class="nx">c</span><span class="p">.</span><span class="nf">Abort</span><span class="p">()</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="p">(</span><span class="nx">fs</span> <span class="o">*</span><span class="nx">FileSystem</span><span class="p">)</span> <span class="nf">HandlerFunc</span><span class="p">()</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">HandlerFunc</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 3</span>		<span class="k">if</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">exclude</span> <span class="o">!=</span> <span class="s">&#34;&#34;</span> <span class="o">&amp;&amp;</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">HasPrefix</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">exclude</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 4</span>			<span class="nx">c</span><span class="p">.</span><span class="nf">Next</span><span class="p">()</span>
+<span class="ln"> 5</span>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<span class="ln"> 6</span>			<span class="k">if</span> <span class="nx">fs</span><span class="p">.</span><span class="nf">Exist</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 7</span>				<span class="nx">fs</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Writer</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span>
+<span class="ln"> 8</span>				<span class="nx">c</span><span class="p">.</span><span class="nf">Abort</span><span class="p">()</span>
+<span class="ln"> 9</span>			<span class="p">}</span>
+<span class="ln">10</span>		<span class="p">}</span>
+<span class="ln">11</span>	<span class="p">}</span>
+<span class="ln">12</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>如果是 <code>/api/v1</code> 后端接口，则直接进入下一步</li>
 <li>否则判断是否存在，存在会执行标准的 ServeHTTP</li>
 </ul>
 <p><strong>判断文件是否存在</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">fs</span> <span class="o">*</span><span class="nx">FileSystem</span><span class="p">)</span> <span class="nf">Exist</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
-	<span class="nx">filepath</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span>
-	<span class="k">if</span> <span class="nf">isFrontPageRouter</span><span class="p">(</span><span class="nx">filepath</span><span class="p">,</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">exclude</span><span class="p">)</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="kc">true</span>
-	<span class="p">}</span>
-
-	<span class="k">if</span> <span class="nx">p</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">TrimPrefix</span><span class="p">(</span><span class="nx">filepath</span><span class="p">,</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">prefix</span><span class="p">);</span> <span class="nb">len</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">filepath</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">name</span> <span class="o">:=</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">root</span><span class="p">,</span> <span class="nx">p</span><span class="p">)</span>
-		<span class="nx">stats</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Stat</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
-		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-			<span class="k">return</span> <span class="kc">false</span>
-		<span class="p">}</span>
-		<span class="k">if</span> <span class="nx">stats</span><span class="p">.</span><span class="nf">IsDir</span><span class="p">()</span> <span class="p">{</span>
-			<span class="k">if</span> <span class="p">!</span><span class="nx">fs</span><span class="p">.</span><span class="nx">indexes</span> <span class="p">{</span>
-				<span class="nx">index</span> <span class="o">:=</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">INDEX</span><span class="p">)</span>
-				<span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Stat</span><span class="p">(</span><span class="nx">index</span><span class="p">)</span>
-				<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-					<span class="k">return</span> <span class="kc">false</span>
-				<span class="p">}</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-		<span class="k">return</span> <span class="kc">true</span>
-	<span class="p">}</span>
-	<span class="k">return</span> <span class="kc">false</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="p">(</span><span class="nx">fs</span> <span class="o">*</span><span class="nx">FileSystem</span><span class="p">)</span> <span class="nf">Exist</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="nx">filepath</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Request</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span>
+<span class="ln"> 3</span>	<span class="k">if</span> <span class="nf">isFrontPageRouter</span><span class="p">(</span><span class="nx">filepath</span><span class="p">,</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">exclude</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 4</span>		<span class="k">return</span> <span class="kc">true</span>
+<span class="ln"> 5</span>	<span class="p">}</span>
+<span class="ln"> 6</span>
+<span class="ln"> 7</span>	<span class="k">if</span> <span class="nx">p</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">TrimPrefix</span><span class="p">(</span><span class="nx">filepath</span><span class="p">,</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">prefix</span><span class="p">);</span> <span class="nb">len</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">filepath</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 8</span>		<span class="nx">name</span> <span class="o">:=</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">root</span><span class="p">,</span> <span class="nx">p</span><span class="p">)</span>
+<span class="ln"> 9</span>		<span class="nx">stats</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Stat</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+<span class="ln">10</span>		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln">11</span>			<span class="k">return</span> <span class="kc">false</span>
+<span class="ln">12</span>		<span class="p">}</span>
+<span class="ln">13</span>		<span class="k">if</span> <span class="nx">stats</span><span class="p">.</span><span class="nf">IsDir</span><span class="p">()</span> <span class="p">{</span>
+<span class="ln">14</span>			<span class="k">if</span> <span class="p">!</span><span class="nx">fs</span><span class="p">.</span><span class="nx">indexes</span> <span class="p">{</span>
+<span class="ln">15</span>				<span class="nx">index</span> <span class="o">:=</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">INDEX</span><span class="p">)</span>
+<span class="ln">16</span>				<span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Stat</span><span class="p">(</span><span class="nx">index</span><span class="p">)</span>
+<span class="ln">17</span>				<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln">18</span>					<span class="k">return</span> <span class="kc">false</span>
+<span class="ln">19</span>				<span class="p">}</span>
+<span class="ln">20</span>			<span class="p">}</span>
+<span class="ln">21</span>		<span class="p">}</span>
+<span class="ln">22</span>		<span class="k">return</span> <span class="kc">true</span>
+<span class="ln">23</span>	<span class="p">}</span>
+<span class="ln">24</span>	<span class="k">return</span> <span class="kc">false</span>
+<span class="ln">25</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>如果是前端页面，直接返回存在，因为始终是 <code>index.html</code></li>
 <li>其它用 <code>os</code> 去判断文件是否真实存在</li>
 </ul>
 <p><strong>http.HandlerFunc 改进</strong></p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// StripPrefix like http.StripPrefix
-</span><span class="c1"></span><span class="kd">func</span> <span class="nf">StripPrefix</span><span class="p">(</span><span class="nx">prefix</span><span class="p">,</span> <span class="nx">exclude</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">h</span> <span class="nx">http</span><span class="p">.</span><span class="nx">Handler</span><span class="p">)</span> <span class="nx">http</span><span class="p">.</span><span class="nx">Handler</span> <span class="p">{</span>
-	<span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">h</span>
-	<span class="p">}</span>
-	<span class="k">return</span> <span class="nx">http</span><span class="p">.</span><span class="nf">HandlerFunc</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="nx">p</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">TrimPrefix</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">prefix</span><span class="p">);</span> <span class="nb">len</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span> <span class="p">{</span>
-			<span class="nx">r2</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span>
-			<span class="o">*</span><span class="nx">r2</span> <span class="p">=</span> <span class="o">*</span><span class="nx">r</span>
-			<span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">URL</span><span class="p">)</span>
-			<span class="o">*</span><span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span> <span class="p">=</span> <span class="o">*</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span>
-			<span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span> <span class="p">=</span> <span class="nx">p</span>
-			<span class="nx">b</span> <span class="o">:=</span> <span class="nf">isFrontPageRouter</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">exclude</span><span class="p">)</span>
-			<span class="k">if</span> <span class="nx">b</span> <span class="p">{</span>
-				<span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span> <span class="p">=</span> <span class="s">&#34;/&#34;</span>
-			<span class="p">}</span>
-			<span class="nx">h</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r2</span><span class="p">)</span>
-		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-			<span class="nx">http</span><span class="p">.</span><span class="nf">NotFound</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
-		<span class="p">}</span>
-	<span class="p">})</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="c1">// StripPrefix like http.StripPrefix
+</span><span class="ln"> 2</span><span class="c1"></span><span class="kd">func</span> <span class="nf">StripPrefix</span><span class="p">(</span><span class="nx">prefix</span><span class="p">,</span> <span class="nx">exclude</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">h</span> <span class="nx">http</span><span class="p">.</span><span class="nx">Handler</span><span class="p">)</span> <span class="nx">http</span><span class="p">.</span><span class="nx">Handler</span> <span class="p">{</span>
+<span class="ln"> 3</span>	<span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+<span class="ln"> 4</span>		<span class="k">return</span> <span class="nx">h</span>
+<span class="ln"> 5</span>	<span class="p">}</span>
+<span class="ln"> 6</span>	<span class="k">return</span> <span class="nx">http</span><span class="p">.</span><span class="nf">HandlerFunc</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 7</span>		<span class="k">if</span> <span class="nx">p</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">TrimPrefix</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">prefix</span><span class="p">);</span> <span class="nb">len</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 8</span>			<span class="nx">r2</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span>
+<span class="ln"> 9</span>			<span class="o">*</span><span class="nx">r2</span> <span class="p">=</span> <span class="o">*</span><span class="nx">r</span>
+<span class="ln">10</span>			<span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">URL</span><span class="p">)</span>
+<span class="ln">11</span>			<span class="o">*</span><span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span> <span class="p">=</span> <span class="o">*</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span>
+<span class="ln">12</span>			<span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span> <span class="p">=</span> <span class="nx">p</span>
+<span class="ln">13</span>			<span class="nx">b</span> <span class="o">:=</span> <span class="nf">isFrontPageRouter</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">exclude</span><span class="p">)</span>
+<span class="ln">14</span>			<span class="k">if</span> <span class="nx">b</span> <span class="p">{</span>
+<span class="ln">15</span>				<span class="nx">r2</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span> <span class="p">=</span> <span class="s">&#34;/&#34;</span>
+<span class="ln">16</span>			<span class="p">}</span>
+<span class="ln">17</span>			<span class="nx">h</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r2</span><span class="p">)</span>
+<span class="ln">18</span>		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<span class="ln">19</span>			<span class="nx">http</span><span class="p">.</span><span class="nf">NotFound</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+<span class="ln">20</span>		<span class="p">}</span>
+<span class="ln">21</span>	<span class="p">})</span>
+<span class="ln">22</span><span class="p">}</span>
 </code></pre></div><ul>
 <li>新加参数 exclude，表示是否不包含的路径</li>
 <li>isFrontPageRouter 是否是前端页面的路径，如果是前端页面会改写 <code>URL.Path = &quot;/&quot;</code>，保证始终访问 <code>index.html</code> 文件</li>
@@ -507,26 +507,26 @@ http://127.0.0.1:8080/favicon.ico
 </blockquote>
 <h4 id="231-直接返回前端html">2.3.1 直接返回前端HTML</h4>
 <p>启动程序</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">r</span> <span class="o">:=</span> <span class="nx">gin</span><span class="p">.</span><span class="nf">Default</span><span class="p">()</span>
-
-	<span class="c1">// Serves unicode entities
-</span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/json&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">c</span><span class="p">.</span><span class="nf">JSON</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">H</span><span class="p">{</span>
-			<span class="s">&#34;html&#34;</span><span class="p">:</span> <span class="s">&#34;&lt;b&gt;Hello, world!&lt;/b&gt;&#34;</span><span class="p">,</span>
-		<span class="p">})</span>
-	<span class="p">})</span>
-
-	<span class="c1">// Serves literal characters
-</span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/purejson&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">c</span><span class="p">.</span><span class="nf">PureJSON</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">H</span><span class="p">{</span>
-			<span class="s">&#34;html&#34;</span><span class="p">:</span> <span class="s">&#34;&lt;b&gt;Hello, world!&lt;/b&gt;&#34;</span><span class="p">,</span>
-		<span class="p">})</span>
-	<span class="p">})</span>
-
-	<span class="c1">// listen and serve on 0.0.0.0:8080
-</span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">)</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="nx">r</span> <span class="o">:=</span> <span class="nx">gin</span><span class="p">.</span><span class="nf">Default</span><span class="p">()</span>
+<span class="ln"> 3</span>
+<span class="ln"> 4</span>	<span class="c1">// Serves unicode entities
+</span><span class="ln"> 5</span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/json&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 6</span>		<span class="nx">c</span><span class="p">.</span><span class="nf">JSON</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">H</span><span class="p">{</span>
+<span class="ln"> 7</span>			<span class="s">&#34;html&#34;</span><span class="p">:</span> <span class="s">&#34;&lt;b&gt;Hello, world!&lt;/b&gt;&#34;</span><span class="p">,</span>
+<span class="ln"> 8</span>		<span class="p">})</span>
+<span class="ln"> 9</span>	<span class="p">})</span>
+<span class="ln">10</span>
+<span class="ln">11</span>	<span class="c1">// Serves literal characters
+</span><span class="ln">12</span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/purejson&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">13</span>		<span class="nx">c</span><span class="p">.</span><span class="nf">PureJSON</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">H</span><span class="p">{</span>
+<span class="ln">14</span>			<span class="s">&#34;html&#34;</span><span class="p">:</span> <span class="s">&#34;&lt;b&gt;Hello, world!&lt;/b&gt;&#34;</span><span class="p">,</span>
+<span class="ln">15</span>		<span class="p">})</span>
+<span class="ln">16</span>	<span class="p">})</span>
+<span class="ln">17</span>
+<span class="ln">18</span>	<span class="c1">// listen and serve on 0.0.0.0:8080
+</span><span class="ln">19</span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">)</span>
+<span class="ln">20</span><span class="p">}</span>
 </code></pre></div><p>效果</p>
 <figure>
     <img src="/2020/10/gin-static/json.jpg"/> <figcaption>
@@ -542,29 +542,29 @@ http://127.0.0.1:8080/favicon.ico
 
 <h4 id="232-通过模板返回html">2.3.2 通过模板返回HTML</h4>
 <p>创建模板</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ mkdir templates <span class="o">&amp;&amp;</span> touch index.tmpl
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>$ mkdir templates <span class="o">&amp;&amp;</span> touch index.tmpl
 </code></pre></div><p>编辑模板</p>
-<div class="highlight"><pre class="chroma"><code class="language-tmpl" data-lang="tmpl"><span class="x">&lt;html&gt;
-</span><span class="x">&lt;body&gt;
-</span><span class="x">&lt;h1&gt;
-</span><span class="x">    {{ .title }}
-</span><span class="x">&lt;/h1&gt;
-</span><span class="x">&lt;/body&gt;
-</span><span class="x">&lt;/html&gt;
+<div class="highlight"><pre class="chroma"><code class="language-tmpl" data-lang="tmpl"><span class="ln">1</span><span class="x">&lt;html&gt;
+</span><span class="ln">2</span><span class="x">&lt;body&gt;
+</span><span class="ln">3</span><span class="x">&lt;h1&gt;
+</span><span class="ln">4</span><span class="x">    {{ .title }}
+</span><span class="ln">5</span><span class="x">&lt;/h1&gt;
+</span><span class="ln">6</span><span class="x">&lt;/body&gt;
+</span><span class="ln">7</span><span class="x">&lt;/html&gt;
 </span></code></pre></div><p>启动程序</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">r</span> <span class="o">:=</span> <span class="nx">gin</span><span class="p">.</span><span class="nf">Default</span><span class="p">()</span>
-
-  <span class="nx">r</span><span class="p">.</span><span class="nf">LoadHTMLGlob</span><span class="p">(</span><span class="nx">dir</span> <span class="o">+</span> <span class="s">&#34;/src/gin/templates/*&#34;</span><span class="p">)</span>
-  <span class="nx">r</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/index&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">c</span><span class="p">.</span><span class="nf">HTML</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span> <span class="s">&#34;index.tmpl&#34;</span><span class="p">,</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">H</span><span class="p">{</span>
-      <span class="s">&#34;title&#34;</span><span class="p">:</span> <span class="s">&#34;Main website&#34;</span><span class="p">,</span>
-    <span class="p">})</span>
-  <span class="p">})</span>
-
-  <span class="c1">// listen and serve on 0.0.0.0:8080
-</span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">)</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="nx">r</span> <span class="o">:=</span> <span class="nx">gin</span><span class="p">.</span><span class="nf">Default</span><span class="p">()</span>
+<span class="ln"> 3</span>
+<span class="ln"> 4</span>  <span class="nx">r</span><span class="p">.</span><span class="nf">LoadHTMLGlob</span><span class="p">(</span><span class="nx">dir</span> <span class="o">+</span> <span class="s">&#34;/src/gin/templates/*&#34;</span><span class="p">)</span>
+<span class="ln"> 5</span>  <span class="nx">r</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/index&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">gin</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 6</span>    <span class="nx">c</span><span class="p">.</span><span class="nf">HTML</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span> <span class="s">&#34;index.tmpl&#34;</span><span class="p">,</span> <span class="nx">gin</span><span class="p">.</span><span class="nx">H</span><span class="p">{</span>
+<span class="ln"> 7</span>      <span class="s">&#34;title&#34;</span><span class="p">:</span> <span class="s">&#34;Main website&#34;</span><span class="p">,</span>
+<span class="ln"> 8</span>    <span class="p">})</span>
+<span class="ln"> 9</span>  <span class="p">})</span>
+<span class="ln">10</span>
+<span class="ln">11</span>  <span class="c1">// listen and serve on 0.0.0.0:8080
+</span><span class="ln">12</span><span class="c1"></span>	<span class="nx">r</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">)</span>
+<span class="ln">13</span><span class="p">}</span>
 </code></pre></div><p>效果</p>
 <figure>
     <img src="/2020/10/gin-static/pure.jpg"/> <figcaption>
@@ -587,7 +587,7 @@ http://127.0.0.1:8080/favicon.ico
                             <a class="link-to-markdown" href="/2020/10/gin-static/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2020/10/gin-static/" data-title="一拳搞定 Gin | 前后端分离下静态资源部署到后端访问" data-hashtags="静态资源,React,Ant Design,Gin"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2020/10/gin-static/" data-hashtag="静态资源"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2020/10/gin-static/" data-title="一拳搞定 Gin | 前后端分离下静态资源部署到后端访问"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2020/10/gin-static/" data-title="一拳搞定 Gin | 前后端分离下静态资源部署到后端访问"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2020/10/gin-static/" data-title="一拳搞定 Gin | 前后端分离下静态资源部署到后端访问"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.funnycode.cn/2020/10/gin-static/" data-title="一拳搞定 Gin | 配置前后端分离后的静态资源访问" data-hashtags="静态资源,React,Ant Design,Gin"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.funnycode.cn/2020/10/gin-static/" data-hashtag="静态资源"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://blog.funnycode.cn/2020/10/gin-static/" data-title="一拳搞定 Gin | 配置前后端分离后的静态资源访问"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://blog.funnycode.cn/2020/10/gin-static/" data-title="一拳搞定 Gin | 配置前后端分离后的静态资源访问"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://blog.funnycode.cn/2020/10/gin-static/" data-title="一拳搞定 Gin | 配置前后端分离后的静态资源访问"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>

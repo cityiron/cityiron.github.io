@@ -1,11 +1,11 @@
-# dubbo-go 白话文 | 修复 go 调用 java 方法参数 BUG
+# dubbo-go 白话文 | go 和 java 互通有无
 
 本文从一个 BUG 入手，手把手教你 dubbogo 调用 dubbogo 或 dubbo 服务
 
 <!--more-->
 
 ## 一、前言
-昨天[邹部长](https://zouyx.github.io/index.html)在群里@我让看一个关于 dubbogo 调用 dubbo 报错的问题 [issue地址](https://github.com/apache/dubbo-go/pull/903)，于是我跑了 dubbogo + dubbbo 的测试代码来定位这个问题，因为之前也没跨语言调用，从零开始搭建，踩到了一些新人使用dubbogo的坑，把这个过程记录下供大家参考。
+昨天[邹部长](https://zouyx.github.io/index.html)在群里@我让看一个关于 dubbogo 调用 dubbo 报错的问题，<u>问题[issue地址](https://github.com/apache/dubbo-go/issues/900)</u>，于是我跑了 dubbogo + dubbbo 的测试代码来定位这个问题，因为之前也没跨语言调用，从零开始搭建，踩到了一些新人使用dubbogo的坑，把这个过程记录下供大家参考。
 
 ## 二、解决问题
 
@@ -588,7 +588,7 @@ func main() {
 }
 ```
 
-这里主要注意 `MethodMapper` 方法，像我请求 `SayHello` 变成了 `sayHello`，需要在这个方法中配置这个关系，否则还是会找不到方法。 
+这里主要注意 `MethodMapper` 方法，像我请求 `SayHello` 变成了 `sayHello`，需要在这个方法中配置这个映射关系，否则还是会找不到方法。
 
 ### 3.4 为什么会用 hessian2
 
@@ -639,7 +639,7 @@ if reflect.Ptr == t.Kind() {
 ```
 
 ### 3.8 繁琐的配置简化
-查看我另一篇文章
+查看我另一篇文章 [dubbo配置简化]({{< ref "dubbo-go-no-config/index.tc.md" >}})
 
 ### 3.9 复现代码
 - https://github.com/cityiron/java_study/tree/master/dubbo2.7.7

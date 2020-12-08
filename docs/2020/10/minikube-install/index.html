@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2020\/10\/minikube-install\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "minikube","wordcount":  1069 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "minikube","wordcount":  1106 ,
         "url": "https:\/\/blog.funnycode.cn\/2020\/10\/minikube-install\/","datePublished": "2020-10-07T14:42:58+08:00","dateModified": "2020-10-09T15:33:21+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "IronCity","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -107,7 +107,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">一拳搞定 Kubernetes | 安装 Minikube</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/kubernetes/"><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-07">2020-10-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1069 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-07">2020-10-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1106 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id="/2020/10/minikube-install/" class="leancloud_visitors" data-flag-title="一拳搞定 Kubernetes | 安装 Minikube">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -156,29 +156,29 @@
 <p><a href="https://kubernetes.io/zh/docs/tasks/tools/install-minikube/" target="_blank" rel="noopener noreffer">安装参考</a></p>
 </blockquote>
 <h3 id="2-1-暂停-minikube">2-1. 暂停 Minikube</h3>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">minikube stop
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>minikube stop
 </code></pre></div><p>输出:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">* Stopping <span class="s2">&#34;minikube&#34;</span> in hyperkit ...
-* <span class="s2">&#34;minikube&#34;</span> 已停止
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>* Stopping <span class="s2">&#34;minikube&#34;</span> in hyperkit ...
+<span class="ln">2</span>* <span class="s2">&#34;minikube&#34;</span> 已停止
 </code></pre></div><h3 id="2-2-启动">2-2. 启动</h3>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">minikube start
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>minikube start
 </code></pre></div><p>输出:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">* Darwin 10.15.6 上的 minikube v1.6.2
-  - <span class="nv">KUBECONFIG</span><span class="o">=</span>/Users/tc/.kube/config.22
-* Selecting <span class="s1">&#39;hyperkit&#39;</span> driver from existing profile <span class="o">(</span>alternates: <span class="o">[])</span>
-* Tip: Use <span class="s1">&#39;minikube start -p &lt;name&gt;&#39;</span> to create a new cluster, or <span class="s1">&#39;minikube delete&#39;</span> to delete this one.
-* Starting existing hyperkit VM <span class="k">for</span> <span class="s2">&#34;minikube&#34;</span> ...
-* Waiting <span class="k">for</span> the host to be provisioned ...
-^<span class="o">[</span>* 正在 Docker <span class="s1">&#39;19.03.5&#39;</span> 中准备 Kubernetes v1.17.0…
-* 正在启动 Kubernetes ...
-* 完成！kubectl 已经配置至 <span class="s2">&#34;minikube&#34;</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>* Darwin 10.15.6 上的 minikube v1.6.2
+<span class="ln">2</span>  - <span class="nv">KUBECONFIG</span><span class="o">=</span>/Users/tc/.kube/config.22
+<span class="ln">3</span>* Selecting <span class="s1">&#39;hyperkit&#39;</span> driver from existing profile <span class="o">(</span>alternates: <span class="o">[])</span>
+<span class="ln">4</span>* Tip: Use <span class="s1">&#39;minikube start -p &lt;name&gt;&#39;</span> to create a new cluster, or <span class="s1">&#39;minikube delete&#39;</span> to delete this one.
+<span class="ln">5</span>* Starting existing hyperkit VM <span class="k">for</span> <span class="s2">&#34;minikube&#34;</span> ...
+<span class="ln">6</span>* Waiting <span class="k">for</span> the host to be provisioned ...
+<span class="ln">7</span>^<span class="o">[</span>* 正在 Docker <span class="s1">&#39;19.03.5&#39;</span> 中准备 Kubernetes v1.17.0…
+<span class="ln">8</span>* 正在启动 Kubernetes ...
+<span class="ln">9</span>* 完成！kubectl 已经配置至 <span class="s2">&#34;minikube&#34;</span>
 </code></pre></div><h3 id="2-3-启动-dashboard">2-3. 启动 dashboard</h3>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">minikube dashboard
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>minikube dashboard
 </code></pre></div><p>输出:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">* Verifying dashboard health ...
-* Launching proxy ...
-* Verifying proxy health ...
-* Opening http://127.0.0.1:58368/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/ in your default browser...
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>* Verifying dashboard health ...
+<span class="ln">2</span>* Launching proxy ...
+<span class="ln">3</span>* Verifying proxy health ...
+<span class="ln">4</span>* Opening http://127.0.0.1:58368/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/ in your default browser...
 </code></pre></div><p>会自动跳转到浏览器：</p>
 <figure>
     <img src="/2020/10/minikube-install/dashboard.png"/> <figcaption>
@@ -187,72 +187,72 @@
 </figure>
 
 <h3 id="2-4-查看-service-的-url">2-4. 查看 service 的 URL</h3>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">minikube service hello-minikube --url
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>minikube service hello-minikube --url
 </code></pre></div><h3 id="2-5-删除-minikube-集群">2-5. 删除 Minikube 集群</h3>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">minikube delete
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>minikube delete
 </code></pre></div><p>输出:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">* Deleting <span class="s2">&#34;minikube&#34;</span> ...
-* The <span class="s2">&#34;minikube&#34;</span> cluster has been deleted.
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>* Deleting <span class="s2">&#34;minikube&#34;</span> ...
+<span class="ln">2</span>* The <span class="s2">&#34;minikube&#34;</span> cluster has been deleted.
 </code></pre></div><h2 id="三kubernetes-操作">三、kubernetes 操作</h2>
 <p>创建 deployment</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl create deployment hello-minikube --image<span class="o">=</span>k8s.gcr.io/echoserver:1.4
-kubectl expose deployment hello-minikube --type<span class="o">=</span>NodePort --port<span class="o">=</span><span class="m">8080</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl create deployment hello-minikube --image<span class="o">=</span>k8s.gcr.io/echoserver:1.4
+<span class="ln">2</span>kubectl expose deployment hello-minikube --type<span class="o">=</span>NodePort --port<span class="o">=</span><span class="m">8080</span>
 </code></pre></div><p>请注意看这个 <code>--type=NodePort</code>，它表示了服务暴露的模式，也就是你要访问到 k8s 里面一个运行程序的途径。</p>
 <h2 id="四补充说明">四、补充说明</h2>
 <h3 id="3-1-不能暴露-service">3-1. 不能暴露 service</h3>
 <p>当创建的 service 不加 <code>--type=NodePort</code>，在 minikube 获取不到 service url。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">minikube service nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span> --url
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>minikube service nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span> --url
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="p">|</span>-----------<span class="p">|</span>------------------<span class="p">|</span>-------------<span class="p">|</span>--------------<span class="p">|</span>
-<span class="p">|</span> NAMESPACE <span class="p">|</span>       NAME       <span class="p">|</span> TARGET PORT <span class="p">|</span>     URL      <span class="p">|</span>
-<span class="p">|</span>-----------<span class="p">|</span>------------------<span class="p">|</span>-------------<span class="p">|</span>--------------<span class="p">|</span>
-<span class="p">|</span> <span class="nb">test</span>      <span class="p">|</span> nginx-deployment <span class="p">|</span>             <span class="p">|</span> No node port <span class="p">|</span>
-<span class="p">|</span>-----------<span class="p">|</span>------------------<span class="p">|</span>-------------<span class="p">|</span>--------------<span class="p">|</span>
-* service test/nginx-deployment has no node port
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span><span class="p">|</span>-----------<span class="p">|</span>------------------<span class="p">|</span>-------------<span class="p">|</span>--------------<span class="p">|</span>
+<span class="ln">2</span><span class="p">|</span> NAMESPACE <span class="p">|</span>       NAME       <span class="p">|</span> TARGET PORT <span class="p">|</span>     URL      <span class="p">|</span>
+<span class="ln">3</span><span class="p">|</span>-----------<span class="p">|</span>------------------<span class="p">|</span>-------------<span class="p">|</span>--------------<span class="p">|</span>
+<span class="ln">4</span><span class="p">|</span> <span class="nb">test</span>      <span class="p">|</span> nginx-deployment <span class="p">|</span>             <span class="p">|</span> No node port <span class="p">|</span>
+<span class="ln">5</span><span class="p">|</span>-----------<span class="p">|</span>------------------<span class="p">|</span>-------------<span class="p">|</span>--------------<span class="p">|</span>
+<span class="ln">6</span>* service test/nginx-deployment has no node port
 </code></pre></div><p>正常情况输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">http://192.168.64.3:31022
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>http://192.168.64.3:31022
 </code></pre></div><p>请求这个地址：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl http://192.168.64.3:31022
-
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;Welcome to nginx!&lt;/title&gt;
-&lt;style&gt;
-    body <span class="o">{</span>
-        width: 35em<span class="p">;</span>
-        margin: <span class="m">0</span> auto<span class="p">;</span>
-        font-family: Tahoma, Verdana, Arial, sans-serif<span class="p">;</span>
-    <span class="o">}</span>
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;
-&lt;p&gt;If you see this page, the nginx web server is successfully installed and
-working. Further configuration is required.&lt;/p&gt;
-
-&lt;p&gt;For online documentation and support please refer to
-&lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;http://nginx.org/&#34;</span>&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;
-Commercial support is available at
-&lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;http://nginx.com/&#34;</span>&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Thank you <span class="k">for</span> using nginx.&lt;/em&gt;&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln"> 1</span>curl http://192.168.64.3:31022
+<span class="ln"> 2</span>
+<span class="ln"> 3</span>&lt;!DOCTYPE html&gt;
+<span class="ln"> 4</span>&lt;html&gt;
+<span class="ln"> 5</span>&lt;head&gt;
+<span class="ln"> 6</span>&lt;title&gt;Welcome to nginx!&lt;/title&gt;
+<span class="ln"> 7</span>&lt;style&gt;
+<span class="ln"> 8</span>    body <span class="o">{</span>
+<span class="ln"> 9</span>        width: 35em<span class="p">;</span>
+<span class="ln">10</span>        margin: <span class="m">0</span> auto<span class="p">;</span>
+<span class="ln">11</span>        font-family: Tahoma, Verdana, Arial, sans-serif<span class="p">;</span>
+<span class="ln">12</span>    <span class="o">}</span>
+<span class="ln">13</span>&lt;/style&gt;
+<span class="ln">14</span>&lt;/head&gt;
+<span class="ln">15</span>&lt;body&gt;
+<span class="ln">16</span>&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;
+<span class="ln">17</span>&lt;p&gt;If you see this page, the nginx web server is successfully installed and
+<span class="ln">18</span>working. Further configuration is required.&lt;/p&gt;
+<span class="ln">19</span>
+<span class="ln">20</span>&lt;p&gt;For online documentation and support please refer to
+<span class="ln">21</span>&lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;http://nginx.org/&#34;</span>&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;
+<span class="ln">22</span>Commercial support is available at
+<span class="ln">23</span>&lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;http://nginx.com/&#34;</span>&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;
+<span class="ln">24</span>
+<span class="ln">25</span>&lt;p&gt;&lt;em&gt;Thank you <span class="k">for</span> using nginx.&lt;/em&gt;&lt;/p&gt;
+<span class="ln">26</span>&lt;/body&gt;
+<span class="ln">27</span>&lt;/html&gt;
 </code></pre></div><p>有输出，表示请求到了 k8s 集群部署的 nginx。</p>
 <h3 id="3-2-dashboard-打不开了">3-2. dashboard 打不开了</h3>
 <p>在电脑从公司带回家再次来到公司的时候，出现了一些网络问题，比如 dashboard 无法打开，在浏览器回车 dashboard 地址, 类似：http://127.0.0.1:63999/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/service?namespace=default 后返回:</p>
-<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
-  <span class="nt">&#34;kind&#34;</span><span class="p">:</span> <span class="s2">&#34;Status&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;apiVersion&#34;</span><span class="p">:</span> <span class="s2">&#34;v1&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;metadata&#34;</span><span class="p">:</span> <span class="p">{</span>
-
-  <span class="p">},</span>
-  <span class="nt">&#34;status&#34;</span><span class="p">:</span> <span class="s2">&#34;Failure&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;no endpoints available for service \&#34;http:kubernetes-dashboard:\&#34;&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;reason&#34;</span><span class="p">:</span> <span class="s2">&#34;ServiceUnavailable&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;code&#34;</span><span class="p">:</span> <span class="mi">503</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="ln"> 1</span><span class="p">{</span>
+<span class="ln"> 2</span>  <span class="nt">&#34;kind&#34;</span><span class="p">:</span> <span class="s2">&#34;Status&#34;</span><span class="p">,</span>
+<span class="ln"> 3</span>  <span class="nt">&#34;apiVersion&#34;</span><span class="p">:</span> <span class="s2">&#34;v1&#34;</span><span class="p">,</span>
+<span class="ln"> 4</span>  <span class="nt">&#34;metadata&#34;</span><span class="p">:</span> <span class="p">{</span>
+<span class="ln"> 5</span>
+<span class="ln"> 6</span>  <span class="p">},</span>
+<span class="ln"> 7</span>  <span class="nt">&#34;status&#34;</span><span class="p">:</span> <span class="s2">&#34;Failure&#34;</span><span class="p">,</span>
+<span class="ln"> 8</span>  <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;no endpoints available for service \&#34;http:kubernetes-dashboard:\&#34;&#34;</span><span class="p">,</span>
+<span class="ln"> 9</span>  <span class="nt">&#34;reason&#34;</span><span class="p">:</span> <span class="s2">&#34;ServiceUnavailable&#34;</span><span class="p">,</span>
+<span class="ln">10</span>  <span class="nt">&#34;code&#34;</span><span class="p">:</span> <span class="mi">503</span>
+<span class="ln">11</span><span class="p">}</span>
 </code></pre></div><p>这时候建议 stop minikube 后再重新启动.</p>
 <h3 id="3-3-kubeconfig">3-3. kubeconfig</h3>
 <div class="details admonition tip open">
@@ -268,39 +268,39 @@ Commercial support is available at
 <p>这里 KUBECONFIG 是可以通过环境变量指定的，比如我本地：</p>
 <p><code>export KUBECONFIG=/Users/tc/.kube/config.22</code></p>
 <p>里面的内容如下：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">cat /Users/tc/.kube/config.22
-
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority-data: <span class="nv">LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURBVENDQWVtZ0F3SUJBZ0lKQU91U0IwYkU3VGIrTUEwR0NTcUdTSWIzRFFFQkN3VUFNQmN4RlRBVEJnTlYKQkFNTURERXdMakUxTWk0eE9ETXVNVEFlRncweE9URXlNekF3TmpVek1qTmFGdzAwTnpBMU1UY3dOalV6TWpOYQpNQmN4RlRBVEJnTlZCQU1NRERFd0xqRTFNaTR4T0RNdU1UQ0NBU0l3RFFZSktvWklodmNOQVFFQkJRQURnZ0VQCkFEQ0NBUW9DZ2dFQkFNazV4T2tXb0RXUzdRdFZhOFFCN21DbFFCeC90N2VHdXpEdENYVXYyWU8wcVBJa3RHRVQKaDZkM2dFQ3kzK0ZVVGhDWTF1U2gzYkhDT2wybXJPWnJmN21DelVPdDJZSWQ3QWFVOEVZQzN6dDl6L2d3NTdBWgpWeHE4L3NYZUNQSlBQZXVpOTR0b252cTBSNXNVMm0veTB3UFJMdTFkS052cUV6K05YNFRPUnpCcVpNeVoycXU0CjNMazJCMkNycXJnOXQ1Wks0cU9wQTMwZUxYNHMwVlZUN042RkdFWlRFMTkzdXNLc2dkV2FGb1pJcnh6LzZDbUUKemlDektMcVZiNzAxdWJVZXlCTEU0OER4cVVyZTdtYkoxSWI0VUU5NjE1cDhuSml2UlRJdXZ5aUlxazFieEQ5RwpkaVNEMTdUV1NpTnUwelUyQkJWaEV4OTRYbDcwcENucnhxRUNBd0VBQWFOUU1FNHdIUVlEVlIwT0JCWUVGS29jClFUVE1RYTF1TzZMVk1nVEd0WndsMFNxek1COEdBMVVkSXdRWU1CYUFGS29jUVRUTVFhMXVPNkxWTWdUR3Rad2wKMFNxek1Bd0dBMVVkRXdRRk1BTUJBZjh3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUZodlYwVkxGMlRYU0hTLwpGeXBQNG1jMy8vWG9RdWRrUUdNSTJQWDNmNk8xWlBteFVrOGpiMnhiUmJ0aGhTcU5BU0xPSGdSQnRqYjF1UnVaCi96NVliRnhpTEFXdWYyd3FoSzJtRkl4WHg2enF1bExremszRFMxRjZnVWxhYS9hRXoxWW5XdWhUdzArenRtYkkKQkdENnRaTUM3ZDA1YlhseTREQkNtZklPclNNUW14eURvN0IxV1RHWklpd2NwSzN5clJsUEFCc2w5dnJUcit0RQoydUwxaytoYnB3ZjRreVZrNzNRZWdWTGZaK3Q3ZUZRVUpCMDR2V1RSdmtQcVdoTWhqQXRTR1FObG80TVJ3eklWCit2TDUyVGcxZjNXb09LRldyQkQzM1MzOGhLWlpJbzVKUDlPMmxDUU9VRXhRVzZEcmN0UEp0bmhRbHdEUjQ0a04KL1FxNmFNZz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo</span><span class="o">=</span>
-    server: https://30.11.44.31:16443
-  name: microk8s-cluster
-- cluster:
-    certificate-authority: /Users/tc/.minikube/ca.crt
-    server: https://192.168.64.3:8443
-  name: minikube
-contexts:
-- context:
-    cluster: microk8s-cluster
-    user: admin
-  name: microk8s
-- context:
-    cluster: minikube
-    user: minikube
-  name: minikube
-current-context: minikube
-kind: Config
-preferences: <span class="o">{}</span>
-users:
-- name: admin
-  user:
-    password: d0F2R1hDc2RYUEgxWFA4RGtpWVdFQldHM2xrU0Q2M3czZ3ovK3YzNXJxaz0K
-    username: admin
-- name: minikube
-  user:
-    client-certificate: /Users/tc/.minikube/client.crt
-    client-key: /Users/tc/.minikube/client.key
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln"> 1</span>cat /Users/tc/.kube/config.22
+<span class="ln"> 2</span>
+<span class="ln"> 3</span>apiVersion: v1
+<span class="ln"> 4</span>clusters:
+<span class="ln"> 5</span>- cluster:
+<span class="ln"> 6</span>    certificate-authority-data: <span class="nv">LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURBVENDQWVtZ0F3SUJBZ0lKQU91U0IwYkU3VGIrTUEwR0NTcUdTSWIzRFFFQkN3VUFNQmN4RlRBVEJnTlYKQkFNTURERXdMakUxTWk0eE9ETXVNVEFlRncweE9URXlNekF3TmpVek1qTmFGdzAwTnpBMU1UY3dOalV6TWpOYQpNQmN4RlRBVEJnTlZCQU1NRERFd0xqRTFNaTR4T0RNdU1UQ0NBU0l3RFFZSktvWklodmNOQVFFQkJRQURnZ0VQCkFEQ0NBUW9DZ2dFQkFNazV4T2tXb0RXUzdRdFZhOFFCN21DbFFCeC90N2VHdXpEdENYVXYyWU8wcVBJa3RHRVQKaDZkM2dFQ3kzK0ZVVGhDWTF1U2gzYkhDT2wybXJPWnJmN21DelVPdDJZSWQ3QWFVOEVZQzN6dDl6L2d3NTdBWgpWeHE4L3NYZUNQSlBQZXVpOTR0b252cTBSNXNVMm0veTB3UFJMdTFkS052cUV6K05YNFRPUnpCcVpNeVoycXU0CjNMazJCMkNycXJnOXQ1Wks0cU9wQTMwZUxYNHMwVlZUN042RkdFWlRFMTkzdXNLc2dkV2FGb1pJcnh6LzZDbUUKemlDektMcVZiNzAxdWJVZXlCTEU0OER4cVVyZTdtYkoxSWI0VUU5NjE1cDhuSml2UlRJdXZ5aUlxazFieEQ5RwpkaVNEMTdUV1NpTnUwelUyQkJWaEV4OTRYbDcwcENucnhxRUNBd0VBQWFOUU1FNHdIUVlEVlIwT0JCWUVGS29jClFUVE1RYTF1TzZMVk1nVEd0WndsMFNxek1COEdBMVVkSXdRWU1CYUFGS29jUVRUTVFhMXVPNkxWTWdUR3Rad2wKMFNxek1Bd0dBMVVkRXdRRk1BTUJBZjh3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUZodlYwVkxGMlRYU0hTLwpGeXBQNG1jMy8vWG9RdWRrUUdNSTJQWDNmNk8xWlBteFVrOGpiMnhiUmJ0aGhTcU5BU0xPSGdSQnRqYjF1UnVaCi96NVliRnhpTEFXdWYyd3FoSzJtRkl4WHg2enF1bExremszRFMxRjZnVWxhYS9hRXoxWW5XdWhUdzArenRtYkkKQkdENnRaTUM3ZDA1YlhseTREQkNtZklPclNNUW14eURvN0IxV1RHWklpd2NwSzN5clJsUEFCc2w5dnJUcit0RQoydUwxaytoYnB3ZjRreVZrNzNRZWdWTGZaK3Q3ZUZRVUpCMDR2V1RSdmtQcVdoTWhqQXRTR1FObG80TVJ3eklWCit2TDUyVGcxZjNXb09LRldyQkQzM1MzOGhLWlpJbzVKUDlPMmxDUU9VRXhRVzZEcmN0UEp0bmhRbHdEUjQ0a04KL1FxNmFNZz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo</span><span class="o">=</span>
+<span class="ln"> 7</span>    server: https://30.11.44.31:16443
+<span class="ln"> 8</span>  name: microk8s-cluster
+<span class="ln"> 9</span>- cluster:
+<span class="ln">10</span>    certificate-authority: /Users/tc/.minikube/ca.crt
+<span class="ln">11</span>    server: https://192.168.64.3:8443
+<span class="ln">12</span>  name: minikube
+<span class="ln">13</span>contexts:
+<span class="ln">14</span>- context:
+<span class="ln">15</span>    cluster: microk8s-cluster
+<span class="ln">16</span>    user: admin
+<span class="ln">17</span>  name: microk8s
+<span class="ln">18</span>- context:
+<span class="ln">19</span>    cluster: minikube
+<span class="ln">20</span>    user: minikube
+<span class="ln">21</span>  name: minikube
+<span class="ln">22</span>current-context: minikube
+<span class="ln">23</span>kind: Config
+<span class="ln">24</span>preferences: <span class="o">{}</span>
+<span class="ln">25</span>users:
+<span class="ln">26</span>- name: admin
+<span class="ln">27</span>  user:
+<span class="ln">28</span>    password: d0F2R1hDc2RYUEgxWFA4RGtpWVdFQldHM2xrU0Q2M3czZ3ovK3YzNXJxaz0K
+<span class="ln">29</span>    username: admin
+<span class="ln">30</span>- name: minikube
+<span class="ln">31</span>  user:
+<span class="ln">32</span>    client-certificate: /Users/tc/.minikube/client.crt
+<span class="ln">33</span>    client-key: /Users/tc/.minikube/client.key
 </code></pre></div><p>也可以执行命令 <code>kubectl config view</code> 是一样的效果。</p>
 <p>如果要访问多个 k8s 集群，可以通过在 <code>kubectl</code> 命令加上 <code>--kubeconfig=[位置]</code> 来实现。</p>
 <h2 id="五参考">五、参考</h2>

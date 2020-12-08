@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2020\/10\/run-deployment\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "deployment, pod","wordcount":  5239 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "deployment, pod","wordcount":  5475 ,
         "url": "https:\/\/blog.funnycode.cn\/2020\/10\/run-deployment\/","datePublished": "2020-10-09T15:25:02+08:00","dateModified": "2020-10-11T15:25:02+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "IronCity","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -107,7 +107,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">一拳搞定 Kubernetes | 玩转 deployment</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/kubernetes/"><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-09">2020-10-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5239 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-09">2020-10-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5475 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;<span id="/2020/10/run-deployment/" class="leancloud_visitors" data-flag-title="一拳搞定 Kubernetes | 玩转 deployment">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -161,26 +161,26 @@
 <h2 id="二实战操作">二、实战操作</h2>
 <h3 id="21-准备-yaml-文件">2.1 准备 yaml 文件</h3>
 <p>按照任务创建一个运行 nginx:1.14.2 Docker 镜像的 Deployment:</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w"> </span><span class="c"># for versions before 1.9.0 use apps/v1beta2</span><span class="w">
-</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
-</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx-deployment</span><span class="w">
-</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">test</span><span class="w">
-</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c"># tells deployment to run 2 pods matching the template</span><span class="w">
-</span><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">nginx:1.14.2</span><span class="w">
-</span><span class="w">        </span><span class="nt">ports</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- <span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="ln"> 1</span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w"> </span><span class="c"># for versions before 1.9.0 use apps/v1beta2</span><span class="w">
+</span><span class="ln"> 2</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
+</span><span class="ln"> 3</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 4</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx-deployment</span><span class="w">
+</span><span class="ln"> 5</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">test</span><span class="w">
+</span><span class="ln"> 6</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 7</span><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 8</span><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 9</span><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
+</span><span class="ln">10</span><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c"># tells deployment to run 2 pods matching the template</span><span class="w">
+</span><span class="ln">11</span><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span><span class="ln">12</span><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="ln">13</span><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="ln">14</span><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
+</span><span class="ln">15</span><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="ln">16</span><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span><span class="ln">17</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
+</span><span class="ln">18</span><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">nginx:1.14.2</span><span class="w">
+</span><span class="ln">19</span><span class="w">        </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="ln">20</span><span class="w">        </span>- <span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
 </span></code></pre></div><p>文件说明：</p>
 <ul>
 <li>在命名空间 test（由 .metadata.namespace 字段标明）创建名为 nginx-deployment（由 .metadata.name 字段标明）的 Deployment。</li>
@@ -209,7 +209,7 @@
 <blockquote>
 <p>也可以通过命令直接创建，参考<a href="https://blog.funnycode.cn/2020/10/minikube-install/#创建 deployment" rel="">minikube</a></p>
 </blockquote>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl apply -f /XXX/document/note/Kubernetes/test/nginx/deployment.yaml
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl apply -f /XXX/document/note/Kubernetes/test/nginx/deployment.yaml
 </code></pre></div><div class="details admonition tip open">
         <div class="details-summary admonition-title">
             <i class="icon fas fa-lightbulb fa-fw"></i>小贴士<i class="details-icon fas fa-angle-right fa-fw"></i>
@@ -219,10 +219,10 @@
         </div>
     </div>
 <h4 id="2-查看-deployment-创建情况">2. 查看 deployment 创建情况</h4>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get deployments --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get deployments --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME               READY   UP-TO-DATE   AVAILABLE   AGE
-nginx-deployment   2/2     <span class="m">2</span>            <span class="m">2</span>           8d
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+<span class="ln">2</span>nginx-deployment   2/2     <span class="m">2</span>            <span class="m">2</span>           8d
 </code></pre></div><p>输出字段说明：</p>
 <ul>
 <li>NAME 列出了集群中 Deployment 的名称。</li>
@@ -232,18 +232,18 @@ nginx-deployment   2/2     <span class="m">2</span>            <span class="m">2
 <li>AGE 显示应用程序运行的时间。</li>
 </ul>
 <h4 id="3-查看-deployment-上线状态">3. 查看 Deployment 上线状态：</h4>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl rollout status deployment.v1.apps/nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl rollout status deployment.v1.apps/nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">deployment <span class="s2">&#34;nginx-deployment&#34;</span> successfully rolled out
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>deployment <span class="s2">&#34;nginx-deployment&#34;</span> successfully rolled out
 </code></pre></div><h4 id="4-查看-deployment-创建的-replicasetrs">4. 查看 Deployment 创建的 ReplicaSet（rs）：</h4>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get rs --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get rs --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME                          DESIRED   CURRENT   READY   AGE
-nginx-deployment-6b5df77cd8   <span class="m">2</span>         <span class="m">2</span>         <span class="m">2</span>       17h
-nginx-deployment-74f5bf7bd9   <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>       8d
-nginx-deployment-7c79566d49   <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>       17h
-nginx-deployment-865d6c94c9   <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>       17h
-nginx-deployment-fbb99c8b8    <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>       17h
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME                          DESIRED   CURRENT   READY   AGE
+<span class="ln">2</span>nginx-deployment-6b5df77cd8   <span class="m">2</span>         <span class="m">2</span>         <span class="m">2</span>       17h
+<span class="ln">3</span>nginx-deployment-74f5bf7bd9   <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>       8d
+<span class="ln">4</span>nginx-deployment-7c79566d49   <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>       17h
+<span class="ln">5</span>nginx-deployment-865d6c94c9   <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>       17h
+<span class="ln">6</span>nginx-deployment-fbb99c8b8    <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>       17h
 </code></pre></div><p>输出字段说明：</p>
 <ul>
 <li>NAME 列出名字空间中 ReplicaSet 的名称；</li>
@@ -253,60 +253,60 @@ nginx-deployment-fbb99c8b8    <span class="m">0</span>         <span class="m">0
 <li>AGE 显示应用已经运行的时间长度。</li>
 </ul>
 <h4 id="5-展示-deployment-的更多信息">5. 展示 Deployment 的更多信息：</h4>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl describe deployment nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl describe deployment nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">Name:                   nginx-deployment
-Namespace:              <span class="nb">test</span>
-CreationTimestamp:      Thu, <span class="m">01</span> Oct <span class="m">2020</span> 17:12:59 +0800
-Labels:                 &lt;none&gt;
-Annotations:            deployment.kubernetes.io/revision: <span class="m">3</span>
-                        kubectl.kubernetes.io/last-applied-configuration:
-                          <span class="o">{</span><span class="s2">&#34;apiVersion&#34;</span>:<span class="s2">&#34;apps/v1&#34;</span>,<span class="s2">&#34;kind&#34;</span>:<span class="s2">&#34;Deployment&#34;</span>,<span class="s2">&#34;metadata&#34;</span>:<span class="o">{</span><span class="s2">&#34;annotations&#34;</span>:<span class="o">{}</span>,<span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;nginx-deployment&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;test&#34;</span><span class="o">}</span>,<span class="s2">&#34;spec&#34;</span>:<span class="o">{</span><span class="s2">&#34;replicas&#34;</span>:...
-Selector:               <span class="nv">app</span><span class="o">=</span>nginx
-Replicas:               <span class="m">2</span> desired <span class="p">|</span> <span class="m">2</span> updated <span class="p">|</span> <span class="m">2</span> total <span class="p">|</span> <span class="m">2</span> available <span class="p">|</span> <span class="m">0</span> unavailable
-StrategyType:           RollingUpdate
-MinReadySeconds:        <span class="m">0</span>
-RollingUpdateStrategy:  25% max unavailable, 25% max surge
-Pod Template:
-  Labels:  <span class="nv">app</span><span class="o">=</span>nginx
-  Containers:
-   nginx:
-    Image:      nginx:1.14.2
-    Port:       80/TCP
-    Host Port:  0/TCP
-    Limits:
-      memory:  200Mi
-    Requests:
-      memory:     100Mi
-    Environment:  &lt;none&gt;
-    Mounts:       &lt;none&gt;
-  Volumes:        &lt;none&gt;
-Conditions:
-  Type           Status  Reason
-  ----           ------  ------
-  Available      True    MinimumReplicasAvailable
-  Progressing    True    NewReplicaSetAvailable
-OldReplicaSets:  &lt;none&gt;
-NewReplicaSet:   nginx-deployment-fbb99c8b8 <span class="o">(</span>2/2 replicas created<span class="o">)</span>
-Events:
-  Type    Reason             Age    From                   Message
-  ----    ------             ----   ----                   -------
-  Normal  ScalingReplicaSet  5m6s   deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-865d6c94c9 to <span class="m">1</span>
-  Normal  ScalingReplicaSet  3m43s  deployment-controller  Scaled down replica <span class="nb">set</span> nginx-deployment-74f5bf7bd9 to <span class="m">1</span>
-  Normal  ScalingReplicaSet  3m43s  deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-fbb99c8b8 to <span class="m">1</span>
-  Normal  ScalingReplicaSet  3m41s  deployment-controller  Scaled down replica <span class="nb">set</span> nginx-deployment-865d6c94c9 to <span class="m">0</span>
-  Normal  ScalingReplicaSet  3m41s  deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-fbb99c8b8 to <span class="m">2</span>
-  Normal  ScalingReplicaSet  3m38s  deployment-controller  Scaled down replica <span class="nb">set</span> nginx-deployment-74f5bf7bd9 to <span class="m">0</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln"> 1</span>Name:                   nginx-deployment
+<span class="ln"> 2</span>Namespace:              <span class="nb">test</span>
+<span class="ln"> 3</span>CreationTimestamp:      Thu, <span class="m">01</span> Oct <span class="m">2020</span> 17:12:59 +0800
+<span class="ln"> 4</span>Labels:                 &lt;none&gt;
+<span class="ln"> 5</span>Annotations:            deployment.kubernetes.io/revision: <span class="m">3</span>
+<span class="ln"> 6</span>                        kubectl.kubernetes.io/last-applied-configuration:
+<span class="ln"> 7</span>                          <span class="o">{</span><span class="s2">&#34;apiVersion&#34;</span>:<span class="s2">&#34;apps/v1&#34;</span>,<span class="s2">&#34;kind&#34;</span>:<span class="s2">&#34;Deployment&#34;</span>,<span class="s2">&#34;metadata&#34;</span>:<span class="o">{</span><span class="s2">&#34;annotations&#34;</span>:<span class="o">{}</span>,<span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;nginx-deployment&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;test&#34;</span><span class="o">}</span>,<span class="s2">&#34;spec&#34;</span>:<span class="o">{</span><span class="s2">&#34;replicas&#34;</span>:...
+<span class="ln"> 8</span>Selector:               <span class="nv">app</span><span class="o">=</span>nginx
+<span class="ln"> 9</span>Replicas:               <span class="m">2</span> desired <span class="p">|</span> <span class="m">2</span> updated <span class="p">|</span> <span class="m">2</span> total <span class="p">|</span> <span class="m">2</span> available <span class="p">|</span> <span class="m">0</span> unavailable
+<span class="ln">10</span>StrategyType:           RollingUpdate
+<span class="ln">11</span>MinReadySeconds:        <span class="m">0</span>
+<span class="ln">12</span>RollingUpdateStrategy:  25% max unavailable, 25% max surge
+<span class="ln">13</span>Pod Template:
+<span class="ln">14</span>  Labels:  <span class="nv">app</span><span class="o">=</span>nginx
+<span class="ln">15</span>  Containers:
+<span class="ln">16</span>   nginx:
+<span class="ln">17</span>    Image:      nginx:1.14.2
+<span class="ln">18</span>    Port:       80/TCP
+<span class="ln">19</span>    Host Port:  0/TCP
+<span class="ln">20</span>    Limits:
+<span class="ln">21</span>      memory:  200Mi
+<span class="ln">22</span>    Requests:
+<span class="ln">23</span>      memory:     100Mi
+<span class="ln">24</span>    Environment:  &lt;none&gt;
+<span class="ln">25</span>    Mounts:       &lt;none&gt;
+<span class="ln">26</span>  Volumes:        &lt;none&gt;
+<span class="ln">27</span>Conditions:
+<span class="ln">28</span>  Type           Status  Reason
+<span class="ln">29</span>  ----           ------  ------
+<span class="ln">30</span>  Available      True    MinimumReplicasAvailable
+<span class="ln">31</span>  Progressing    True    NewReplicaSetAvailable
+<span class="ln">32</span>OldReplicaSets:  &lt;none&gt;
+<span class="ln">33</span>NewReplicaSet:   nginx-deployment-fbb99c8b8 <span class="o">(</span>2/2 replicas created<span class="o">)</span>
+<span class="ln">34</span>Events:
+<span class="ln">35</span>  Type    Reason             Age    From                   Message
+<span class="ln">36</span>  ----    ------             ----   ----                   -------
+<span class="ln">37</span>  Normal  ScalingReplicaSet  5m6s   deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-865d6c94c9 to <span class="m">1</span>
+<span class="ln">38</span>  Normal  ScalingReplicaSet  3m43s  deployment-controller  Scaled down replica <span class="nb">set</span> nginx-deployment-74f5bf7bd9 to <span class="m">1</span>
+<span class="ln">39</span>  Normal  ScalingReplicaSet  3m43s  deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-fbb99c8b8 to <span class="m">1</span>
+<span class="ln">40</span>  Normal  ScalingReplicaSet  3m41s  deployment-controller  Scaled down replica <span class="nb">set</span> nginx-deployment-865d6c94c9 to <span class="m">0</span>
+<span class="ln">41</span>  Normal  ScalingReplicaSet  3m41s  deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-fbb99c8b8 to <span class="m">2</span>
+<span class="ln">42</span>  Normal  ScalingReplicaSet  3m38s  deployment-controller  Scaled down replica <span class="nb">set</span> nginx-deployment-74f5bf7bd9 to <span class="m">0</span>
 </code></pre></div><p>输出字段说明：</p>
 <ul>
 <li>Events rs 根据 deployment 的配置控制 pod 的行为，可以看到当副本数变化时，旧的 rs 缩容到 0，新的 rs 扩容到 2（是从上往下的顺序执行，渐进式，结合下一个小贴士便于理解）。</li>
 </ul>
 <h4 id="6-列出创建的-pods">6. 列出创建的 pods：</h4>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME                               READY   STATUS    RESTARTS   AGE
-nginx-deployment-fbb99c8b8-4lpwd   1/1     Running   <span class="m">0</span>          5m28s
-nginx-deployment-fbb99c8b8-tpd4n   1/1     Running   <span class="m">0</span>          5m26s
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME                               READY   STATUS    RESTARTS   AGE
+<span class="ln">2</span>nginx-deployment-fbb99c8b8-4lpwd   1/1     Running   <span class="m">0</span>          5m28s
+<span class="ln">3</span>nginx-deployment-fbb99c8b8-tpd4n   1/1     Running   <span class="m">0</span>          5m26s
 </code></pre></div><div class="details admonition tip open">
         <div class="details-summary admonition-title">
             <i class="icon fas fa-lightbulb fa-fw"></i>小贴士<i class="details-icon fas fa-angle-right fa-fw"></i>
@@ -318,61 +318,61 @@ nginx-deployment-fbb99c8b8-tpd4n   1/1     Running   <span class="m">0</span>   
         </div>
     </div>
 <h4 id="7-查看具体某个-pod-的信息">7. 查看具体某个 pod 的信息：</h4>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl describe pod nginx-deployment-fbb99c8b8-4lpwd --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl describe pod nginx-deployment-fbb99c8b8-4lpwd --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">Name:         nginx-deployment-fbb99c8b8-4lpwd
-Namespace:    <span class="nb">test</span>
-Priority:     <span class="m">0</span>
-Node:         minikube/192.168.64.3
-Start Time:   Fri, <span class="m">09</span> Oct <span class="m">2020</span> 15:40:15 +0800
-Labels:       <span class="nv">app</span><span class="o">=</span>nginx
-              pod-template-hash<span class="o">=</span>fbb99c8b8
-Annotations:  &lt;none&gt;
-Status:       Running
-IP:           172.17.0.9
-IPs:
-  IP:           172.17.0.9
-Controlled By:  ReplicaSet/nginx-deployment-fbb99c8b8
-Containers:
-  nginx:
-    Container ID:   docker://16da80166234e8f7fdbb2e2bb7accbcc1841213cb2888af6463102675414c00d
-    Image:          nginx:1.14.2
-    Image ID:       docker-pullable://nginx@sha256:f7988fb6c02e0ce69257d9bd9cf37ae20a60f1df7563c3a2a6abe24160306b8d
-    Port:           80/TCP
-    Host Port:      0/TCP
-    State:          Running
-      Started:      Fri, <span class="m">09</span> Oct <span class="m">2020</span> 15:40:16 +0800
-    Ready:          True
-    Restart Count:  <span class="m">0</span>
-    Limits:
-      memory:  200Mi
-    Requests:
-      memory:     100Mi
-    Environment:  &lt;none&gt;
-    Mounts:
-      /var/run/secrets/kubernetes.io/serviceaccount from default-token-pvdh5 <span class="o">(</span>ro<span class="o">)</span>
-Conditions:
-  Type              Status
-  Initialized       True
-  Ready             True
-  ContainersReady   True
-  PodScheduled      True
-Volumes:
-  default-token-pvdh5:
-    Type:        Secret <span class="o">(</span>a volume populated by a Secret<span class="o">)</span>
-    SecretName:  default-token-pvdh5
-    Optional:    <span class="nb">false</span>
-QoS Class:       Burstable
-Node-Selectors:  &lt;none&gt;
-Tolerations:     node.kubernetes.io/not-ready:NoExecute <span class="k">for</span> 300s
-                 node.kubernetes.io/unreachable:NoExecute <span class="k">for</span> 300s
-Events:
-  Type    Reason     Age        From               Message
-  ----    ------     ----       ----               -------
-  Normal  Scheduled  &lt;unknown&gt;  default-scheduler  Successfully assigned test/nginx-deployment-fbb99c8b8-4lpwd to minikube
-  Normal  Pulled     6m31s      kubelet, minikube  Container image <span class="s2">&#34;nginx:1.14.2&#34;</span> already present on machine
-  Normal  Created    6m31s      kubelet, minikube  Created container nginx
-  Normal  Started    6m31s      kubelet, minikube  Started container nginx
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln"> 1</span>Name:         nginx-deployment-fbb99c8b8-4lpwd
+<span class="ln"> 2</span>Namespace:    <span class="nb">test</span>
+<span class="ln"> 3</span>Priority:     <span class="m">0</span>
+<span class="ln"> 4</span>Node:         minikube/192.168.64.3
+<span class="ln"> 5</span>Start Time:   Fri, <span class="m">09</span> Oct <span class="m">2020</span> 15:40:15 +0800
+<span class="ln"> 6</span>Labels:       <span class="nv">app</span><span class="o">=</span>nginx
+<span class="ln"> 7</span>              pod-template-hash<span class="o">=</span>fbb99c8b8
+<span class="ln"> 8</span>Annotations:  &lt;none&gt;
+<span class="ln"> 9</span>Status:       Running
+<span class="ln">10</span>IP:           172.17.0.9
+<span class="ln">11</span>IPs:
+<span class="ln">12</span>  IP:           172.17.0.9
+<span class="ln">13</span>Controlled By:  ReplicaSet/nginx-deployment-fbb99c8b8
+<span class="ln">14</span>Containers:
+<span class="ln">15</span>  nginx:
+<span class="ln">16</span>    Container ID:   docker://16da80166234e8f7fdbb2e2bb7accbcc1841213cb2888af6463102675414c00d
+<span class="ln">17</span>    Image:          nginx:1.14.2
+<span class="ln">18</span>    Image ID:       docker-pullable://nginx@sha256:f7988fb6c02e0ce69257d9bd9cf37ae20a60f1df7563c3a2a6abe24160306b8d
+<span class="ln">19</span>    Port:           80/TCP
+<span class="ln">20</span>    Host Port:      0/TCP
+<span class="ln">21</span>    State:          Running
+<span class="ln">22</span>      Started:      Fri, <span class="m">09</span> Oct <span class="m">2020</span> 15:40:16 +0800
+<span class="ln">23</span>    Ready:          True
+<span class="ln">24</span>    Restart Count:  <span class="m">0</span>
+<span class="ln">25</span>    Limits:
+<span class="ln">26</span>      memory:  200Mi
+<span class="ln">27</span>    Requests:
+<span class="ln">28</span>      memory:     100Mi
+<span class="ln">29</span>    Environment:  &lt;none&gt;
+<span class="ln">30</span>    Mounts:
+<span class="ln">31</span>      /var/run/secrets/kubernetes.io/serviceaccount from default-token-pvdh5 <span class="o">(</span>ro<span class="o">)</span>
+<span class="ln">32</span>Conditions:
+<span class="ln">33</span>  Type              Status
+<span class="ln">34</span>  Initialized       True
+<span class="ln">35</span>  Ready             True
+<span class="ln">36</span>  ContainersReady   True
+<span class="ln">37</span>  PodScheduled      True
+<span class="ln">38</span>Volumes:
+<span class="ln">39</span>  default-token-pvdh5:
+<span class="ln">40</span>    Type:        Secret <span class="o">(</span>a volume populated by a Secret<span class="o">)</span>
+<span class="ln">41</span>    SecretName:  default-token-pvdh5
+<span class="ln">42</span>    Optional:    <span class="nb">false</span>
+<span class="ln">43</span>QoS Class:       Burstable
+<span class="ln">44</span>Node-Selectors:  &lt;none&gt;
+<span class="ln">45</span>Tolerations:     node.kubernetes.io/not-ready:NoExecute <span class="k">for</span> 300s
+<span class="ln">46</span>                 node.kubernetes.io/unreachable:NoExecute <span class="k">for</span> 300s
+<span class="ln">47</span>Events:
+<span class="ln">48</span>  Type    Reason     Age        From               Message
+<span class="ln">49</span>  ----    ------     ----       ----               -------
+<span class="ln">50</span>  Normal  Scheduled  &lt;unknown&gt;  default-scheduler  Successfully assigned test/nginx-deployment-fbb99c8b8-4lpwd to minikube
+<span class="ln">51</span>  Normal  Pulled     6m31s      kubelet, minikube  Container image <span class="s2">&#34;nginx:1.14.2&#34;</span> already present on machine
+<span class="ln">52</span>  Normal  Created    6m31s      kubelet, minikube  Created container nginx
+<span class="ln">53</span>  Normal  Started    6m31s      kubelet, minikube  Started container nginx
 </code></pre></div><div class="details admonition tip open">
         <div class="details-summary admonition-title">
             <i class="icon fas fa-lightbulb fa-fw"></i>小贴士<i class="details-icon fas fa-angle-right fa-fw"></i>
@@ -385,72 +385,72 @@ Events:
         </div>
     </div>
 <h4 id="8-查看-replicasetrs的更多信息">8. 查看 ReplicaSet（rs）的更多信息</h4>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl describe rs nginx-deployment-6b5df77cd8 --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl describe rs nginx-deployment-6b5df77cd8 --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">Name:           nginx-deployment-6b5df77cd8
-Namespace:      <span class="nb">test</span>
-Selector:       <span class="nv">app</span><span class="o">=</span>nginx,pod-template-hash<span class="o">=</span>6b5df77cd8
-Labels:         <span class="nv">app</span><span class="o">=</span>nginx
-                pod-template-hash<span class="o">=</span>6b5df77cd8
-Annotations:    deployment.kubernetes.io/desired-replicas: <span class="m">2</span>
-                deployment.kubernetes.io/max-replicas: <span class="m">3</span>
-                deployment.kubernetes.io/revision: <span class="m">7</span>
-                deployment.kubernetes.io/revision-history: <span class="m">5</span>
-Controlled By:  Deployment/nginx-deployment
-Replicas:       <span class="m">2</span> current / <span class="m">2</span> desired
-Pods Status:    <span class="m">2</span> Running / <span class="m">0</span> Waiting / <span class="m">0</span> Succeeded / <span class="m">0</span> Failed
-Pod Template:
-  Labels:  <span class="nv">app</span><span class="o">=</span>nginx
-           pod-template-hash<span class="o">=</span>6b5df77cd8
-  Containers:
-   nginx:
-    Image:      nginx:1.19.3
-    Port:       80/TCP
-    Host Port:  0/TCP
-    Limits:
-      memory:  200Mi
-    Requests:
-      memory:     100Mi
-    Environment:  &lt;none&gt;
-    Mounts:       &lt;none&gt;
-  Volumes:        &lt;none&gt;
-Events:           &lt;none&gt;
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln"> 1</span>Name:           nginx-deployment-6b5df77cd8
+<span class="ln"> 2</span>Namespace:      <span class="nb">test</span>
+<span class="ln"> 3</span>Selector:       <span class="nv">app</span><span class="o">=</span>nginx,pod-template-hash<span class="o">=</span>6b5df77cd8
+<span class="ln"> 4</span>Labels:         <span class="nv">app</span><span class="o">=</span>nginx
+<span class="ln"> 5</span>                pod-template-hash<span class="o">=</span>6b5df77cd8
+<span class="ln"> 6</span>Annotations:    deployment.kubernetes.io/desired-replicas: <span class="m">2</span>
+<span class="ln"> 7</span>                deployment.kubernetes.io/max-replicas: <span class="m">3</span>
+<span class="ln"> 8</span>                deployment.kubernetes.io/revision: <span class="m">7</span>
+<span class="ln"> 9</span>                deployment.kubernetes.io/revision-history: <span class="m">5</span>
+<span class="ln">10</span>Controlled By:  Deployment/nginx-deployment
+<span class="ln">11</span>Replicas:       <span class="m">2</span> current / <span class="m">2</span> desired
+<span class="ln">12</span>Pods Status:    <span class="m">2</span> Running / <span class="m">0</span> Waiting / <span class="m">0</span> Succeeded / <span class="m">0</span> Failed
+<span class="ln">13</span>Pod Template:
+<span class="ln">14</span>  Labels:  <span class="nv">app</span><span class="o">=</span>nginx
+<span class="ln">15</span>           pod-template-hash<span class="o">=</span>6b5df77cd8
+<span class="ln">16</span>  Containers:
+<span class="ln">17</span>   nginx:
+<span class="ln">18</span>    Image:      nginx:1.19.3
+<span class="ln">19</span>    Port:       80/TCP
+<span class="ln">20</span>    Host Port:  0/TCP
+<span class="ln">21</span>    Limits:
+<span class="ln">22</span>      memory:  200Mi
+<span class="ln">23</span>    Requests:
+<span class="ln">24</span>      memory:     100Mi
+<span class="ln">25</span>    Environment:  &lt;none&gt;
+<span class="ln">26</span>    Mounts:       &lt;none&gt;
+<span class="ln">27</span>  Volumes:        &lt;none&gt;
+<span class="ln">28</span>Events:           &lt;none&gt;
 </code></pre></div><p>主要是 selector 和 labels 加了 pod-template-hash 值，和上文 pod 中提到的 pod-template-hash 对应。</p>
 <h3 id="23-更新-deployment">2.3 更新 deployment</h3>
 <p>更新镜像，把 nginx 从 1.14.2 升级到 1.19.3</p>
 <h4 id="1-直接修改配置文件">1. 直接修改配置文件</h4>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w"> </span><span class="c"># for versions before 1.9.0 use apps/v1beta2</span><span class="w">
-</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
-</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx-deployment</span><span class="w">
-</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">test</span><span class="w">
-</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c"># tells deployment to run 2 pods matching the template</span><span class="w">
-</span><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">nginx:1.19.3</span><span class="w">
-</span><span class="w">        </span><span class="nt">ports</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- <span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="ln"> 1</span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w"> </span><span class="c"># for versions before 1.9.0 use apps/v1beta2</span><span class="w">
+</span><span class="ln"> 2</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
+</span><span class="ln"> 3</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 4</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx-deployment</span><span class="w">
+</span><span class="ln"> 5</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">test</span><span class="w">
+</span><span class="ln"> 6</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 7</span><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 8</span><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 9</span><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
+</span><span class="ln">10</span><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c"># tells deployment to run 2 pods matching the template</span><span class="w">
+</span><span class="ln">11</span><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span><span class="ln">12</span><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="ln">13</span><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="ln">14</span><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
+</span><span class="ln">15</span><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="ln">16</span><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span><span class="ln">17</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
+</span><span class="ln">18</span><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">nginx:1.19.3</span><span class="w">
+</span><span class="ln">19</span><span class="w">        </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="ln">20</span><span class="w">        </span>- <span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
 </span></code></pre></div><p>再次执行 <code>kubectl apply -f</code> 指令。</p>
 <h4 id="2-执行-kubectl-编辑命令">2. 执行 kubectl 编辑命令</h4>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl --record deployment.apps/nginx-deployment <span class="nb">set</span> image <span class="se">\
-</span><span class="se"></span>   deployment.v1.apps/nginx-deployment <span class="nv">nginx</span><span class="o">=</span>nginx:1.19.3 --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl --record deployment.apps/nginx-deployment <span class="nb">set</span> image <span class="se">\
+</span><span class="ln">2</span><span class="se"></span>   deployment.v1.apps/nginx-deployment <span class="nv">nginx</span><span class="o">=</span>nginx:1.19.3 --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>或者</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl <span class="nb">set</span> image deployment/nginx-deployment <span class="nv">nginx</span><span class="o">=</span>nginx:1.19.3 --record --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl <span class="nb">set</span> image deployment/nginx-deployment <span class="nv">nginx</span><span class="o">=</span>nginx:1.19.3 --record --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>或者</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl edit deployment.v1.apps/nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
-
-<span class="c1"># 等价</span>
-
-kubectl edit deployment/nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl edit deployment.v1.apps/nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
+<span class="ln">2</span>
+<span class="ln">3</span><span class="c1"># 等价</span>
+<span class="ln">4</span>
+<span class="ln">5</span>kubectl edit deployment/nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>编辑效果：</p>
 <p><figure><a class="lightgallery" href="/2020/10/run-deployment/edit.jpg" title="edit-deployment" data-thumbnail="/2020/10/run-deployment/edit.jpg" data-sub-html="<h2>edit-deployment</h2><p>edit-deployment</p>">
         <img
@@ -463,11 +463,11 @@ kubectl edit deployment/nginx-deployment --namespace<span class="o">=</span><spa
     </a><figcaption class="image-caption">edit-deployment</figcaption>
     </figure></p>
 <p>查看新的 pods:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx --namespace<span class="o">=</span><span class="nb">test</span>
-
-NAME                                READY   STATUS    RESTARTS   AGE
-nginx-deployment-6b5df77cd8-lf2cl   1/1     Running   <span class="m">0</span>          69s
-nginx-deployment-6b5df77cd8-n52z6   1/1     Running   <span class="m">0</span>          71s
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx --namespace<span class="o">=</span><span class="nb">test</span>
+<span class="ln">2</span>
+<span class="ln">3</span>NAME                                READY   STATUS    RESTARTS   AGE
+<span class="ln">4</span>nginx-deployment-6b5df77cd8-lf2cl   1/1     Running   <span class="m">0</span>          69s
+<span class="ln">5</span>nginx-deployment-6b5df77cd8-n52z6   1/1     Running   <span class="m">0</span>          71s
 </code></pre></div><p>可以看到和之前的名称都是不一样的。</p>
 <p>dashboard可以直观看到:</p>
 <p><figure><a class="lightgallery" href="/2020/10/run-deployment/pod.02.jpg" title="Pods" data-thumbnail="/2020/10/run-deployment/pod.02.jpg" data-sub-html="<h2>Pods</h2><p>Pods</p>">
@@ -482,52 +482,52 @@ nginx-deployment-6b5df77cd8-n52z6   1/1     Running   <span class="m">0</span>  
     </figure></p>
 <h3 id="24-删除-deployment">2.4 删除 deployment</h3>
 <p>通过名称删除deployment:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl delete deployment nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl delete deployment nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><h3 id="25-改变副本数来弹性伸缩应用">2.5 改变副本数来弹性伸缩应用</h3>
 <p>关键参数 <code>replicas</code> 可以设置 pod 的数量，下面例子把 nginx 变成 4 个。</p>
 <h4 id="1-直接修改配置文件-1">1. 直接修改配置文件</h4>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w"> </span><span class="c"># for versions before 1.9.0 use apps/v1beta2</span><span class="w">
-</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
-</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx-deployment</span><span class="w">
-</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">test</span><span class="w">
-</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="c"># tells deployment to run 2 pods matching the template</span><span class="w">
-</span><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
-</span><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">nginx:1.19.3</span><span class="w">
-</span><span class="w">        </span><span class="nt">ports</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- <span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="ln"> 1</span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w"> </span><span class="c"># for versions before 1.9.0 use apps/v1beta2</span><span class="w">
+</span><span class="ln"> 2</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
+</span><span class="ln"> 3</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 4</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx-deployment</span><span class="w">
+</span><span class="ln"> 5</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">test</span><span class="w">
+</span><span class="ln"> 6</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 7</span><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 8</span><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="ln"> 9</span><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
+</span><span class="ln">10</span><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="c"># tells deployment to run 2 pods matching the template</span><span class="w">
+</span><span class="ln">11</span><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span><span class="ln">12</span><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="ln">13</span><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="ln">14</span><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
+</span><span class="ln">15</span><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="ln">16</span><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span><span class="ln">17</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">nginx</span><span class="w">
+</span><span class="ln">18</span><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">nginx:1.19.3</span><span class="w">
+</span><span class="ln">19</span><span class="w">        </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="ln">20</span><span class="w">        </span>- <span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
 </span></code></pre></div><p>再次执行 <code>kubectl apply -f</code> 指令。</p>
 <p>查看新的 pods:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx --namespace<span class="o">=</span><span class="nb">test</span>
-
-NAME                                READY   STATUS    RESTARTS   AGE
-nginx-deployment-6b5df77cd8-5b28p   1/1     Running   <span class="m">0</span>          65s
-nginx-deployment-6b5df77cd8-b24xd   1/1     Running   <span class="m">0</span>          65s
-nginx-deployment-6b5df77cd8-lf2cl   1/1     Running   <span class="m">0</span>          17m
-nginx-deployment-6b5df77cd8-n52z6   1/1     Running   <span class="m">0</span>          17m
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx --namespace<span class="o">=</span><span class="nb">test</span>
+<span class="ln">2</span>
+<span class="ln">3</span>NAME                                READY   STATUS    RESTARTS   AGE
+<span class="ln">4</span>nginx-deployment-6b5df77cd8-5b28p   1/1     Running   <span class="m">0</span>          65s
+<span class="ln">5</span>nginx-deployment-6b5df77cd8-b24xd   1/1     Running   <span class="m">0</span>          65s
+<span class="ln">6</span>nginx-deployment-6b5df77cd8-lf2cl   1/1     Running   <span class="m">0</span>          17m
+<span class="ln">7</span>nginx-deployment-6b5df77cd8-n52z6   1/1     Running   <span class="m">0</span>          17m
 </code></pre></div><h4 id="2-执行-kubectl-编辑命令-1">2. 执行 kubectl 编辑命令</h4>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl scale deployment/nginx-deployment --replicas<span class="o">=</span><span class="m">10</span> --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl scale deployment/nginx-deployment --replicas<span class="o">=</span><span class="m">10</span> --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>扩展点（另起文章学习）：</p>
 <p>假设集群启用了Pod 的<a href="https://kubernetes.io/zh/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/" target="_blank" rel="noopener noreffer">水平自动</a>缩放， 你可以为 Deployment 设置自动缩放器，并基于现有 Pods 的 CPU 利用率选择 要运行的 Pods 个数下限和上限。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl autoscale deployment/nginx-deployment --min<span class="o">=</span><span class="m">10</span> --max<span class="o">=</span><span class="m">15</span> --cpu-percent<span class="o">=</span><span class="m">80</span> --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl autoscale deployment/nginx-deployment --min<span class="o">=</span><span class="m">10</span> --max<span class="o">=</span><span class="m">15</span> --cpu-percent<span class="o">=</span><span class="m">80</span> --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><h4 id="3-比例缩放实战">3. 比例缩放实战</h4>
 <p>默认的配置</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">strategy</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">RollingUpdate</span><span class="w">
-</span><span class="w">    </span><span class="nt">rollingUpdate</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">maxUnavailable</span><span class="p">:</span><span class="w"> </span><span class="m">25</span><span class="l">%</span><span class="w">
-</span><span class="w">      </span><span class="nt">maxSurge</span><span class="p">:</span><span class="w"> </span><span class="m">25</span><span class="l">%</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="ln">1</span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="ln">2</span><span class="w">  </span><span class="nt">strategy</span><span class="p">:</span><span class="w">
+</span><span class="ln">3</span><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">RollingUpdate</span><span class="w">
+</span><span class="ln">4</span><span class="w">    </span><span class="nt">rollingUpdate</span><span class="p">:</span><span class="w">
+</span><span class="ln">5</span><span class="w">      </span><span class="nt">maxUnavailable</span><span class="p">:</span><span class="w"> </span><span class="m">25</span><span class="l">%</span><span class="w">
+</span><span class="ln">6</span><span class="w">      </span><span class="nt">maxSurge</span><span class="p">:</span><span class="w"> </span><span class="m">25</span><span class="l">%</span><span class="w">
 </span></code></pre></div><div class="details admonition note open">
         <div class="details-summary admonition-title">
             <i class="icon fas fa-pencil-alt fa-fw"></i>说明<i class="details-icon fas fa-angle-right fa-fw"></i>
@@ -542,15 +542,15 @@ nginx-deployment-6b5df77cd8-n52z6   1/1     Running   <span class="m">0</span>  
         </div>
     </div>
 <h5 id="更新-deployment-使用新镜像碰巧该镜像无法从集群内部解析">更新 Deployment 使用新镜像，碰巧该镜像无法从集群内部解析。</h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl <span class="nb">set</span> image deployment/nginx-deployment <span class="nv">nginx</span><span class="o">=</span>nginx:sometag --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl <span class="nb">set</span> image deployment/nginx-deployment <span class="nv">nginx</span><span class="o">=</span>nginx:sometag --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">deployment.apps/nginx-deployment image updated
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>deployment.apps/nginx-deployment image updated
 </code></pre></div><h5 id="镜像更新使用新的-replicaset-nginx-deployment-86dc975d96-启动上线过程但由于默认-maxunavailable-的要求会被阻塞检查上线状态">镜像更新使用新的 ReplicaSet <code>nginx-deployment-86dc975d96</code> 启动上线过程，但由于默认 <code>maxUnavailable</code> 的要求会被阻塞。检查上线状态：</h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get rs --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get rs --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME                          DESIRED   CURRENT   READY   AGE
-nginx-deployment-6b5df77cd8   <span class="m">2</span>         <span class="m">2</span>         <span class="m">2</span>       18h
-nginx-deployment-86dc975d96   <span class="m">1</span>         <span class="m">1</span>         <span class="m">0</span>       112s
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME                          DESIRED   CURRENT   READY   AGE
+<span class="ln">2</span>nginx-deployment-6b5df77cd8   <span class="m">2</span>         <span class="m">2</span>         <span class="m">2</span>       18h
+<span class="ln">3</span>nginx-deployment-86dc975d96   <span class="m">1</span>         <span class="m">1</span>         <span class="m">0</span>       112s
 </code></pre></div><p>dashboard:</p>
 <p><figure><a class="lightgallery" href="/2020/10/run-deployment/pod.03.jpg" title="Pods" data-thumbnail="/2020/10/run-deployment/pod.03.jpg" data-sub-html="<h2>Pods</h2><p>Pods</p>">
         <img
@@ -563,27 +563,27 @@ nginx-deployment-86dc975d96   <span class="m">1</span>         <span class="m">1
     </a><figcaption class="image-caption">Pods</figcaption>
     </figure></p>
 <h5 id="查看-deployment-创建情况">查看 deployment 创建情况</h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get deploy --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get deploy --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME               READY   UP-TO-DATE   AVAILABLE   AGE
-nginx-deployment   2/2     <span class="m">1</span>            <span class="m">2</span>           8d
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+<span class="ln">2</span>nginx-deployment   2/2     <span class="m">1</span>            <span class="m">2</span>           8d
 </code></pre></div><h5 id="变更-deployment-副本数到-10">变更 Deployment 副本数到 10</h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl scale deployment/nginx-deployment --replicas<span class="o">=</span><span class="m">10</span> --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl scale deployment/nginx-deployment --replicas<span class="o">=</span><span class="m">10</span> --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">deployment.apps/nginx-deployment scaled
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>deployment.apps/nginx-deployment scaled
 </code></pre></div><ul>
 <li>再次查看 deployment 创建情况</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get deploy --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get deploy --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME               READY   UP-TO-DATE   AVAILABLE   AGE
-nginx-deployment   8/10    <span class="m">5</span>            <span class="m">8</span>           8d
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+<span class="ln">2</span>nginx-deployment   8/10    <span class="m">5</span>            <span class="m">8</span>           8d
 </code></pre></div><h5 id="确认上线状态">确认上线状态</h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get rs --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get rs --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME                          DESIRED   CURRENT   READY   AGE
-nginx-deployment-6b5df77cd8   <span class="m">8</span>         <span class="m">8</span>         <span class="m">8</span>       18h
-nginx-deployment-86dc975d96   <span class="m">5</span>         <span class="m">5</span>         <span class="m">0</span>       6m56s
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME                          DESIRED   CURRENT   READY   AGE
+<span class="ln">2</span>nginx-deployment-6b5df77cd8   <span class="m">8</span>         <span class="m">8</span>         <span class="m">8</span>       18h
+<span class="ln">3</span>nginx-deployment-86dc975d96   <span class="m">5</span>         <span class="m">5</span>         <span class="m">0</span>       6m56s
 </code></pre></div><p>说明：</p>
 <p>10 个 pod，25% 不可用，所以不能超过 3 个，10 - 2 = 8 个可用，25% 的最大值，就是 12.5，向上取整 13， 8 + 5 = 13。</p>
 <h3 id="26-回滚-deployment">2.6 回滚 deployment</h3>
@@ -599,22 +599,22 @@ nginx-deployment-86dc975d96   <span class="m">5</span>         <span class="m">5
     </div>
 <h4 id="回滚操作基于比例缩放实战">回滚操作基于比例缩放实战</h4>
 <h5 id="查看-pod">查看 pod</h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get pod --selector <span class="nv">app</span><span class="o">=</span>nginx --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get pod --selector <span class="nv">app</span><span class="o">=</span>nginx --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME                                READY   STATUS             RESTARTS   AGE
-nginx-deployment-6b5df77cd8-6wx22   1/1     Running            <span class="m">0</span>          24m
-nginx-deployment-6b5df77cd8-85q77   1/1     Running            <span class="m">0</span>          24m
-nginx-deployment-6b5df77cd8-8jstb   1/1     Running            <span class="m">0</span>          24m
-nginx-deployment-6b5df77cd8-lf2cl   1/1     Running            <span class="m">0</span>          19h
-nginx-deployment-6b5df77cd8-lg2kz   1/1     Running            <span class="m">0</span>          24m
-nginx-deployment-6b5df77cd8-n52z6   1/1     Running            <span class="m">0</span>          19h
-nginx-deployment-6b5df77cd8-nxcrf   1/1     Running            <span class="m">0</span>          24m
-nginx-deployment-6b5df77cd8-tt44h   1/1     Running            <span class="m">0</span>          24m
-nginx-deployment-86dc975d96-d9pw7   0/1     ImagePullBackOff   <span class="m">0</span>          24m
-nginx-deployment-86dc975d96-fx9nr   0/1     ImagePullBackOff   <span class="m">0</span>          24m
-nginx-deployment-86dc975d96-lfhl4   0/1     ImagePullBackOff   <span class="m">0</span>          24m
-nginx-deployment-86dc975d96-m252z   0/1     ImagePullBackOff   <span class="m">0</span>          24m
-nginx-deployment-86dc975d96-p7zcg   0/1     ImagePullBackOff   <span class="m">0</span>          31m
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln"> 1</span>NAME                                READY   STATUS             RESTARTS   AGE
+<span class="ln"> 2</span>nginx-deployment-6b5df77cd8-6wx22   1/1     Running            <span class="m">0</span>          24m
+<span class="ln"> 3</span>nginx-deployment-6b5df77cd8-85q77   1/1     Running            <span class="m">0</span>          24m
+<span class="ln"> 4</span>nginx-deployment-6b5df77cd8-8jstb   1/1     Running            <span class="m">0</span>          24m
+<span class="ln"> 5</span>nginx-deployment-6b5df77cd8-lf2cl   1/1     Running            <span class="m">0</span>          19h
+<span class="ln"> 6</span>nginx-deployment-6b5df77cd8-lg2kz   1/1     Running            <span class="m">0</span>          24m
+<span class="ln"> 7</span>nginx-deployment-6b5df77cd8-n52z6   1/1     Running            <span class="m">0</span>          19h
+<span class="ln"> 8</span>nginx-deployment-6b5df77cd8-nxcrf   1/1     Running            <span class="m">0</span>          24m
+<span class="ln"> 9</span>nginx-deployment-6b5df77cd8-tt44h   1/1     Running            <span class="m">0</span>          24m
+<span class="ln">10</span>nginx-deployment-86dc975d96-d9pw7   0/1     ImagePullBackOff   <span class="m">0</span>          24m
+<span class="ln">11</span>nginx-deployment-86dc975d96-fx9nr   0/1     ImagePullBackOff   <span class="m">0</span>          24m
+<span class="ln">12</span>nginx-deployment-86dc975d96-lfhl4   0/1     ImagePullBackOff   <span class="m">0</span>          24m
+<span class="ln">13</span>nginx-deployment-86dc975d96-m252z   0/1     ImagePullBackOff   <span class="m">0</span>          24m
+<span class="ln">14</span>nginx-deployment-86dc975d96-p7zcg   0/1     ImagePullBackOff   <span class="m">0</span>          31m
 </code></pre></div><div class="details admonition tip open">
         <div class="details-summary admonition-title">
             <i class="icon fas fa-lightbulb fa-fw"></i>小贴士<i class="details-icon fas fa-angle-right fa-fw"></i>
@@ -624,61 +624,61 @@ nginx-deployment-86dc975d96-p7zcg   0/1     ImagePullBackOff   <span class="m">0
         </div>
     </div>
 <h5 id="获取-deployment-描述信息">获取 Deployment 描述信息</h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl describe deployment nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl describe deployment nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">Name:                   nginx-deployment
-Namespace:              <span class="nb">test</span>
-CreationTimestamp:      Thu, <span class="m">01</span> Oct <span class="m">2020</span> 17:12:59 +0800
-Labels:                 &lt;none&gt;
-Annotations:            deployment.kubernetes.io/revision: <span class="m">8</span>
-                        kubectl.kubernetes.io/last-applied-configuration:
-                          <span class="o">{</span><span class="s2">&#34;apiVersion&#34;</span>:<span class="s2">&#34;apps/v1&#34;</span>,<span class="s2">&#34;kind&#34;</span>:<span class="s2">&#34;Deployment&#34;</span>,<span class="s2">&#34;metadata&#34;</span>:<span class="o">{</span><span class="s2">&#34;annotations&#34;</span>:<span class="o">{}</span>,<span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;nginx-deployment&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;test&#34;</span><span class="o">}</span>,<span class="s2">&#34;spec&#34;</span>:<span class="o">{</span><span class="s2">&#34;replicas&#34;</span>:...
-Selector:               <span class="nv">app</span><span class="o">=</span>nginx
-Replicas:               <span class="m">10</span> desired <span class="p">|</span> <span class="m">5</span> updated <span class="p">|</span> <span class="m">13</span> total <span class="p">|</span> <span class="m">8</span> available <span class="p">|</span> <span class="m">5</span> unavailable
-StrategyType:           RollingUpdate
-MinReadySeconds:        <span class="m">0</span>
-RollingUpdateStrategy:  25% max unavailable, 25% max surge
-Pod Template:
-  Labels:  <span class="nv">app</span><span class="o">=</span>nginx
-  Containers:
-   nginx:
-    Image:      nginx:sometag
-    Port:       80/TCP
-    Host Port:  0/TCP
-    Limits:
-      memory:  200Mi
-    Requests:
-      memory:     100Mi
-    Environment:  &lt;none&gt;
-    Mounts:       &lt;none&gt;
-  Volumes:        &lt;none&gt;
-Conditions:
-  Type           Status  Reason
-  ----           ------  ------
-  Available      True    MinimumReplicasAvailable
-  Progressing    False   ProgressDeadlineExceeded
-OldReplicaSets:  nginx-deployment-6b5df77cd8 <span class="o">(</span>8/8 replicas created<span class="o">)</span>
-NewReplicaSet:   nginx-deployment-86dc975d96 <span class="o">(</span>5/5 replicas created<span class="o">)</span>
-Events:
-  Type    Reason             Age   From                   Message
-  ----    ------             ----  ----                   -------
-  Normal  ScalingReplicaSet  34m   deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">1</span>
-  Normal  ScalingReplicaSet  27m   deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-6b5df77cd8 to <span class="m">9</span>
-  Normal  ScalingReplicaSet  27m   deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">4</span>
-  Normal  ScalingReplicaSet  27m   deployment-controller  Scaled down replica <span class="nb">set</span> nginx-deployment-6b5df77cd8 to <span class="m">8</span>
-  Normal  ScalingReplicaSet  27m   deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">5</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln"> 1</span>Name:                   nginx-deployment
+<span class="ln"> 2</span>Namespace:              <span class="nb">test</span>
+<span class="ln"> 3</span>CreationTimestamp:      Thu, <span class="m">01</span> Oct <span class="m">2020</span> 17:12:59 +0800
+<span class="ln"> 4</span>Labels:                 &lt;none&gt;
+<span class="ln"> 5</span>Annotations:            deployment.kubernetes.io/revision: <span class="m">8</span>
+<span class="ln"> 6</span>                        kubectl.kubernetes.io/last-applied-configuration:
+<span class="ln"> 7</span>                          <span class="o">{</span><span class="s2">&#34;apiVersion&#34;</span>:<span class="s2">&#34;apps/v1&#34;</span>,<span class="s2">&#34;kind&#34;</span>:<span class="s2">&#34;Deployment&#34;</span>,<span class="s2">&#34;metadata&#34;</span>:<span class="o">{</span><span class="s2">&#34;annotations&#34;</span>:<span class="o">{}</span>,<span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;nginx-deployment&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;test&#34;</span><span class="o">}</span>,<span class="s2">&#34;spec&#34;</span>:<span class="o">{</span><span class="s2">&#34;replicas&#34;</span>:...
+<span class="ln"> 8</span>Selector:               <span class="nv">app</span><span class="o">=</span>nginx
+<span class="ln"> 9</span>Replicas:               <span class="m">10</span> desired <span class="p">|</span> <span class="m">5</span> updated <span class="p">|</span> <span class="m">13</span> total <span class="p">|</span> <span class="m">8</span> available <span class="p">|</span> <span class="m">5</span> unavailable
+<span class="ln">10</span>StrategyType:           RollingUpdate
+<span class="ln">11</span>MinReadySeconds:        <span class="m">0</span>
+<span class="ln">12</span>RollingUpdateStrategy:  25% max unavailable, 25% max surge
+<span class="ln">13</span>Pod Template:
+<span class="ln">14</span>  Labels:  <span class="nv">app</span><span class="o">=</span>nginx
+<span class="ln">15</span>  Containers:
+<span class="ln">16</span>   nginx:
+<span class="ln">17</span>    Image:      nginx:sometag
+<span class="ln">18</span>    Port:       80/TCP
+<span class="ln">19</span>    Host Port:  0/TCP
+<span class="ln">20</span>    Limits:
+<span class="ln">21</span>      memory:  200Mi
+<span class="ln">22</span>    Requests:
+<span class="ln">23</span>      memory:     100Mi
+<span class="ln">24</span>    Environment:  &lt;none&gt;
+<span class="ln">25</span>    Mounts:       &lt;none&gt;
+<span class="ln">26</span>  Volumes:        &lt;none&gt;
+<span class="ln">27</span>Conditions:
+<span class="ln">28</span>  Type           Status  Reason
+<span class="ln">29</span>  ----           ------  ------
+<span class="ln">30</span>  Available      True    MinimumReplicasAvailable
+<span class="ln">31</span>  Progressing    False   ProgressDeadlineExceeded
+<span class="ln">32</span>OldReplicaSets:  nginx-deployment-6b5df77cd8 <span class="o">(</span>8/8 replicas created<span class="o">)</span>
+<span class="ln">33</span>NewReplicaSet:   nginx-deployment-86dc975d96 <span class="o">(</span>5/5 replicas created<span class="o">)</span>
+<span class="ln">34</span>Events:
+<span class="ln">35</span>  Type    Reason             Age   From                   Message
+<span class="ln">36</span>  ----    ------             ----  ----                   -------
+<span class="ln">37</span>  Normal  ScalingReplicaSet  34m   deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">1</span>
+<span class="ln">38</span>  Normal  ScalingReplicaSet  27m   deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-6b5df77cd8 to <span class="m">9</span>
+<span class="ln">39</span>  Normal  ScalingReplicaSet  27m   deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">4</span>
+<span class="ln">40</span>  Normal  ScalingReplicaSet  27m   deployment-controller  Scaled down replica <span class="nb">set</span> nginx-deployment-6b5df77cd8 to <span class="m">8</span>
+<span class="ln">41</span>  Normal  ScalingReplicaSet  27m   deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">5</span>
 </code></pre></div><h4 id="261-检查-deployment-上线历史">2.6.1 检查 deployment 上线历史</h4>
 <h5 id="检查-deployment-修订历史">检查 Deployment 修订历史</h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl rollout <span class="nb">history</span> deployment/nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl rollout <span class="nb">history</span> deployment/nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">deployment.apps/nginx-deployment
-REVISION  CHANGE-CAUSE
-<span class="m">1</span>         &lt;none&gt;
-<span class="m">2</span>         &lt;none&gt;
-<span class="m">3</span>         &lt;none&gt;
-<span class="m">6</span>         &lt;none&gt;
-<span class="m">7</span>         &lt;none&gt;
-<span class="m">8</span>         &lt;none&gt;
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>deployment.apps/nginx-deployment
+<span class="ln">2</span>REVISION  CHANGE-CAUSE
+<span class="ln">3</span><span class="m">1</span>         &lt;none&gt;
+<span class="ln">4</span><span class="m">2</span>         &lt;none&gt;
+<span class="ln">5</span><span class="m">3</span>         &lt;none&gt;
+<span class="ln">6</span><span class="m">6</span>         &lt;none&gt;
+<span class="ln">7</span><span class="m">7</span>         &lt;none&gt;
+<span class="ln">8</span><span class="m">8</span>         &lt;none&gt;
 </code></pre></div><p>CHANGE-CAUSE 的内容是从 Deployment 的 kubernetes.io/change-cause 注解复制过来的。 复制动作发生在修订版本创建时。你可以通过以下方式设置 CHANGE-CAUSE 消息：</p>
 <ul>
 <li>使用 kubectl annotate deployment.v1.apps/nginx-deployment kubernetes.io/change-cause=&ldquo;image updated to 1.9.1&rdquo; 为 Deployment 添加注解。</li>
@@ -686,237 +686,237 @@ REVISION  CHANGE-CAUSE
 <li>手动编辑资源的清单。</li>
 </ul>
 <h5 id="查看修订历史的详细信息">查看修订历史的详细信息</h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl rollout <span class="nb">history</span> deployment/nginx-deployment --revision<span class="o">=</span><span class="m">8</span> --namespace<span class="o">=</span><span class="nb">test</span>
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">deployment.apps/nginx-deployment with revision <span class="c1">#8</span>
-Pod Template:
-  Labels:       <span class="nv">app</span><span class="o">=</span>nginx
-        pod-template-hash<span class="o">=</span>86dc975d96
-  Containers:
-   nginx:
-    Image:      nginx:sometag
-    Port:       80/TCP
-    Host Port:  0/TCP
-    Limits:
-      memory:   200Mi
-    Requests:
-      memory:   100Mi
-    Environment:        &lt;none&gt;
-    Mounts:     &lt;none&gt;
-  Volumes:      &lt;none&gt;
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl rollout <span class="nb">history</span> deployment/nginx-deployment --revision<span class="o">=</span><span class="m">8</span> --namespace<span class="o">=</span><span class="nb">test</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln"> 1</span>deployment.apps/nginx-deployment with revision <span class="c1">#8</span>
+<span class="ln"> 2</span>Pod Template:
+<span class="ln"> 3</span>  Labels:       <span class="nv">app</span><span class="o">=</span>nginx
+<span class="ln"> 4</span>        pod-template-hash<span class="o">=</span>86dc975d96
+<span class="ln"> 5</span>  Containers:
+<span class="ln"> 6</span>   nginx:
+<span class="ln"> 7</span>    Image:      nginx:sometag
+<span class="ln"> 8</span>    Port:       80/TCP
+<span class="ln"> 9</span>    Host Port:  0/TCP
+<span class="ln">10</span>    Limits:
+<span class="ln">11</span>      memory:   200Mi
+<span class="ln">12</span>    Requests:
+<span class="ln">13</span>      memory:   100Mi
+<span class="ln">14</span>    Environment:        &lt;none&gt;
+<span class="ln">15</span>    Mounts:     &lt;none&gt;
+<span class="ln">16</span>  Volumes:      &lt;none&gt;
 </code></pre></div><h4 id="262-回滚到之前的修订版本">2.6.2 回滚到之前的修订版本</h4>
 <h5 id="假定现在你已决定撤消当前上线并回滚到以前的修订版本">假定现在你已决定撤消当前上线并回滚到以前的修订版本</h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl rollout undo deployment.v1.apps/nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
-
-<span class="c1"># 指定版本</span>
-kubectl rollout undo deployment.v1.apps/nginx-deployment --to-revision<span class="o">=</span><span class="m">2</span> --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl rollout undo deployment.v1.apps/nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
+<span class="ln">2</span>
+<span class="ln">3</span><span class="c1"># 指定版本</span>
+<span class="ln">4</span>kubectl rollout undo deployment.v1.apps/nginx-deployment --to-revision<span class="o">=</span><span class="m">2</span> --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">deployment.apps/nginx-deployment rolled back
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>deployment.apps/nginx-deployment rolled back
 </code></pre></div><h5 id="查看-deployment-运行情况">查看 deployment 运行情况</h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get deployments --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get deployments --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME               READY   UP-TO-DATE   AVAILABLE   AGE
-nginx-deployment   10/10   <span class="m">10</span>           <span class="m">10</span>          8d
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+<span class="ln">2</span>nginx-deployment   10/10   <span class="m">10</span>           <span class="m">10</span>          8d
 </code></pre></div><h5 id="获取-deployment-描述信息-1">获取 Deployment 描述信息</h5>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl describe deployment nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl describe deployment nginx-deployment --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">Name:                   nginx-deployment
-Namespace:              <span class="nb">test</span>
-CreationTimestamp:      Thu, <span class="m">01</span> Oct <span class="m">2020</span> 17:12:59 +0800
-Labels:                 &lt;none&gt;
-Annotations:            deployment.kubernetes.io/revision: <span class="m">9</span>
-                        kubectl.kubernetes.io/last-applied-configuration:
-                          <span class="o">{</span><span class="s2">&#34;apiVersion&#34;</span>:<span class="s2">&#34;apps/v1&#34;</span>,<span class="s2">&#34;kind&#34;</span>:<span class="s2">&#34;Deployment&#34;</span>,<span class="s2">&#34;metadata&#34;</span>:<span class="o">{</span><span class="s2">&#34;annotations&#34;</span>:<span class="o">{}</span>,<span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;nginx-deployment&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;test&#34;</span><span class="o">}</span>,<span class="s2">&#34;spec&#34;</span>:<span class="o">{</span><span class="s2">&#34;replicas&#34;</span>:...
-Selector:               <span class="nv">app</span><span class="o">=</span>nginx
-Replicas:               <span class="m">10</span> desired <span class="p">|</span> <span class="m">10</span> updated <span class="p">|</span> <span class="m">10</span> total <span class="p">|</span> <span class="m">10</span> available <span class="p">|</span> <span class="m">0</span> unavailable
-StrategyType:           RollingUpdate
-MinReadySeconds:        <span class="m">0</span>
-RollingUpdateStrategy:  25% max unavailable, 25% max surge
-Pod Template:
-  Labels:  <span class="nv">app</span><span class="o">=</span>nginx
-  Containers:
-   nginx:
-    Image:      nginx:1.19.3
-    Port:       80/TCP
-    Host Port:  0/TCP
-    Limits:
-      memory:  200Mi
-    Requests:
-      memory:     100Mi
-    Environment:  &lt;none&gt;
-    Mounts:       &lt;none&gt;
-  Volumes:        &lt;none&gt;
-Conditions:
-  Type           Status  Reason
-  ----           ------  ------
-  Available      True    MinimumReplicasAvailable
-  Progressing    True    NewReplicaSetAvailable
-OldReplicaSets:  &lt;none&gt;
-NewReplicaSet:   nginx-deployment-6b5df77cd8 <span class="o">(</span>10/10 replicas created<span class="o">)</span>
-Events:
-  Type    Reason             Age    From                   Message
-  ----    ------             ----   ----                   -------
-  Normal  ScalingReplicaSet  43m    deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">1</span>
-  Normal  ScalingReplicaSet  37m    deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-6b5df77cd8 to <span class="m">9</span>
-  Normal  ScalingReplicaSet  37m    deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">4</span>
-  Normal  ScalingReplicaSet  37m    deployment-controller  Scaled down replica <span class="nb">set</span> nginx-deployment-6b5df77cd8 to <span class="m">8</span>
-  Normal  ScalingReplicaSet  37m    deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">5</span>
-  Normal  ScalingReplicaSet  2m11s  deployment-controller  Scaled down replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">0</span>
-  Normal  ScalingReplicaSet  2m11s  deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-6b5df77cd8 to <span class="m">10</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln"> 1</span>Name:                   nginx-deployment
+<span class="ln"> 2</span>Namespace:              <span class="nb">test</span>
+<span class="ln"> 3</span>CreationTimestamp:      Thu, <span class="m">01</span> Oct <span class="m">2020</span> 17:12:59 +0800
+<span class="ln"> 4</span>Labels:                 &lt;none&gt;
+<span class="ln"> 5</span>Annotations:            deployment.kubernetes.io/revision: <span class="m">9</span>
+<span class="ln"> 6</span>                        kubectl.kubernetes.io/last-applied-configuration:
+<span class="ln"> 7</span>                          <span class="o">{</span><span class="s2">&#34;apiVersion&#34;</span>:<span class="s2">&#34;apps/v1&#34;</span>,<span class="s2">&#34;kind&#34;</span>:<span class="s2">&#34;Deployment&#34;</span>,<span class="s2">&#34;metadata&#34;</span>:<span class="o">{</span><span class="s2">&#34;annotations&#34;</span>:<span class="o">{}</span>,<span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;nginx-deployment&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;test&#34;</span><span class="o">}</span>,<span class="s2">&#34;spec&#34;</span>:<span class="o">{</span><span class="s2">&#34;replicas&#34;</span>:...
+<span class="ln"> 8</span>Selector:               <span class="nv">app</span><span class="o">=</span>nginx
+<span class="ln"> 9</span>Replicas:               <span class="m">10</span> desired <span class="p">|</span> <span class="m">10</span> updated <span class="p">|</span> <span class="m">10</span> total <span class="p">|</span> <span class="m">10</span> available <span class="p">|</span> <span class="m">0</span> unavailable
+<span class="ln">10</span>StrategyType:           RollingUpdate
+<span class="ln">11</span>MinReadySeconds:        <span class="m">0</span>
+<span class="ln">12</span>RollingUpdateStrategy:  25% max unavailable, 25% max surge
+<span class="ln">13</span>Pod Template:
+<span class="ln">14</span>  Labels:  <span class="nv">app</span><span class="o">=</span>nginx
+<span class="ln">15</span>  Containers:
+<span class="ln">16</span>   nginx:
+<span class="ln">17</span>    Image:      nginx:1.19.3
+<span class="ln">18</span>    Port:       80/TCP
+<span class="ln">19</span>    Host Port:  0/TCP
+<span class="ln">20</span>    Limits:
+<span class="ln">21</span>      memory:  200Mi
+<span class="ln">22</span>    Requests:
+<span class="ln">23</span>      memory:     100Mi
+<span class="ln">24</span>    Environment:  &lt;none&gt;
+<span class="ln">25</span>    Mounts:       &lt;none&gt;
+<span class="ln">26</span>  Volumes:        &lt;none&gt;
+<span class="ln">27</span>Conditions:
+<span class="ln">28</span>  Type           Status  Reason
+<span class="ln">29</span>  ----           ------  ------
+<span class="ln">30</span>  Available      True    MinimumReplicasAvailable
+<span class="ln">31</span>  Progressing    True    NewReplicaSetAvailable
+<span class="ln">32</span>OldReplicaSets:  &lt;none&gt;
+<span class="ln">33</span>NewReplicaSet:   nginx-deployment-6b5df77cd8 <span class="o">(</span>10/10 replicas created<span class="o">)</span>
+<span class="ln">34</span>Events:
+<span class="ln">35</span>  Type    Reason             Age    From                   Message
+<span class="ln">36</span>  ----    ------             ----   ----                   -------
+<span class="ln">37</span>  Normal  ScalingReplicaSet  43m    deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">1</span>
+<span class="ln">38</span>  Normal  ScalingReplicaSet  37m    deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-6b5df77cd8 to <span class="m">9</span>
+<span class="ln">39</span>  Normal  ScalingReplicaSet  37m    deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">4</span>
+<span class="ln">40</span>  Normal  ScalingReplicaSet  37m    deployment-controller  Scaled down replica <span class="nb">set</span> nginx-deployment-6b5df77cd8 to <span class="m">8</span>
+<span class="ln">41</span>  Normal  ScalingReplicaSet  37m    deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">5</span>
+<span class="ln">42</span>  Normal  ScalingReplicaSet  2m11s  deployment-controller  Scaled down replica <span class="nb">set</span> nginx-deployment-86dc975d96 to <span class="m">0</span>
+<span class="ln">43</span>  Normal  ScalingReplicaSet  2m11s  deployment-controller  Scaled up replica <span class="nb">set</span> nginx-deployment-6b5df77cd8 to <span class="m">10</span>
 </code></pre></div><h2 id="三api操作">三、API操作</h2>
 <blockquote>
 <p>client-go 内容也比较多，这里尽量简单介绍。</p>
 </blockquote>
 <h3 id="31-创建-deployment">3.1 创建 deployment</h3>
 <h4 id="运行-client-go-示例">运行 client-go 示例</h4>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">TestCreateDeployment</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">c</span> <span class="o">:=</span> <span class="nf">getClient</span><span class="p">()</span>
-	<span class="nx">n</span> <span class="o">:=</span> <span class="s">&#34;test&#34;</span>
-
-	<span class="nx">deployment</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">appsv1</span><span class="p">.</span><span class="nx">Deployment</span><span class="p">{</span>
-		<span class="nx">ObjectMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span>
-			<span class="nx">Name</span><span class="p">:</span>      <span class="s">&#34;nginx-deployment&#34;</span><span class="p">,</span>
-			<span class="nx">Namespace</span><span class="p">:</span> <span class="nx">n</span><span class="p">,</span>
-		<span class="p">},</span>
-		<span class="nx">Spec</span><span class="p">:</span> <span class="nx">appsv1</span><span class="p">.</span><span class="nx">DeploymentSpec</span><span class="p">{</span>
-			<span class="nx">Replicas</span><span class="p">:</span> <span class="nf">int32Ptr</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
-			<span class="nx">Selector</span><span class="p">:</span> <span class="o">&amp;</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">LabelSelector</span><span class="p">{</span>
-				<span class="nx">MatchLabels</span><span class="p">:</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
-					<span class="s">&#34;app&#34;</span><span class="p">:</span> <span class="s">&#34;nginx&#34;</span><span class="p">,</span>
-				<span class="p">},</span>
-			<span class="p">},</span>
-			<span class="nx">Template</span><span class="p">:</span> <span class="nx">apiv1</span><span class="p">.</span><span class="nx">PodTemplateSpec</span><span class="p">{</span>
-				<span class="nx">ObjectMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span>
-					<span class="nx">Labels</span><span class="p">:</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
-						<span class="s">&#34;app&#34;</span><span class="p">:</span> <span class="s">&#34;nginx&#34;</span><span class="p">,</span>
-					<span class="p">},</span>
-				<span class="p">},</span>
-				<span class="nx">Spec</span><span class="p">:</span> <span class="nx">apiv1</span><span class="p">.</span><span class="nx">PodSpec</span><span class="p">{</span>
-					<span class="nx">Containers</span><span class="p">:</span> <span class="p">[]</span><span class="nx">apiv1</span><span class="p">.</span><span class="nx">Container</span><span class="p">{</span>
-						<span class="p">{</span>
-							<span class="nx">Name</span><span class="p">:</span>  <span class="s">&#34;nginx&#34;</span><span class="p">,</span>
-							<span class="nx">Image</span><span class="p">:</span> <span class="s">&#34;nginx:1.19.3&#34;</span><span class="p">,</span>
-							<span class="nx">Ports</span><span class="p">:</span> <span class="p">[]</span><span class="nx">apiv1</span><span class="p">.</span><span class="nx">ContainerPort</span><span class="p">{</span>
-								<span class="p">{</span>
-									<span class="nx">ContainerPort</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
-								<span class="p">},</span>
-							<span class="p">},</span>
-						<span class="p">},</span>
-					<span class="p">},</span>
-				<span class="p">},</span>
-			<span class="p">},</span>
-		<span class="p">},</span>
-	<span class="p">}</span>
-
-	<span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">AppsV1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nf">Create</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">deployment</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">CreateOptions</span><span class="p">{})</span>
-	<span class="nx">assert</span><span class="p">.</span><span class="nf">NoError</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
-	<span class="nx">t</span><span class="p">.</span><span class="nf">Logf</span><span class="p">(</span><span class="s">&#34;create deployment result : %v&#34;</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="nf">TestCreateDeployment</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="nx">c</span> <span class="o">:=</span> <span class="nf">getClient</span><span class="p">()</span>
+<span class="ln"> 3</span>	<span class="nx">n</span> <span class="o">:=</span> <span class="s">&#34;test&#34;</span>
+<span class="ln"> 4</span>
+<span class="ln"> 5</span>	<span class="nx">deployment</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">appsv1</span><span class="p">.</span><span class="nx">Deployment</span><span class="p">{</span>
+<span class="ln"> 6</span>		<span class="nx">ObjectMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span>
+<span class="ln"> 7</span>			<span class="nx">Name</span><span class="p">:</span>      <span class="s">&#34;nginx-deployment&#34;</span><span class="p">,</span>
+<span class="ln"> 8</span>			<span class="nx">Namespace</span><span class="p">:</span> <span class="nx">n</span><span class="p">,</span>
+<span class="ln"> 9</span>		<span class="p">},</span>
+<span class="ln">10</span>		<span class="nx">Spec</span><span class="p">:</span> <span class="nx">appsv1</span><span class="p">.</span><span class="nx">DeploymentSpec</span><span class="p">{</span>
+<span class="ln">11</span>			<span class="nx">Replicas</span><span class="p">:</span> <span class="nf">int32Ptr</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+<span class="ln">12</span>			<span class="nx">Selector</span><span class="p">:</span> <span class="o">&amp;</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">LabelSelector</span><span class="p">{</span>
+<span class="ln">13</span>				<span class="nx">MatchLabels</span><span class="p">:</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+<span class="ln">14</span>					<span class="s">&#34;app&#34;</span><span class="p">:</span> <span class="s">&#34;nginx&#34;</span><span class="p">,</span>
+<span class="ln">15</span>				<span class="p">},</span>
+<span class="ln">16</span>			<span class="p">},</span>
+<span class="ln">17</span>			<span class="nx">Template</span><span class="p">:</span> <span class="nx">apiv1</span><span class="p">.</span><span class="nx">PodTemplateSpec</span><span class="p">{</span>
+<span class="ln">18</span>				<span class="nx">ObjectMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span>
+<span class="ln">19</span>					<span class="nx">Labels</span><span class="p">:</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+<span class="ln">20</span>						<span class="s">&#34;app&#34;</span><span class="p">:</span> <span class="s">&#34;nginx&#34;</span><span class="p">,</span>
+<span class="ln">21</span>					<span class="p">},</span>
+<span class="ln">22</span>				<span class="p">},</span>
+<span class="ln">23</span>				<span class="nx">Spec</span><span class="p">:</span> <span class="nx">apiv1</span><span class="p">.</span><span class="nx">PodSpec</span><span class="p">{</span>
+<span class="ln">24</span>					<span class="nx">Containers</span><span class="p">:</span> <span class="p">[]</span><span class="nx">apiv1</span><span class="p">.</span><span class="nx">Container</span><span class="p">{</span>
+<span class="ln">25</span>						<span class="p">{</span>
+<span class="ln">26</span>							<span class="nx">Name</span><span class="p">:</span>  <span class="s">&#34;nginx&#34;</span><span class="p">,</span>
+<span class="ln">27</span>							<span class="nx">Image</span><span class="p">:</span> <span class="s">&#34;nginx:1.19.3&#34;</span><span class="p">,</span>
+<span class="ln">28</span>							<span class="nx">Ports</span><span class="p">:</span> <span class="p">[]</span><span class="nx">apiv1</span><span class="p">.</span><span class="nx">ContainerPort</span><span class="p">{</span>
+<span class="ln">29</span>								<span class="p">{</span>
+<span class="ln">30</span>									<span class="nx">ContainerPort</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
+<span class="ln">31</span>								<span class="p">},</span>
+<span class="ln">32</span>							<span class="p">},</span>
+<span class="ln">33</span>						<span class="p">},</span>
+<span class="ln">34</span>					<span class="p">},</span>
+<span class="ln">35</span>				<span class="p">},</span>
+<span class="ln">36</span>			<span class="p">},</span>
+<span class="ln">37</span>		<span class="p">},</span>
+<span class="ln">38</span>	<span class="p">}</span>
+<span class="ln">39</span>
+<span class="ln">40</span>	<span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">AppsV1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nf">Create</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">deployment</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">CreateOptions</span><span class="p">{})</span>
+<span class="ln">41</span>	<span class="nx">assert</span><span class="p">.</span><span class="nf">NoError</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+<span class="ln">42</span>	<span class="nx">t</span><span class="p">.</span><span class="nf">Logf</span><span class="p">(</span><span class="s">&#34;create deployment result : %v&#34;</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
+<span class="ln">43</span><span class="p">}</span>
 </code></pre></div><h4 id="查看部署情况">查看部署情况</h4>
 <ul>
 <li>查看 deployment</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get deployments --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get deployments --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME               READY   UP-TO-DATE   AVAILABLE   AGE
-nginx-deployment   4/4     <span class="m">4</span>            <span class="m">4</span>           3m4s
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+<span class="ln">2</span>nginx-deployment   4/4     <span class="m">4</span>            <span class="m">4</span>           3m4s
 </code></pre></div><ul>
 <li>查看 pod</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME                                READY   STATUS    RESTARTS   AGE
-nginx-deployment-669d59f9b4-7lgz2   1/1     Running   <span class="m">0</span>          5m29s
-nginx-deployment-669d59f9b4-jmj25   1/1     Running   <span class="m">0</span>          5m29s
-nginx-deployment-669d59f9b4-kswqx   1/1     Running   <span class="m">0</span>          5m29s
-nginx-deployment-669d59f9b4-sb5xm   1/1     Running   <span class="m">0</span>          5m29s
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME                                READY   STATUS    RESTARTS   AGE
+<span class="ln">2</span>nginx-deployment-669d59f9b4-7lgz2   1/1     Running   <span class="m">0</span>          5m29s
+<span class="ln">3</span>nginx-deployment-669d59f9b4-jmj25   1/1     Running   <span class="m">0</span>          5m29s
+<span class="ln">4</span>nginx-deployment-669d59f9b4-kswqx   1/1     Running   <span class="m">0</span>          5m29s
+<span class="ln">5</span>nginx-deployment-669d59f9b4-sb5xm   1/1     Running   <span class="m">0</span>          5m29s
 </code></pre></div><ul>
 <li>查看 rs</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get rs --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get rs --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME                          DESIRED   CURRENT   READY   AGE
-nginx-deployment-669d59f9b4   <span class="m">4</span>         <span class="m">4</span>         <span class="m">4</span>       5m18s
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME                          DESIRED   CURRENT   READY   AGE
+<span class="ln">2</span>nginx-deployment-669d59f9b4   <span class="m">4</span>         <span class="m">4</span>         <span class="m">4</span>       5m18s
 </code></pre></div><h3 id="33-查看-deployment">3.3 查看 deployment</h3>
 <h4 id="运行-client-go-示例-1">运行 client-go 示例</h4>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">TestGetDeployment</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">c</span> <span class="o">:=</span> <span class="nf">getClient</span><span class="p">()</span>
-	<span class="nx">n</span> <span class="o">:=</span> <span class="s">&#34;test&#34;</span>
-
-	<span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">AppsV1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nf">Get</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="s">&#34;nginx-deployment&#34;</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">GetOptions</span><span class="p">{})</span>
-	<span class="nx">assert</span><span class="p">.</span><span class="nf">NoError</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
-	<span class="nx">t</span><span class="p">.</span><span class="nf">Logf</span><span class="p">(</span><span class="s">&#34;get deployment result : %v&#34;</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="kd">func</span> <span class="nf">TestGetDeployment</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln">2</span>	<span class="nx">c</span> <span class="o">:=</span> <span class="nf">getClient</span><span class="p">()</span>
+<span class="ln">3</span>	<span class="nx">n</span> <span class="o">:=</span> <span class="s">&#34;test&#34;</span>
+<span class="ln">4</span>
+<span class="ln">5</span>	<span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">AppsV1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nf">Get</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="s">&#34;nginx-deployment&#34;</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">GetOptions</span><span class="p">{})</span>
+<span class="ln">6</span>	<span class="nx">assert</span><span class="p">.</span><span class="nf">NoError</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+<span class="ln">7</span>	<span class="nx">t</span><span class="p">.</span><span class="nf">Logf</span><span class="p">(</span><span class="s">&#34;get deployment result : %v&#34;</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
+<span class="ln">8</span><span class="p">}</span>
 </code></pre></div><h3 id="32-更新-deployment">3.2 更新 deployment</h3>
 <h4 id="运行-client-go-示例-2">运行 client-go 示例</h4>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">TestUpdateDeployment</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">c</span> <span class="o">:=</span> <span class="nf">getClient</span><span class="p">()</span>
-	<span class="nx">n</span> <span class="o">:=</span> <span class="s">&#34;test&#34;</span>
-
-	<span class="nx">retryErr</span> <span class="o">:=</span> <span class="nx">retry</span><span class="p">.</span><span class="nf">RetryOnConflict</span><span class="p">(</span><span class="nx">retry</span><span class="p">.</span><span class="nx">DefaultRetry</span><span class="p">,</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
-		<span class="c1">// Retrieve the latest version of Deployment before attempting update
-</span><span class="c1"></span>		<span class="c1">// RetryOnConflict uses exponential backoff to avoid exhausting the apiserver
-</span><span class="c1"></span>		<span class="nx">result</span><span class="p">,</span> <span class="nx">getErr</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">AppsV1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nf">Get</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="s">&#34;nginx-deployment&#34;</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">GetOptions</span><span class="p">{})</span>
-		<span class="k">if</span> <span class="nx">getErr</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-			<span class="nx">t</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Failed to get latest version of Deployment: %v&#34;</span><span class="p">,</span> <span class="nx">getErr</span><span class="p">)</span>
-		<span class="p">}</span>
-
-		<span class="nx">result</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="p">=</span> <span class="nf">int32Ptr</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>                             <span class="c1">// reduce replica count
-</span><span class="c1"></span>		<span class="nx">result</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Template</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Containers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Image</span> <span class="p">=</span> <span class="s">&#34;nginx:1.14.2&#34;</span> <span class="c1">// change nginx version
-</span><span class="c1"></span>		<span class="nx">_</span><span class="p">,</span> <span class="nx">updateErr</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">AppsV1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nf">Update</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">UpdateOptions</span><span class="p">{})</span>
-		<span class="k">return</span> <span class="nx">updateErr</span>
-	<span class="p">})</span>
-
-	<span class="k">if</span> <span class="nx">retryErr</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">t</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Update failed: %v&#34;</span><span class="p">,</span> <span class="nx">retryErr</span><span class="p">)</span>
-	<span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="nf">TestUpdateDeployment</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="nx">c</span> <span class="o">:=</span> <span class="nf">getClient</span><span class="p">()</span>
+<span class="ln"> 3</span>	<span class="nx">n</span> <span class="o">:=</span> <span class="s">&#34;test&#34;</span>
+<span class="ln"> 4</span>
+<span class="ln"> 5</span>	<span class="nx">retryErr</span> <span class="o">:=</span> <span class="nx">retry</span><span class="p">.</span><span class="nf">RetryOnConflict</span><span class="p">(</span><span class="nx">retry</span><span class="p">.</span><span class="nx">DefaultRetry</span><span class="p">,</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+<span class="ln"> 6</span>		<span class="c1">// Retrieve the latest version of Deployment before attempting update
+</span><span class="ln"> 7</span><span class="c1"></span>		<span class="c1">// RetryOnConflict uses exponential backoff to avoid exhausting the apiserver
+</span><span class="ln"> 8</span><span class="c1"></span>		<span class="nx">result</span><span class="p">,</span> <span class="nx">getErr</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">AppsV1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nf">Get</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="s">&#34;nginx-deployment&#34;</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">GetOptions</span><span class="p">{})</span>
+<span class="ln"> 9</span>		<span class="k">if</span> <span class="nx">getErr</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln">10</span>			<span class="nx">t</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Failed to get latest version of Deployment: %v&#34;</span><span class="p">,</span> <span class="nx">getErr</span><span class="p">)</span>
+<span class="ln">11</span>		<span class="p">}</span>
+<span class="ln">12</span>
+<span class="ln">13</span>		<span class="nx">result</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="p">=</span> <span class="nf">int32Ptr</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>                             <span class="c1">// reduce replica count
+</span><span class="ln">14</span><span class="c1"></span>		<span class="nx">result</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Template</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Containers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Image</span> <span class="p">=</span> <span class="s">&#34;nginx:1.14.2&#34;</span> <span class="c1">// change nginx version
+</span><span class="ln">15</span><span class="c1"></span>		<span class="nx">_</span><span class="p">,</span> <span class="nx">updateErr</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">AppsV1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nf">Update</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">UpdateOptions</span><span class="p">{})</span>
+<span class="ln">16</span>		<span class="k">return</span> <span class="nx">updateErr</span>
+<span class="ln">17</span>	<span class="p">})</span>
+<span class="ln">18</span>
+<span class="ln">19</span>	<span class="k">if</span> <span class="nx">retryErr</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln">20</span>		<span class="nx">t</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Update failed: %v&#34;</span><span class="p">,</span> <span class="nx">retryErr</span><span class="p">)</span>
+<span class="ln">21</span>	<span class="p">}</span>
+<span class="ln">22</span><span class="p">}</span>
 </code></pre></div><p>注意下 <code>RetryOnConflict</code> 说明：</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// RetryOnConflict is used to make an update to a resource when you have to worry about
-</span><span class="c1">// conflicts caused by other code making unrelated updates to the resource at the same
-</span><span class="c1">// time. fn should fetch the resource to be modified, make appropriate changes to it, try
-</span><span class="c1">// to update it, and return (unmodified) the error from the update function. On a
-</span><span class="c1">// successful update, RetryOnConflict will return nil. If the update function returns a
-</span><span class="c1">// &#34;Conflict&#34; error, RetryOnConflict will wait some amount of time as described by
-</span><span class="c1">// backoff, and then try again. On a non-&#34;Conflict&#34; error, or if it retries too many times
-</span><span class="c1">// and gives up, RetryOnConflict will return an error to the caller.
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln">1</span><span class="c1">// RetryOnConflict is used to make an update to a resource when you have to worry about
+</span><span class="ln">2</span><span class="c1">// conflicts caused by other code making unrelated updates to the resource at the same
+</span><span class="ln">3</span><span class="c1">// time. fn should fetch the resource to be modified, make appropriate changes to it, try
+</span><span class="ln">4</span><span class="c1">// to update it, and return (unmodified) the error from the update function. On a
+</span><span class="ln">5</span><span class="c1">// successful update, RetryOnConflict will return nil. If the update function returns a
+</span><span class="ln">6</span><span class="c1">// &#34;Conflict&#34; error, RetryOnConflict will wait some amount of time as described by
+</span><span class="ln">7</span><span class="c1">// backoff, and then try again. On a non-&#34;Conflict&#34; error, or if it retries too many times
+</span><span class="ln">8</span><span class="c1">// and gives up, RetryOnConflict will return an error to the caller.
 </span></code></pre></div><p>一句话总结就是：当你担心有冲突的时候使用，保障出现冲突错误会自动重试一定的次数直到成功。</p>
 <h4 id="查看部署情况-1">查看部署情况</h4>
 <ul>
 <li>查看 deployment</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get deployments --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get deployments --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME               READY   UP-TO-DATE   AVAILABLE   AGE
-nginx-deployment   2/2     <span class="m">2</span>            <span class="m">2</span>           25m
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+<span class="ln">2</span>nginx-deployment   2/2     <span class="m">2</span>            <span class="m">2</span>           25m
 </code></pre></div><ul>
 <li>查看 pod</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get pods -l <span class="nv">app</span><span class="o">=</span>nginx --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME                                READY   STATUS    RESTARTS   AGE
-nginx-deployment-574b87c764-2vlqk   1/1     Running   <span class="m">0</span>          5m4s
-nginx-deployment-574b87c764-5p9br   1/1     Running   <span class="m">0</span>          5m7s
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME                                READY   STATUS    RESTARTS   AGE
+<span class="ln">2</span>nginx-deployment-574b87c764-2vlqk   1/1     Running   <span class="m">0</span>          5m4s
+<span class="ln">3</span>nginx-deployment-574b87c764-5p9br   1/1     Running   <span class="m">0</span>          5m7s
 </code></pre></div><ul>
 <li>查看 rs</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl get rs --namespace<span class="o">=</span><span class="nb">test</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>kubectl get rs --namespace<span class="o">=</span><span class="nb">test</span>
 </code></pre></div><p>输出：</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">NAME                          DESIRED   CURRENT   READY   AGE
-nginx-deployment-574b87c764   <span class="m">2</span>         <span class="m">2</span>         <span class="m">2</span>       5m20s
-nginx-deployment-669d59f9b4   <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>       25m
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>NAME                          DESIRED   CURRENT   READY   AGE
+<span class="ln">2</span>nginx-deployment-574b87c764   <span class="m">2</span>         <span class="m">2</span>         <span class="m">2</span>       5m20s
+<span class="ln">3</span>nginx-deployment-669d59f9b4   <span class="m">0</span>         <span class="m">0</span>         <span class="m">0</span>       25m
 </code></pre></div><h3 id="34-删除-deployment">3.4 删除 deployment</h3>
 <h4 id="运行-client-go-示例-3">运行 client-go 示例</h4>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">TestDeleteDeployment</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
-	<span class="nx">c</span> <span class="o">:=</span> <span class="nf">getClient</span><span class="p">()</span>
-	<span class="nx">n</span> <span class="o">:=</span> <span class="s">&#34;test&#34;</span>
-
-	<span class="nx">deletePolicy</span> <span class="o">:=</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">DeletePropagationForeground</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">AppsV1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nf">Delete</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="s">&#34;nginx-deployment&#34;</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">DeleteOptions</span><span class="p">{</span>
-		<span class="nx">PropagationPolicy</span><span class="p">:</span> <span class="o">&amp;</span><span class="nx">deletePolicy</span><span class="p">,</span>
-	<span class="p">});</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-		<span class="nx">t</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-	<span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="ln"> 1</span><span class="kd">func</span> <span class="nf">TestDeleteDeployment</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+<span class="ln"> 2</span>	<span class="nx">c</span> <span class="o">:=</span> <span class="nf">getClient</span><span class="p">()</span>
+<span class="ln"> 3</span>	<span class="nx">n</span> <span class="o">:=</span> <span class="s">&#34;test&#34;</span>
+<span class="ln"> 4</span>
+<span class="ln"> 5</span>	<span class="nx">deletePolicy</span> <span class="o">:=</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">DeletePropagationForeground</span>
+<span class="ln"> 6</span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">AppsV1</span><span class="p">().</span><span class="nf">Deployments</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nf">Delete</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">TODO</span><span class="p">(),</span> <span class="s">&#34;nginx-deployment&#34;</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">DeleteOptions</span><span class="p">{</span>
+<span class="ln"> 7</span>		<span class="nx">PropagationPolicy</span><span class="p">:</span> <span class="o">&amp;</span><span class="nx">deletePolicy</span><span class="p">,</span>
+<span class="ln"> 8</span>	<span class="p">});</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<span class="ln"> 9</span>		<span class="nx">t</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="ln">10</span>	<span class="p">}</span>
+<span class="ln">11</span><span class="p">}</span>
 </code></pre></div><h2 id="四补充信息">四、补充信息</h2>
 <h3 id="41-deployment-动态更新">4.1 Deployment 动态更新</h3>
 <p>Deployment 控制器每次注意到新的 Deployment 时，都会创建一个 ReplicaSet 以启动所需的 Pods。 如果更新了 Deployment，则控制标签匹配 .spec.selector 但模板不匹配 .spec.template 的 Pods 的现有 ReplicaSet 被缩容。最终，新的 ReplicaSet 缩放为 .spec.replicas 个副本， 所有旧 ReplicaSets 缩放为 0 个副本。</p>

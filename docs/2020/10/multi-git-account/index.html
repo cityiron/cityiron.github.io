@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/blog.funnycode.cn\/2020\/10\/multi-git-account\/"
-        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "ssh, git","wordcount":  283 ,
+        },"image": ["https:\/\/blog.funnycode.cn\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "ssh, git","wordcount":  284 ,
         "url": "https:\/\/blog.funnycode.cn\/2020\/10\/multi-git-account\/","datePublished": "2020-10-29T14:11:30+08:00","dateModified": "2020-10-29T14:11:30+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "IronCity","logo": "https:\/\/blog.funnycode.cn\/images\/me\/punch.jpeg"},"author": {
@@ -107,7 +107,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Mac 上配置多个 GitHub 的 ssh 账号</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>tiecheng</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/github/"><i class="far fa-folder fa-fw"></i>GitHub</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-29">2020-10-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 283 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-29">2020-10-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 284 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2020/10/multi-git-account/" class="leancloud_visitors" data-flag-title="Mac 上配置多个 GitHub 的 ssh 账号">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -130,29 +130,29 @@
 <ul>
 <li>添加 ssh-agent</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">eval</span> <span class="s2">&#34;</span><span class="k">$(</span>ssh-agent -s<span class="k">)</span><span class="s2">&#34;</span>
-Agent pid <span class="m">65799</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>$ <span class="nb">eval</span> <span class="s2">&#34;</span><span class="k">$(</span>ssh-agent -s<span class="k">)</span><span class="s2">&#34;</span>
+<span class="ln">2</span>Agent pid <span class="m">65799</span>
 </code></pre></div><ul>
 <li>查看初始化的认证信息</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ ssh-add -L
-The agent has no identities.
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>$ ssh-add -L
+<span class="ln">2</span>The agent has no identities.
 </code></pre></div><ul>
 <li>把 rsa 私钥添加到 ssh</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ ssh-add ~/.ssh/id_rsa2
-Identity added: /Users/tc/.ssh/id_rsa2 <span class="o">(</span>/Users/tc/.ssh/id_rsa2<span class="o">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>$ ssh-add ~/.ssh/id_rsa2
+<span class="ln">2</span>Identity added: /Users/tc/.ssh/id_rsa2 <span class="o">(</span>/Users/tc/.ssh/id_rsa2<span class="o">)</span>
 </code></pre></div><ul>
 <li>查看添加后的认证信息</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ ssh-add -L
-ssh-rsa AAAAB3NzaC1yc2EAAAFDAQABAAABAQCmz+FyF/uuIYAedTbzQoAE+wnHG3/uzqQ2Mv9QQbjcWOOjOlTmL48rYTH6hA1rJQl4hFsTrYzTbKYlV1h7oNqT/7nUsmNOhItg51DcvSbA/PSw+2jADkbMV6bnKUtJmx7gxu7RKuWi48smEewYny/zMIJSPRu5Tr1G6WX/zEtonJntgEJELfgrJntgBikTZ/QJOGtejwWJjEPyKyNji0O4o0tmK5Xql+MG0O109Xa5toRBADFWqz+Popk7MNFuooRp/Fz0b4tLTvvlfwrEGDu0z4qmlShTmiZNQhYQsmiwpt27/IUo2Cw8J62EEUqviykuNeZBzYCGMXd3Mcg/CpTPbtBb /Users/tc/.ssh/id_rsa2
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>$ ssh-add -L
+<span class="ln">2</span>ssh-rsa AAAAB3NzaC1yc2EAAAFDAQABAAABAQCmz+FyF/uuIYAedTbzQoAE+wnHG3/uzqQ2Mv9QQbjcWOOjOlTmL48rYTH6hA1rJQl4hFsTrYzTbKYlV1h7oNqT/7nUsmNOhItg51DcvSbA/PSw+2jADkbMV6bnKUtJmx7gxu7RKuWi48smEewYny/zMIJSPRu5Tr1G6WX/zEtonJntgEJELfgrJntgBikTZ/QJOGtejwWJjEPyKyNji0O4o0tmK5Xql+MG0O109Xa5toRBADFWqz+Popk7MNFuooRp/Fz0b4tLTvvlfwrEGDu0z4qmlShTmiZNQhYQsmiwpt27/IUo2Cw8J62EEUqviykuNeZBzYCGMXd3Mcg/CpTPbtBb /Users/tc/.ssh/id_rsa2
 </code></pre></div><ul>
 <li>查看 github.com 交互的账号信息</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ ssh -T git@github.com
-
-Hi cityiron! You<span class="se">\&#39;</span>ve successfully authenticated, but GitHub does not provide shell access.
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="ln">1</span>$ ssh -T git@github.com
+<span class="ln">2</span>
+<span class="ln">3</span>Hi cityiron! You<span class="se">\&#39;</span>ve successfully authenticated, but GitHub does not provide shell access.
 </code></pre></div><p>当出现 <code>Hi [yourname]</code>， name 和你要操作的仓库所在的 github 账号一样，那么就可以正常使用 Git 命令。</p>
 <blockquote>
 <p>每一个 terminal 可以是独立的 session，当电脑启动的时候，默认所有的 terminal 共享一个账号信息</p>
@@ -183,7 +183,7 @@ Hi cityiron! You<span class="se">\&#39;</span>ve successfully authenticated, but
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2020/10/gin-static/" class="prev" rel="prev" title="一拳搞定 Gin | 前后端分离下静态资源部署到后端访问"><i class="fas fa-angle-left fa-fw"></i>一拳搞定 Gin | 前后端分离下静态资源部署到后端访问</a>
+    <div class="post-nav"><a href="/2020/10/gin-static/" class="prev" rel="prev" title="一拳搞定 Gin | 配置前后端分离后的静态资源访问"><i class="fas fa-angle-left fa-fw"></i>一拳搞定 Gin | 配置前后端分离后的静态资源访问</a>
             <a href="/2020/11/keyboard-mac/" class="next" rel="next" title="外设 | 斐尔可圣手二代键盘">外设 | 斐尔可圣手二代键盘<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
