@@ -9,10 +9,6 @@
 
 使用 [Hugo](https://gohugo.io/) 搭建博客的你是否还在为没有友情链接而烦恼，阅读本文将为你制作属于自己的友情链接提供解决方案。
 
-关于 Hugo 下其它介绍可以查看
-- [基于github page 制作 hugo 博客]({{< ref "hugo-github-page/index.tc.md" >}})
-- [loveIt主题使用心得]({{< ref "hugo-theme-lovelt/index.tc.md" >}})
-
 ## 二、友情链接
 
 ### 2.1 效果

@@ -5,7 +5,7 @@
 <!--more-->
 
 ## 一、前言
-昨天[邹部长](https://zouyx.github.io/index.html)在群里@我让看一个关于 dubbogo 调用 dubbo 报错的问题，<u>问题[issue地址](https://github.com/apache/dubbo-go/issues/900)</u>，于是我跑了 dubbogo + dubbbo 的测试代码来定位这个问题，因为之前也没跨语言调用，从零开始搭建，踩到了一些新人使用dubbogo的坑，把这个过程记录下供大家参考。
+昨天[邹部长](https://zouyx.github.io/index.html)在群里@我让看一个关于 dubbogo 调用 dubbo 报错的问题，<u>问题[issue地址](https://github.com/apache/dubbo-go/issues/900)</u>，于是我跑了 dubbogo + dubbbo 的测试代码来定位这个问题，因为之前也没跨语言调用，从零开始搭建，踩到了一些新人使用 dubbogo 的坑，把这个过程记录下供大家参考。
 
 ## 二、解决问题
 
