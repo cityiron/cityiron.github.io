@@ -1,4 +1,4 @@
-# hugo 白话文 | 添加友情链接
+# Hugo 白话文 | 添加友情链接
 
 
 本文介绍如何在 hugo 中添加友情链接
@@ -583,7 +583,7 @@ ERROR 2020/12/08 19:16:14 "/Users/tc/Documents/workspace_2020/blog/content/frien
 1:1": unmarshal failed: invalid character '{' looking for beginning of object key string
 ```
 
-[解决方案](https://github.com/gohugoio/hugo/issues/4066)
+[避免](https://github.com/gohugoio/hugo/issues/4066)
 
 - friend 介绍
 
@@ -591,9 +591,9 @@ ERROR 2020/12/08 19:16:14 "/Users/tc/Documents/workspace_2020/blog/content/frien
 
 ## 三、参考
 
-https://gohugo.io/templates/shortcode-templates/
+[https://gohugo.io/templates/shortcode-templates/](https://gohugo.io/templates/shortcode-templates/)
 
-https://github.com/kkkgo/hugo-friendlinks/
+[https://github.com/kkkgo/hugo-friendlinks/](https://github.com/kkkgo/hugo-friendlinks/)
 
-https://blog.233so.com/2020/04/friend-link-shortcodes-for-hugo-loveit/
+[https://blog.233so.com/2020/04/friend-link-shortcodes-for-hugo-loveit/](https://blog.233so.com/2020/04/friend-link-shortcodes-for-hugo-loveit/)
 

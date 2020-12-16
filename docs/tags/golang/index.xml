@@ -5,18 +5,18 @@
         <description>golang - 标签 - Funnycode</description>
         <generator>Hugo -- gohugo.io</generator><language>tc</language><managingEditor>tczjhz@163.com (tiecheng)</managingEditor>
             <webMaster>tczjhz@163.com (tiecheng)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 09 Nov 2019 19:00:33 &#43;0800</lastBuildDate><atom:link href="https://blog.funnycode.cn/tags/golang/" rel="self" type="application/rss+xml" /><item>
-    <title>模板模式</title>
-    <link>https://blog.funnycode.cn/2019/11/pattern-template/</link>
+    <title>闲聊设计模式 | 模板方法模式</title>
+    <link>https://blog.funnycode.cn/2019/11/design-template/</link>
     <pubDate>Sat, 09 Nov 2019 19:00:33 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://blog.funnycode.cn/2019/11/pattern-template/</guid>
-    <description><![CDATA[<p>本文介绍如何在 go 语言中使用模板模式.</p>]]></description>
+    <guid>https://blog.funnycode.cn/2019/11/design-template/</guid>
+    <description><![CDATA[<p>本文介绍设计模式之模板方法模式.</p>]]></description>
 </item><item>
-    <title>装饰者模式</title>
-    <link>https://blog.funnycode.cn/2019/11/pattern-decorator/</link>
+    <title>闲聊设计模式 | 装饰者模式</title>
+    <link>https://blog.funnycode.cn/2019/11/design-decorator/</link>
     <pubDate>Mon, 04 Nov 2019 17:00:24 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://blog.funnycode.cn/2019/11/pattern-decorator/</guid>
+    <guid>https://blog.funnycode.cn/2019/11/design-decorator/</guid>
     <description><![CDATA[<p>本文介绍在 go 语言中使用装饰者模式.</p>]]></description>
 </item></channel>
 </rss>
