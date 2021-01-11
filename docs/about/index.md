@@ -10,7 +10,7 @@
 
 联系我：
 
-:(fas fa-envelope fa-fw):邮箱：{{< link "mailto:tczjhz@163.com" "tczjhz@163.com">}}
+:(fas fa-envelope fa-fw):邮箱：{{< link "mailto:ironcity@apache.org" "ironcity@apache.org">}}
 
 :(fab fa-github fa-fw):GitHub：{{< link "https://github.com/cityiron" cityiron >}}
 
