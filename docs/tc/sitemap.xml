@@ -2,7 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://blog.funnycode.cn/categories/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority><xhtml:link
+            <loc>https://blog.funnycode.cn/categories/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://blog.funnycode.cn/en/categories/"
@@ -11,7 +11,7 @@
                     hreflang="tc"
                     href="https://blog.funnycode.cn/categories/"
                     /></url><url>
-            <loc>https://blog.funnycode.cn/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority><xhtml:link
+            <loc>https://blog.funnycode.cn/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://blog.funnycode.cn/en/"
@@ -20,10 +20,10 @@
                     hreflang="tc"
                     href="https://blog.funnycode.cn/"
                     /></url><url>
-            <loc>https://blog.funnycode.cn/categories/hugo/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://blog.funnycode.cn/2020/12/hugo-friend/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://blog.funnycode.cn/posts/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://blog.funnycode.cn/tags/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority><xhtml:link
+            <loc>https://blog.funnycode.cn/categories/hugo/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.funnycode.cn/2020/12/hugo-friend/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.funnycode.cn/posts/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://blog.funnycode.cn/tags/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://blog.funnycode.cn/en/tags/"
@@ -32,7 +32,7 @@
                     hreflang="tc"
                     href="https://blog.funnycode.cn/tags/"
                     /></url><url>
-            <loc>https://blog.funnycode.cn/tags/%E5%8F%8B%E9%93%BE/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
+            <loc>https://blog.funnycode.cn/tags/%E5%8F%8B%E9%93%BE/</loc><lastmod>2020-12-09T09:38:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.funnycode.cn/2020/12/dubbogo-fix-struct-args/</loc><lastmod>2020-12-03T17:13:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.funnycode.cn/categories/dubbogo/</loc><lastmod>2020-12-03T17:13:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.funnycode.cn/tags/%E5%85%A5%E9%97%A8/</loc><lastmod>2020-12-03T17:13:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
